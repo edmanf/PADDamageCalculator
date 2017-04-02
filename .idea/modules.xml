@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PADDamageCalculator.iml" filepath="$PROJECT_DIR$/PADDamageCalculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PADDamageCalculator.iml" filepath="$PROJECT_DIR$/PADDamageCalculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
