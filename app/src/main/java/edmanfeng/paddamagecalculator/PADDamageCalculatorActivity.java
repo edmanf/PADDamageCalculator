@@ -1,13 +1,13 @@
 package edmanfeng.paddamagecalculator;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class PADDamageCalculatorActivity extends AppCompatActivity {
+public class PADDamageCalculatorActivity extends SingleFragmentActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paddamage_calculator);
+    public Fragment createFragment() {
+        return new TeamListFragment();
     }
 }

@@ -6,10 +6,10 @@ import android.os.Bundle;
 
 public class MainActivity extends SingleFragmentActivity {
 
-    @Override
+    /*@Override
     protected int getLayoutResId() {
         return R.layout.activity_fragment;
-    }
+    }*/
 
     @Override
     protected Fragment createFragment() {

@@ -2,12 +2,19 @@ package edmanfeng.paddamagecalculator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edmanfeng.paddamagecalculator.GameModel.Monster;
+import edmanfeng.paddamagecalculator.GameModel.Team;
 
 /**
  * Created by t7500 on 2/27/2017.
@@ -16,6 +23,7 @@ import android.widget.TextView;
 public class TeamListFragment extends Fragment {
 
     private RecyclerView mTeamRecyclerView;
+    private TeamAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,8 +37,15 @@ public class TeamListFragment extends Fragment {
         // inflate the recycler layout and save the recycler view
         View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
+        ArrayList<Team> tempTeams = new ArrayList<Team>();
+        Team tempTeam = new Team();
+        tempTeam.setLeader(new Monster("Example", 1234));
+        tempTeams.add(tempTeam);
+
         mTeamRecyclerView = (RecyclerView) view
-                .findViewById(R.id.team_recycler_view);
+                .findViewById(R.id.team_list_recycler_view);
+        mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTeamRecyclerView.setAdapter(new TeamAdapter(tempTeams));
         return view;
     }
 
@@ -43,6 +58,8 @@ public class TeamListFragment extends Fragment {
             super(itemView);
             itemView.setOnClickListener(this);
 
+
+            mExampleTextView = (TextView) itemView;
             /*
             mMonsterImageView = (ImageView) itemView
                     .findViewById(R.id.list_monster_image);*/
@@ -53,9 +70,19 @@ public class TeamListFragment extends Fragment {
         public void onClick(View v) {
 
         }
+
+        public void bindTeam(Team team) {
+            mExampleTextView.setText(team.getLeader().getName());
+        }
     }
 
     private class TeamAdapter extends RecyclerView.Adapter<TeamHolder> {
+
+        private List<Team> mTeamList;
+
+        public TeamAdapter(List<Team> teamList) {
+            mTeamList = teamList;
+        }
 
         @Override
         public TeamHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,13 +94,12 @@ public class TeamListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(TeamHolder holder, int position) {
-
-            //holder.mT
+            holder.bindTeam(mTeamList.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mTeamList.size();
         }
     }
 }
