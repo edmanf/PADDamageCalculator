@@ -1,31 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="100dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/team_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/orb_type_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:prompt="@string/orb_type_spinner_prompt">
 
-        </android.support.v7.widget.AppCompatSpinner>
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/orb_number_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:prompt="@string/orb_count_spinner_prompt">
 
-        </android.support.v7.widget.AppCompatSpinner>
-    </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/combo_type_spinner"
+        android:text="@string/choose_orb_type_label"
+        tools:text="Orb type"/>
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/combo_type_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"/>
+<!--
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/combo_orb_number_picker"
+        android:layout_below="@+id/textView"
+        android:text="@string/choose_number_orbs_label"
+        tools:text="# Orbs"/>
+    <NumberPicker
+        android:id="@id/combo_orb_number_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/combo_type_spinner"/>-->
+<!--
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/combo_enhance_number_picker"
+        android:text="@string/choose_number_enhanced_label"/>
+    <NumberPicker
+        android:id="@id/combo_enhance_number_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/combo_orb_number_picker"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/combo_shape_spinner"
+        android:text="@string/choose_shape_label"/>
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@id/combo_shape_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/combo_enhance_number_picker"/>-->
+
+</RelativeLayout>

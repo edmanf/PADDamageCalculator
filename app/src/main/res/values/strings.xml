@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">PADDamageCalculator</string>
-    <string name="orb_type_spinner_prompt">Choose orb type</string>
-    <string name="orb_count_spinner_prompt">Choose number of orbs</string>
+    <string name="choose_orb_type_label">Orb type</string>
+    <string name="choose_number_orbs_label"># orbs</string>
+    <string name="choose_number_enhanced_label"># enhanced</string>
+    <string name="choose_shape_label">Match shape</string>
 
     <string-array name="orb_types">
         <item>Red</item>
@@ -14,5 +16,12 @@
         <item>Poison</item>
         <item>Mortal Poison</item>
         <item>Bomb</item>
+    </string-array>
+
+    <string-array name="combo_shape_types">
+        <item name="blob">Blob</item>
+        <item name="tpa">TPA</item>
+        <item name="row">Row</item>
+        <item name="cross">Cross</item>
     </string-array>
 </resources>
