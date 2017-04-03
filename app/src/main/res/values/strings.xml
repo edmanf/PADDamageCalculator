@@ -3,7 +3,7 @@
     <string name="choose_orb_type_label">Orb type</string>
     <string name="choose_number_orbs_label"># orbs</string>
     <string name="choose_number_enhanced_label"># enhanced</string>
-    <string name="choose_shape_label">Match shape</string>
+    <string name="choose_shape_label">Shape</string>
 
     <string-array name="orb_types">
         <item>Red</item>
