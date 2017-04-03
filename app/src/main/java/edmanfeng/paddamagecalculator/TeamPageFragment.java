@@ -3,6 +3,7 @@ package edmanfeng.paddamagecalculator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,10 @@ import java.util.List;
 
 public class TeamPageFragment extends Fragment {
 
-    private final int MIN_ORBS = 1;
-    private final int MAX_ORBS = 42;
+    private static final int MIN_ORBS = 1;
+    private static final int MAX_ORBS = 42;
 
+    private RecyclerView mTeamRecyclerView;
     private Spinner mComboTypeSpinner;
     private Spinner mComboOrbNumberSpinner;
     private Spinner mComboEnhanceNumberSpinner;
@@ -40,6 +42,9 @@ public class TeamPageFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater
                 .inflate(R.layout.fragment_team_page,container, false);
+
+        mTeamRecyclerView = (RecyclerView)view
+                .findViewById(R.id.team_recycler_view);
 
         mComboTypeSpinner = (Spinner)view.findViewById(R.id.combo_type_spinner);
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
@@ -83,5 +88,12 @@ public class TeamPageFragment extends Fragment {
         comboShapeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mComboShapeSpinner.setAdapter(comboShapeAdapter);
         return view;
+    }
+
+    private class MonsterHolder extends RecyclerView.ViewHolder {
+
+        public MonsterHolder(View itemView) {
+            super(itemView);
+        }
     }
 }
