@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="100dp">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/orb_type_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/orb_type_spinner_prompt">
+
+        </android.support.v7.widget.AppCompatSpinner>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/orb_number_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/orb_count_spinner_prompt">
+
+        </android.support.v7.widget.AppCompatSpinner>
+    </LinearLayout>
+
+</LinearLayout>

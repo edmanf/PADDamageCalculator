@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">PADDamageCalculator</string>
+    <string name="orb_type_spinner_prompt">Choose orb type</string>
+    <string name="orb_count_spinner_prompt">Choose number of orbs</string>
+
+    <string-array name="orb_types">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Purple</item>
+        <item>Heart</item>
+        <item>Jammer</item>
+        <item>Poison</item>
+        <item>Mortal Poison</item>
+        <item>Bomb</item>
+    </string-array>
 </resources>
