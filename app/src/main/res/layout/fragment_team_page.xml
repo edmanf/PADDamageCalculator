@@ -9,57 +9,75 @@
         android:id="@+id/team_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"/>
 
 
 
 
 
     <TextView
+        android:id="@+id/combo_type_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/combo_type_spinner"
+        android:layout_below="@id/team_recycler_view"
+        android:layout_centerVertical="true"
         android:text="@string/choose_orb_type_label"
         tools:text="Orb type"/>
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/combo_type_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="false"/>
-<!--
+        android:layout_below="@id/combo_type_label"/>
+
     <TextView
+        android:id="@+id/combo_orb_number_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/combo_orb_number_picker"
-        android:layout_below="@+id/textView"
+        android:layout_below="@id/team_recycler_view"
+        android:layout_toEndOf="@id/combo_type_label"
+        android:layout_toRightOf="@id/combo_type_label"
+        android:layout_centerVertical="true"
         android:text="@string/choose_number_orbs_label"
         tools:text="# Orbs"/>
     <NumberPicker
-        android:id="@id/combo_orb_number_picker"
+        android:id="@+id/combo_orb_number_picker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/combo_type_spinner"/>-->
-<!--
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/combo_type_spinner"
+        android:layout_toRightOf="@id/combo_type_spinner"
+        android:layout_below="@id/combo_orb_number_label"/>
+
+
     <TextView
+        android:id="@+id/combo_enhance_number_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/combo_enhance_number_picker"
+        android:layout_below="@id/team_recycler_view"
+        android:layout_toLeftOf="@id/combo_shape_label"
+        android:layout_toStartOf="@id/combo_shape_label"
+        android:layout_centerVertical="true"
         android:text="@string/choose_number_enhanced_label"/>
     <NumberPicker
-        android:id="@id/combo_enhance_number_picker"
+        android:id="@+id/combo_enhance_number_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/combo_orb_number_picker"/>
+        android:layout_toLeftOf="@id/combo_shape_spinner"
+        android:layout_toStartOf="@id/combo_shape_spinner"
+        android:layout_below="@id/combo_enhance_number_label"/>
 
     <TextView
+        android:id="@+id/combo_shape_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/combo_shape_spinner"
+        android:layout_below="@id/team_recycler_view"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:text="@string/choose_shape_label"/>
     <android.support.v7.widget.AppCompatSpinner
-        android:id="@id/combo_shape_spinner"
+        android:id="@+id/combo_shape_spinner"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@id/combo_enhance_number_picker"/>-->
-
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/combo_shape_label"/>
 </RelativeLayout>
