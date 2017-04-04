@@ -1,6 +1,6 @@
 package edmanfeng.paddamagecalculator;
 
-import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.List;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Team;
+import edmanfeng.paddamagecalculator.database.TeamBaseHelper;
 
 /**
  * Created by t7500 on 2/27/2017.
@@ -25,6 +25,7 @@ public class TeamListFragment extends Fragment {
 
     private RecyclerView mTeamRecyclerView;
     private TeamAdapter mAdapter;
+    private SQLiteDatabase mTeamDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class TeamListFragment extends Fragment {
         // inflate the recycler layout and save the recycler view
         View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
+        mTeamDatabase = new TeamBaseHelper(getContext()).getWritableDatabase();
+
         ArrayList<Team> tempTeams = new ArrayList<Team>();
         Team tempTeam = new Team();
         tempTeam.setLeader(new Monster("Example", 1234));
@@ -46,25 +49,22 @@ public class TeamListFragment extends Fragment {
         mTeamRecyclerView = (RecyclerView) view
                 .findViewById(R.id.team_list_recycler_view);
         mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mTeamRecyclerView.setAdapter(new TeamAdapter(tempTeams));
+        mTeamRecyclerView.setAdapter(
+                new TeamAdapter(TeamLab.get(getContext()).getTeams()));
         return view;
     }
 
-    private class TeamHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+    private class TeamHolder extends RecyclerView.ViewHolder
+            implements  View.OnClickListener {
 
-        private ImageView mMonsterImageView;
-        private TextView mExampleTextView;
+        private TextView mTeamNameTextView;
 
         public TeamHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
 
-            mExampleTextView = (TextView) itemView;
-            /*
-            mMonsterImageView = (ImageView) itemView
-                    .findViewById(R.id.list_monster_image);*/
-
+            mTeamNameTextView = (TextView) itemView;
         }
 
         @Override
@@ -78,7 +78,7 @@ public class TeamListFragment extends Fragment {
         }
 
         public void bindTeam(Team team) {
-            mExampleTextView.setText(team.getLeader().getName());
+            mTeamNameTextView.setText(team.getLeader().getName());
         }
     }
 
@@ -94,7 +94,7 @@ public class TeamListFragment extends Fragment {
         public TeamHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View view = layoutInflater
-                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+                    .inflate(R.layout.list_item_team, parent, false);
             return new TeamHolder(view);
         }
 
