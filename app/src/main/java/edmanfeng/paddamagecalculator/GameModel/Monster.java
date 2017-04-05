@@ -12,7 +12,9 @@ public class Monster {
     private static final int MAX_AWAKENINGS = 9;
     private static final int MAX_LATENT_SLOTS = 6;
 
-    private UUID mID;
+
+
+    private UUID mId;
 
     private int mHp;
     private int mAtk;
@@ -35,6 +37,7 @@ public class Monster {
     }
 
     public Monster(String name, int num, int hp, int atk, int rcv) {
+        this.mId = UUID.randomUUID();
         this.mName = name;
         this.mNum = num;
         this.mHp = hp;
@@ -44,6 +47,10 @@ public class Monster {
         this.mAwakenings = new int[MAX_AWAKENINGS];
         this.mLatentAwakenings = new int[MAX_LATENT_SLOTS];
         this.mTypes = new int[MAX_TYPES];
+    }
+
+    public UUID getId() {
+        return mId;
     }
 
     public int getHp() {

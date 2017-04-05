@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import edmanfeng.paddamagecalculator.database.PadDbSchema.TeamTable;
+
 /**
  * Created by t7500 on 4/3/2017.
  */
@@ -18,7 +20,17 @@ public class TeamBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL("create table " + TeamTable.NAME + "(" +
+                " _id integer primary key autoincrement, " +
+                TeamTable.Cols.UUID + ", " +
+                TeamTable.Cols.LEADER + ", " +
+                TeamTable.Cols.SUB1 + ", " +
+                TeamTable.Cols.SUB2 + ", " +
+                TeamTable.Cols.SUB3 + ", " +
+                TeamTable.Cols.SUB4 + ", " +
+                TeamTable.Cols.FRIEND_LEADER
+                + ")"
+        );
     }
 
     @Override
