@@ -66,7 +66,20 @@ public class TeamLab {
     }
 
     public Team getTeam(UUID id) {
-        return null;
+        String whereClause = TeamTable.Cols.UUID + " = ?";
+        String[] whereArgs= new String[] { id.toString() };
+        TeamCursorWrapper cursor = queryTeams(whereClause, whereArgs);
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getTeam();
+        } finally {
+            cursor.close();
+        }
     }
 
     /**

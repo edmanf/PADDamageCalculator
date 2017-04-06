@@ -1,5 +1,9 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -168,5 +172,6 @@ public class Monster {
     public void setName(String name) {
         mName = name;
     }
+
 
 }

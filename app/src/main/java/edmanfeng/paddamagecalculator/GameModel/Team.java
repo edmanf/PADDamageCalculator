@@ -1,5 +1,7 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -69,5 +71,15 @@ public class Team {
 
     public void setBadge(int badge) {
         mBadge = badge;
+    }
+
+    public List<Monster> asList() {
+        List<Monster> team = new ArrayList<>();
+        team.add(mLeader);
+        for (int i = 0; i < DEFAULT_SUBS_SOLO; i++) {
+            team.add(mSubs[i]);
+        }
+        team.add(mFriend);
+        return team;
     }
 }

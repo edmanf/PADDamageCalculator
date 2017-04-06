@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Team;
@@ -30,6 +32,8 @@ import edmanfeng.paddamagecalculator.GameModel.Team;
 public class TeamPageFragment extends Fragment {
     private static final String TAG = "paddamagecalculator";
 
+    private static final String ARG_TEAM_ID = "team_id";
+
     private static final int MIN_ORBS = 1;
     private static final int MAX_ORBS = 42;
 
@@ -38,10 +42,16 @@ public class TeamPageFragment extends Fragment {
     private Spinner mComboOrbNumberSpinner;
     private Spinner mComboEnhanceNumberSpinner;
     private Spinner mComboShapeSpinner;
+    private Team mTeam;
 
 
-    public static TeamPageFragment newInstance() {
-        return new TeamPageFragment();
+    public static TeamPageFragment newInstance(UUID uuid) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_TEAM_ID, uuid);
+
+        TeamPageFragment fragment = new TeamPageFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -49,6 +59,14 @@ public class TeamPageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        UUID uuid = (UUID) getArguments().getSerializable(ARG_TEAM_ID);
+        if (uuid == null) {
+            mTeam = new Team();
+        } else {
+            TeamLab teamLab = TeamLab.get(getActivity());
+            mTeam = teamLab.getTeam(uuid);
+        }
     }
 
     @Nullable
@@ -61,6 +79,8 @@ public class TeamPageFragment extends Fragment {
 
         mTeamRecyclerView = (RecyclerView)view
                 .findViewById(R.id.team_recycler_view);
+        mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mTeamRecyclerView.setAdapter(new MonsterAdapter(mTeam.asList()));
 
         mComboTypeSpinner = (Spinner)view.findViewById(R.id.combo_type_spinner);
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
@@ -136,27 +156,36 @@ public class TeamPageFragment extends Fragment {
         }
 
         public void bindMonster(Monster monster) {
-            mExampleText.setText(monster.getName());
+            if (monster == null) {
+                mExampleText.setText("NA");
+            } else {
+                mExampleText.setText(monster.getName());
+            }
         }
     }
 
     private class MonsterAdapter extends RecyclerView.Adapter<MonsterHolder> {
+        private List<Monster> mMonsters;
+
+        public MonsterAdapter(List<Monster> monsters) {
+            mMonsters = monsters;
+        }
 
         @Override
         public MonsterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View v = inflater.inflate(android.R.layout.simple_list_item_1, parent);
+            View v = inflater.inflate(R.layout.list_item_monster, parent, false);
             return new MonsterHolder(v);
         }
 
         @Override
         public void onBindViewHolder(MonsterHolder holder, int position) {
-            holder.bindMonster(new Monster());
+            holder.bindMonster(mMonsters.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return 6;
+            return mMonsters.size();
         }
     }
 }

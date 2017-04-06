@@ -40,7 +40,7 @@ public class TeamListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_team:
-                TeamPageFragment teamPageFragment = TeamPageFragment.newInstance();
+                TeamPageFragment teamPageFragment = TeamPageFragment.newInstance(null);
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, teamPageFragment)
@@ -78,7 +78,9 @@ public class TeamListFragment extends Fragment {
     private class TeamHolder extends RecyclerView.ViewHolder
             implements  View.OnClickListener {
 
+        private Team mTeam;
         private TextView mTeamNameTextView;
+
 
         public TeamHolder(View itemView) {
             super(itemView);
@@ -89,7 +91,9 @@ public class TeamListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            TeamPageFragment teamPageFragment = TeamPageFragment.newInstance();
+            TeamPageFragment teamPageFragment =
+                    TeamPageFragment.newInstance(mTeam.getId());
+
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, teamPageFragment)
@@ -98,6 +102,7 @@ public class TeamListFragment extends Fragment {
         }
 
         public void bindTeam(Team team) {
+            mTeam = team;
             mTeamNameTextView.setText(team.getLeader().getName());
         }
     }
