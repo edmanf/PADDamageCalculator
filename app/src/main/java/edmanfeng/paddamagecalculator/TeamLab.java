@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Team;
 import edmanfeng.paddamagecalculator.database.PadDbSchema;
 import edmanfeng.paddamagecalculator.database.PadDbSchema.TeamTable;
@@ -38,6 +39,8 @@ public class TeamLab {
 
     public void addTeam(Team team) {
 
+        ContentValues values = getContentValues(team);
+        mDatabase.insert(TeamTable.NAME, null, values);
     }
 
     public List<Team> getTeams() {
@@ -48,6 +51,11 @@ public class TeamLab {
         return null;
     }
 
+    /**
+     * Returns a ContentValues for a team
+     * @param team
+     * @return
+     */
     private static ContentValues getContentValues(Team team) {
         ContentValues values = new ContentValues();
         values.put(TeamTable.Cols.UUID, team.getId().toString());

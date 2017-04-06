@@ -1,18 +1,26 @@
 package edmanfeng.paddamagecalculator;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edmanfeng.paddamagecalculator.GameModel.Monster;
+import edmanfeng.paddamagecalculator.GameModel.Team;
 
 /**
  * Created by t7500 on 4/3/2017.
@@ -34,6 +42,12 @@ public class TeamPageFragment extends Fragment {
         return new TeamPageFragment();
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -90,10 +104,66 @@ public class TeamPageFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_team_page, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_save:
+                TeamLab teamLab = TeamLab.get(getActivity());
+                Team team = new Team();
+                Monster leader = new Monster();
+                leader.setName("A");
+                team.setLeader(leader);
+                Monster friend = new Monster();
+                friend.setName("B");
+                team.setFriend(friend);
+                ArrayList<Monster> subs = new ArrayList<>();
+                for (int i = 0; i < 4; i++) {
+                    team.setSub(i, new Monster());
+                }
+                teamLab.addTeam(team);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     private class MonsterHolder extends RecyclerView.ViewHolder {
+        private TextView mExampleText;
 
         public MonsterHolder(View itemView) {
             super(itemView);
+            mExampleText = (TextView) itemView.findViewById(R.id.monster_item);
+        }
+
+        public void bindMonster(Monster monster) {
+            mExampleText.setText(monster.getName());
+        }
+    }
+
+    private class MonsterAdapter extends RecyclerView.Adapter<MonsterHolder> {
+
+        @Override
+        public MonsterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View v = inflater.inflate(android.R.layout.simple_list_item_1, parent);
+            return new MonsterHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(MonsterHolder holder, int position) {
+            holder.bindMonster(new Monster());
+        }
+
+        @Override
+        public int getItemCount() {
+            return 6;
         }
     }
 }

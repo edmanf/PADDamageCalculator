@@ -5,6 +5,7 @@
     <string name="choose_number_enhanced_label"># enhanced</string>
     <string name="choose_shape_label">Shape</string>
     <string name="menu_new_team">New Team</string>
+    <string name="menu_save">Save</string>
 
     <string-array name="orb_types">
         <item>Red</item>
