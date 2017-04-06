@@ -32,6 +32,10 @@ public class Monster {
         this("Default", 0);
     }
 
+    public Monster(String name) {
+        this(name, 0);
+    }
+
     public Monster(String name, int num) {
         this(name, num, 1, 1, 1);
     }

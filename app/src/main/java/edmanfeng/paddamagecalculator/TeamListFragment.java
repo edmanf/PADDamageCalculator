@@ -61,11 +61,6 @@ public class TeamListFragment extends Fragment {
 
         mTeamDatabase = new TeamBaseHelper(getContext()).getWritableDatabase();
 
-        ArrayList<Team> tempTeams = new ArrayList<Team>();
-        Team tempTeam = new Team();
-        tempTeam.setLeader(new Monster("Example", 1234));
-        tempTeams.add(tempTeam);
-
         mTeamRecyclerView = (RecyclerView) view
                 .findViewById(R.id.team_list_recycler_view);
         mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -89,8 +84,7 @@ public class TeamListFragment extends Fragment {
             super(itemView);
             itemView.setOnClickListener(this);
 
-
-            mTeamNameTextView = (TextView) itemView;
+            mTeamNameTextView = (TextView) itemView.findViewById(R.id.team_list_item_name);
         }
 
         @Override

@@ -55,6 +55,10 @@ public class Team {
         mSubs = subs;
     }
 
+    public Monster getSub(int slot) {
+        return mSubs[slot];
+    }
+
     public void setSub(int slot, Monster sub) {
         mSubs[slot] = sub;
     }

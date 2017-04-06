@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import edmanfeng.paddamagecalculator.GameModel.Team;
  */
 
 public class TeamPageFragment extends Fragment {
+    private static final String TAG = "paddamagecalculator";
 
     private static final int MIN_ORBS = 1;
     private static final int MAX_ORBS = 42;
@@ -84,17 +86,6 @@ public class TeamPageFragment extends Fragment {
                 getActivity(), android.R.layout.simple_spinner_item, orbCountLimits);
         comboEnhanceNumAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mComboEnhanceNumberSpinner.setAdapter(comboEnhanceNumAdapter);
-        /*
-        mComboEnhanceNumberSpinner.setMinValue(MIN_ORBS);
-        mComboEnhanceNumberSpinner.setMaxValue(MAX_ORBS);
-        mComboEnhanceNumberSpinner.setWrapSelectorWheel(true);
-        mComboEnhanceNumberSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                // placeholder
-
-            }
-        });*/
 
         mComboShapeSpinner = (Spinner)view.findViewById(R.id.combo_shape_spinner);
         ArrayAdapter<CharSequence> comboShapeAdapter = ArrayAdapter.createFromResource(
@@ -126,7 +117,9 @@ public class TeamPageFragment extends Fragment {
                 for (int i = 0; i < 4; i++) {
                     team.setSub(i, new Monster());
                 }
+
                 teamLab.addTeam(team);
+                Log.i(TAG, "Adding team successful");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
