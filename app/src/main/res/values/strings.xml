@@ -6,6 +6,14 @@
     <string name="choose_shape_label">Shape</string>
     <string name="menu_new_team">New Team</string>
     <string name="menu_save">Save</string>
+    <string name="edit_name">Name</string>
+    <string name="edit_hp">Hp</string>
+    <string name="edit_atk">Atk</string>
+    <string name="edit_rcv">Rcv</string>
+    <string name="edit_name_hint">Enter Name</string>
+    <string name="edit_hp_hint">Enter Hp</string>
+    <string name="edit_atk_hint">Enter Atk</string>
+    <string name="edit_rcv_hint">Enter Rcv</string>
 
     <string-array name="orb_types">
         <item>Red</item>

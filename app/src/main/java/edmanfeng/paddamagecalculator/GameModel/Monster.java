@@ -45,7 +45,11 @@ public class Monster {
     }
 
     public Monster(String name, int num, int hp, int atk, int rcv) {
-        this.mId = UUID.randomUUID();
+        this(UUID.randomUUID(), name, num, hp, atk, rcv);
+    }
+
+    public Monster(UUID uuid, String name, int num, int hp, int atk, int rcv) {
+        this.mId = uuid;
         this.mName = name;
         this.mNum = num;
         this.mHp = hp;
@@ -56,6 +60,7 @@ public class Monster {
         this.mLatentAwakenings = new int[MAX_LATENT_SLOTS];
         this.mTypes = new int[MAX_TYPES];
     }
+
 
     public UUID getId() {
         return mId;

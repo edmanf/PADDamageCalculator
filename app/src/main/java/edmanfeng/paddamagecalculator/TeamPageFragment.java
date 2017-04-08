@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -147,12 +148,15 @@ public class TeamPageFragment extends Fragment {
     }
 
 
-    private class MonsterHolder extends RecyclerView.ViewHolder {
+    private class MonsterHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
         private TextView mExampleText;
 
         public MonsterHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mExampleText = (TextView) itemView.findViewById(R.id.monster_item);
+
         }
 
         public void bindMonster(Monster monster) {
@@ -161,6 +165,16 @@ public class TeamPageFragment extends Fragment {
             } else {
                 mExampleText.setText(monster.getName());
             }
+        }
+
+        @Override
+        public void onClick(View v) {
+            EditMonsterFragment fragment = EditMonsterFragment.newInstance();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 

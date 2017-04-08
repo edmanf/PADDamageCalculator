@@ -24,4 +24,22 @@ public class PadDbSchema {
             public static final String MP_SUB4 = "mp_sub4";
         }
     }
+
+    public static final class MonsterTable {
+        public static final String NAME = "mosnters";
+
+        public static final class Cols implements BaseColumns {
+            public static final String UUID = "uuid";
+            public static final String NUM = "num";
+            public static final String NAME = "name";
+            public static final String AWAKENINGS = "awakenings";
+            public static final String LATENT_AWAKENINGS = "latents";
+            public static final String BASE_HP = "hp";
+            public static final String BASE_ATK = "atk";
+            public static final String BASE_RCV = "rcv";
+            public static final String BASE_INHERIT = "inherit";
+            public static final String ACTIVE_SKILL = "active";
+            public static final String LEADER_SKILL = "leader";
+        }
+    }
 }
