@@ -42,10 +42,21 @@ public class MonsterLab {
     }
 
     public void updateMonster(Monster monster) {
-
+        String whereClause = MonsterTable.Cols.UUID + " = ?";
+        String[] whereArgs = new String[] { monster.getId().toString() };
+        ContentValues values = getContentValues(monster);
+        mDatabase.update(
+                MonsterTable.NAME,
+                null,
+                whereClause,
+                whereArgs);
     }
 
     public void deleteMonster(Monster monster) {
+        String whereClause = MonsterTable.Cols.UUID + " = ?";
+        String[] whereArgs = new String[] { monster.getId().toString() };
+        ContentValues values = getContentValues(monster);
+        mDatabase.delete(MonsterTable.Cols.NAME, whereClause, whereArgs);
 
     }
 
