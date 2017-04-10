@@ -7,4 +7,6 @@
         android:icon="@drawable/ic_menu_add"
         android:title="@string/menu_new_team"
         app:showAsAction="ifRoom|withText"/>
+
+
 </menu>

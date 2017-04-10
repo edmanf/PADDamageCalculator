@@ -29,7 +29,7 @@ public class MonsterLab {
                 .getWritableDatabase();
     }
 
-    public MonsterLab get(Context context) {
+    public static MonsterLab get(Context context) {
         if (sMonsterLab == null) {
             sMonsterLab = new MonsterLab(context);
         }

@@ -1,0 +1,7 @@
+Monster icons
+    - Use codywatts tool to get all monster images
+    - Link them only in team page display
+
+Saving Monsters in teams
+    - Get editmonsterfragment to take a uuid arg
+    - retrieve and save updates in the database

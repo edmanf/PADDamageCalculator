@@ -82,6 +82,19 @@ public class TeamLab {
         }
     }
 
+    public void updateTeam(Team team) {
+        String whereClause = TeamTable.Cols.UUID + " = ?";
+        String[] whereArgs = new String[] { team.getId().toString() };
+        ContentValues values = getContentValues(team);
+        mDatabase.update(TeamTable.NAME, values, whereClause, whereArgs);
+    }
+
+    public void deleteTeam(Team team) {
+        String whereClause = TeamTable.Cols.UUID + " = ?";
+        String[] whereArgs = new String[] { team.getId().toString() };
+        mDatabase.delete(TeamTable.NAME, whereClause, whereArgs);
+    }
+
     /**
      * Returns a ContentValues for a team
      * @param team

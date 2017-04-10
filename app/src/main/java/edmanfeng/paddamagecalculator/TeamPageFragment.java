@@ -45,6 +45,8 @@ public class TeamPageFragment extends Fragment {
     private Spinner mComboShapeSpinner;
     private Team mTeam;
 
+    private boolean mNewTeam;
+
 
     public static TeamPageFragment newInstance(UUID uuid) {
         Bundle args = new Bundle();
@@ -64,9 +66,11 @@ public class TeamPageFragment extends Fragment {
         UUID uuid = (UUID) getArguments().getSerializable(ARG_TEAM_ID);
         if (uuid == null) {
             mTeam = new Team();
+            mNewTeam = true;
         } else {
             TeamLab teamLab = TeamLab.get(getActivity());
             mTeam = teamLab.getTeam(uuid);
+            mNewTeam = false;
         }
     }
 
@@ -126,21 +130,32 @@ public class TeamPageFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_save:
-                TeamLab teamLab = TeamLab.get(getActivity());
-                Team team = new Team();
-                Monster leader = new Monster();
-                leader.setName("A");
-                team.setLeader(leader);
-                Monster friend = new Monster();
-                friend.setName("B");
-                team.setFriend(friend);
-                ArrayList<Monster> subs = new ArrayList<>();
-                for (int i = 0; i < 4; i++) {
-                    team.setSub(i, new Monster());
+                if (mNewTeam) {
+                    TeamLab teamLab = TeamLab.get(getActivity());
+                    Team team = new Team();
+                    Monster leader = new Monster();
+                    leader.setName("A");
+                    team.setLeader(leader);
+                    Monster friend = new Monster();
+                    friend.setName("B");
+                    team.setFriend(friend);
+                    ArrayList<Monster> subs = new ArrayList<>();
+                    for (int i = 0; i < 4; i++) {
+                        team.setSub(i, new Monster());
+                    }
+                    teamLab.addTeam(team);
+                    mNewTeam = false;
+                    Log.i(TAG, "Adding team successful");
+                } else {
+                    TeamLab.get(getActivity()).updateTeam(mTeam);
                 }
-
-                teamLab.addTeam(team);
-                Log.i(TAG, "Adding team successful");
+                return true;
+            case R.id.menu_item_delete_team:
+                if (!mNewTeam) {
+                    TeamLab.get(getActivity()).deleteTeam(mTeam);
+                }
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
