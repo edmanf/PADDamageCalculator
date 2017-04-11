@@ -33,7 +33,7 @@ public class Monster {
     private int mNum;
 
     public Monster() {
-        this("Default", 0);
+        this(UUID.randomUUID(), "Default", 0, 0, 0, 0);
     }
 
     public Monster(String name) {
@@ -46,6 +46,10 @@ public class Monster {
 
     public Monster(String name, int num, int hp, int atk, int rcv) {
         this(UUID.randomUUID(), name, num, hp, atk, rcv);
+    }
+
+    public Monster(UUID id, String name, int hp, int atk, int rcv) {
+        this(id, name, 0, hp, atk, rcv);
     }
 
     public Monster(UUID uuid, String name, int num, int hp, int atk, int rcv) {
@@ -64,6 +68,10 @@ public class Monster {
 
     public UUID getId() {
         return mId;
+    }
+
+    public void setId(UUID id) {
+        mId = id;
     }
 
     public int getHp() {

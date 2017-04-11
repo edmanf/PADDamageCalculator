@@ -1,7 +1,15 @@
-Monster icons
-    - Use codywatts tool to get all monster images
-    - Link them only in team page display
 
 Saving Monsters in teams
-    - Get editmonsterfragment to take a uuid arg
-    - retrieve and save updates in the database
+    - Update the teamlist when needed
+    - fix problem with TPF and EMF showing diff values
+
+
+Monster icons
+    - Use codywatts tool to get all monster images as bc files
+    - Then use texture tool to turn them into png
+    - Link them only in team page display
+
+
+Dungeon Info
+    - https://github.com/ben-vonderhaar/PAD-Dungeon-Parser
+    - If I want it

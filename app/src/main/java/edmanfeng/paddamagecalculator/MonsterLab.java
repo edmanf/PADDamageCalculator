@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import edmanfeng.paddamagecalculator.database.PadDbSchema.MonsterTable;
  */
 
 public class MonsterLab {
+    private static final String TAG = "paddamagecalculator";
     private static MonsterLab sMonsterLab;
 
     private Context mContext;
@@ -39,6 +41,12 @@ public class MonsterLab {
     public void addMonster(Monster monster) {
         ContentValues contentValues = getContentValues(monster);
         mDatabase.insert(MonsterTable.NAME, null, contentValues);
+        Log.d(TAG, "MLab;" +
+                monster.getName() + ";" +
+                monster.getId() + ";" +
+                monster.getHp() + ";" +
+                monster.getAtk() + ";" +
+                monster.getRcv());
     }
 
     public void updateMonster(Monster monster) {
@@ -81,7 +89,6 @@ public class MonsterLab {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MonsterTable.Cols.UUID, monster.getId().toString());
         contentValues.put(MonsterTable.Cols.NAME, monster.getName());
-        contentValues.put(MonsterTable.Cols.NUM, monster.getNum());
         contentValues.put(MonsterTable.Cols.BASE_HP, monster.getHp());
         contentValues.put(MonsterTable.Cols.BASE_ATK, monster.getAtk());
         contentValues.put(MonsterTable.Cols.BASE_RCV, monster.getRcv());

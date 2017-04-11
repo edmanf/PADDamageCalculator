@@ -21,9 +21,8 @@ public class MonsterBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + MonsterTable.NAME + "(" +
-                " _id integer autoincrement primary key, " +
+                " _id integer primary key autoincrement, " +
                 MonsterTable.Cols.UUID + ", " +
-                MonsterTable.Cols.NUM + ", " +
                 MonsterTable.Cols.NAME + ", " +
                 MonsterTable.Cols.BASE_HP + ", " +
                 MonsterTable.Cols.BASE_ATK + ", " +

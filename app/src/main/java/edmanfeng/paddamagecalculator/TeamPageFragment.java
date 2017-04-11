@@ -166,6 +166,7 @@ public class TeamPageFragment extends Fragment {
     private class MonsterHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         private TextView mExampleText;
+        private Monster mMonster;
 
         public MonsterHolder(View itemView) {
             super(itemView);
@@ -176,15 +177,28 @@ public class TeamPageFragment extends Fragment {
 
         public void bindMonster(Monster monster) {
             if (monster == null) {
-                mExampleText.setText("NA");
+                mExampleText.setText("---");
             } else {
                 mExampleText.setText(monster.getName());
             }
+            mMonster = monster;
         }
 
         @Override
         public void onClick(View v) {
-            EditMonsterFragment fragment = EditMonsterFragment.newInstance();
+
+            if (mMonster == null) {
+                mMonster = new Monster();
+            }
+            EditMonsterFragment fragment =
+                    EditMonsterFragment.newInstance(mMonster.getId());
+
+            Log.d(TAG, "TPF;" +
+                    mMonster.getName() + ";" +
+                    mMonster.getId() + ";" +
+                    mMonster.getHp() + ";" +
+                    mMonster.getAtk() + ";" +
+                    mMonster.getRcv());
             FragmentManager fm = getActivity().getSupportFragmentManager();
             fm.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
