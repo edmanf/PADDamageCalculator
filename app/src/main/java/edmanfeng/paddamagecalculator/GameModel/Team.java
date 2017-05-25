@@ -10,19 +10,21 @@ import java.util.UUID;
 
 public class Team {
     private static final int DEFAULT_SUBS_SOLO = 4;
+    private static final int DEFAULT_TEAM_SIZE = 6;
 
     private UUID mId;
-    private Monster mLeader;
-    private Monster mFriend;
-    private Monster[] mSubs;
+    private Monster[] mMonsters;
     private int mBadge;
 
     public Team() {
         mId = UUID.randomUUID();
-        mLeader = null;
-        mFriend = null;
-        mSubs = new Monster[DEFAULT_SUBS_SOLO];
+        mMonsters = new Monster[DEFAULT_TEAM_SIZE];
         mBadge = Values.Badge.NONE;
+    }
+
+    public Team(UUID id, Monster[] monsters) {
+        mId = id;
+        mMonsters = monsters;
     }
 
     public UUID getId() {
@@ -34,35 +36,35 @@ public class Team {
     }
 
     public Monster getLeader() {
-        return mLeader;
+        return mMonsters[0];
     }
 
     public void setLeader(Monster leader) {
-        mLeader = leader;
+        mMonsters[0] = leader;
     }
 
     public Monster getFriend() {
-        return mFriend;
+        return mMonsters[5];
     }
 
     public void setFriend(Monster friend) {
-        mFriend = friend;
+        mMonsters[5] = friend;
     }
 
-    public Monster[] getSubs() {
-        return mSubs;
+    public Monster[] getMonsters() {
+        return mMonsters;
     }
 
-    public void setSubs(Monster[] subs) {
-        mSubs = subs;
+    public void setMonsters(Monster[] monsters) {
+        mMonsters = monsters;
     }
 
     public Monster getSub(int slot) {
-        return mSubs[slot];
+        return mMonsters[slot];
     }
 
     public void setSub(int slot, Monster sub) {
-        mSubs[slot] = sub;
+        mMonsters[slot] = sub;
     }
 
     public int getBadge() {
@@ -75,11 +77,18 @@ public class Team {
 
     public List<Monster> asList() {
         List<Monster> team = new ArrayList<>();
-        team.add(mLeader);
-        for (int i = 0; i < DEFAULT_SUBS_SOLO; i++) {
-            team.add(mSubs[i]);
+        for (int i = 0; i < DEFAULT_TEAM_SIZE; i++) {
+            team.add(mMonsters[i]);
         }
-        team.add(mFriend);
         return team;
+    }
+
+    public boolean isEmpty() {
+        for (Monster monster : mMonsters) {
+            if (monster != null) {
+                return false;
+            }
+        }
+        return true;
     }
 }

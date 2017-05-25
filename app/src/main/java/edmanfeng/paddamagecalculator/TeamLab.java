@@ -49,20 +49,21 @@ public class TeamLab {
     }
 
     public List<Team> getTeams() {
-        List<Team> team = new ArrayList<>();
+        List<Team> teams = new ArrayList<>();
         TeamCursorWrapper cursor = queryTeams(null, null);
+        MonsterLab ml = MonsterLab.get(mContext);
 
         try{
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                team.add(cursor.getTeam());
+                teams.add(makeTeamFromUUIDs(cursor.getTeamUUIDs()));
                 cursor.moveToNext();
             }
         } finally {
             cursor.close();
         }
-        Log.i(TAG, "Found teams: " + team.size());
-        return team;
+        Log.i(TAG, "Found teams: " + teams.size());
+        return teams;
     }
 
     public Team getTeam(UUID id) {
@@ -76,7 +77,7 @@ public class TeamLab {
             }
 
             cursor.moveToFirst();
-            return cursor.getTeam();
+            return makeTeamFromUUIDs(cursor.getTeamUUIDs());
         } finally {
             cursor.close();
         }
@@ -95,6 +96,17 @@ public class TeamLab {
         mDatabase.delete(TeamTable.NAME, whereClause, whereArgs);
     }
 
+    public Team makeTeamFromUUIDs(UUID[] uuids) {
+        MonsterLab ml = MonsterLab.get(mContext);
+
+        Team team = new Team();
+        team.setId(uuids[0]);
+        for (int i = 1; i < uuids.length; i++) {
+            team.setSub(i - 1, ml.getMonster(uuids[i - 1]));
+        }
+        return team;
+    }
+
     /**
      * Returns a ContentValues for a team
      * @param team
@@ -103,12 +115,12 @@ public class TeamLab {
     private static ContentValues getContentValues(Team team) {
         ContentValues values = new ContentValues();
         values.put(TeamTable.Cols.UUID, team.getId().toString());
-        values.put(TeamTable.Cols.LEADER, team.getLeader().getName());
-        values.put(TeamTable.Cols.SUB1, team.getSub(0).getName());
-        values.put(TeamTable.Cols.SUB2, team.getSub(1).getName());
-        values.put(TeamTable.Cols.SUB3, team.getSub(2).getName());
-        values.put(TeamTable.Cols.SUB4, team.getSub(3).getName());
-        values.put(TeamTable.Cols.FRIEND_LEADER, team.getFriend().getName());
+        values.put(TeamTable.Cols.LEADER, team.getLeader().getId().toString());
+        values.put(TeamTable.Cols.SUB1, team.getSub(0).getId().toString());
+        values.put(TeamTable.Cols.SUB2, team.getSub(1).getId().toString());
+        values.put(TeamTable.Cols.SUB3, team.getSub(2).getId().toString());
+        values.put(TeamTable.Cols.SUB4, team.getSub(3).getId().toString());
+        values.put(TeamTable.Cols.FRIEND_LEADER, team.getFriend().getId().toString());
         return values;
     }
 

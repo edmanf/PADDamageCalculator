@@ -24,9 +24,7 @@ public class MonsterBaseHelper extends SQLiteOpenHelper {
                 " _id integer primary key autoincrement, " +
                 MonsterTable.Cols.UUID + ", " +
                 MonsterTable.Cols.NAME + ", " +
-                MonsterTable.Cols.BASE_HP + ", " +
-                MonsterTable.Cols.BASE_ATK + ", " +
-                MonsterTable.Cols.BASE_RCV +
+                MonsterTable.Cols.NUM +
                 ")"
         );
     }

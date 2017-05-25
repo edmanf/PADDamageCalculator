@@ -1,9 +1,10 @@
 package edmanfeng.paddamagecalculator;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,15 +22,32 @@ import edmanfeng.paddamagecalculator.GameModel.Monster;
  */
 
 public class EditMonsterFragment extends Fragment {
+    public static final String EXTRA_UPDATE = "edmanfeng.paddamagecalculator.monsterupdate";
+    public static final String EXTRA_POSITION = "edmanfeng.paddamagecalculator.monsterposition";
+
     private static final String TAG = "paddamagecalculator";
-
     private static final String ARG_MONSTER_ID = "monster id";
+    private static final String ARG_MONSTER_POS = "monster pos";
 
-    private EditText mName;
-    private EditText mHp;
-    private EditText mAtk;
-    private EditText mRcv;
+    private EditText mNameEditTxt;
+    private EditText mHpEditText;
+    private EditText mAtkEditText;
+    private EditText mRcvEditText;
+    private EditText mNumEditText;
+
+
     private Monster mMonster;
+    private boolean mNewMonster;
+    private int mPos;
+
+    public static EditMonsterFragment newInstance(UUID id, int pos) {
+        EditMonsterFragment fragment = new EditMonsterFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MONSTER_ID, id);
+        args.putSerializable(ARG_MONSTER_POS, pos);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,33 +56,17 @@ public class EditMonsterFragment extends Fragment {
 
         Bundle args = getArguments();
         UUID id = (UUID) args.getSerializable(ARG_MONSTER_ID);
-        MonsterLab ml = MonsterLab.get(getActivity());
-        Monster monster = ml.getMonster(id);
-        if (monster != null) {
-            mMonster = monster;
-            mName.setText(mMonster.getName());
-            mHp.setText(mMonster.getHp());
-            mAtk.setText(mMonster.getAtk());
-            mRcv.setText(mMonster.getRcv());
-        } else {
+        mPos = args.getInt(ARG_MONSTER_POS);
+        if (id == null) {
             mMonster = new Monster();
-            mMonster.setId(id);
+            mNewMonster = true;
+        } else {
+            MonsterLab ml = MonsterLab.get(getActivity());
+            mMonster = ml.getMonster(id);
+            mNewMonster = false;
         }
-        Log.d(TAG, "EMF;" +
-                mMonster.getName() + ";" +
-                mMonster.getId() + ";" +
-                mMonster.getHp() + ";" +
-                mMonster.getAtk() + ";" +
-                mMonster.getRcv());
     }
 
-    public static EditMonsterFragment newInstance(UUID id) {
-        EditMonsterFragment fragment = new EditMonsterFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_MONSTER_ID, id);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
 
     @Nullable
@@ -72,17 +74,20 @@ public class EditMonsterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_monster, container, false);
 
-        mName = (EditText) v
+        mNameEditTxt = (EditText) v
                 .findViewById(R.id.monster_name_edit_text);
 
-        mHp = (EditText) v
+        mHpEditText = (EditText) v
                 .findViewById(R.id.monster_hp_edit_text);
 
-        mAtk = (EditText) v
+        mAtkEditText = (EditText) v
                 .findViewById(R.id.monster_atk_edit_text);
 
-        mRcv = (EditText) v
+        mRcvEditText = (EditText) v
                 .findViewById(R.id.monster_rcv_edit_text);
+
+        mNumEditText = (EditText) v
+                .findViewById(R.id.monster_id_edit_text);
 
         return v;
     }
@@ -97,16 +102,34 @@ public class EditMonsterFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_monster_save:
-                mMonster.setName(mName.getText().toString());
-                mMonster.setAtk(Integer.valueOf(mAtk.getText().toString()));
-                mMonster.setHp(Integer.valueOf(mHp.getText().toString()));
-                mMonster.setRcv(Integer.valueOf(mRcv.getText().toString()));
                 MonsterLab ml = MonsterLab.get(getActivity());
-                ml.addMonster(mMonster);
+                mMonster.setName(mNameEditTxt.getText().toString());
+                mMonster.setAtk(Integer.valueOf(mAtkEditText.getText().toString()));
+                mMonster.setHp(Integer.valueOf(mHpEditText.getText().toString()));
+                mMonster.setRcv(Integer.valueOf(mRcvEditText.getText().toString()));
+                mMonster.setNum(Integer.valueOf(mNumEditText.getText().toString()));
+                if (mNewMonster) {
+                    ml.addMonster(mMonster);
+                } else {
+                    ml.updateMonster(mMonster);
+                }
+                sendResult(Activity.RESULT_OK, true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    private void sendResult(int resultCode, boolean updated) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_UPDATE, mMonster.getId());
+        intent.putExtra(EXTRA_POSITION, mPos);
+
+        getTargetFragment()
+                .onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }

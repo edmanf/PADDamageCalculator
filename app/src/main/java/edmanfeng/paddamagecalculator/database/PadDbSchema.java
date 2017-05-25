@@ -26,7 +26,7 @@ public class PadDbSchema {
     }
 
     public static final class MonsterTable {
-        public static final String NAME = "mosnters";
+        public static final String NAME = "monsters";
 
         public static final class Cols implements BaseColumns {
             public static final String UUID = "uuid";

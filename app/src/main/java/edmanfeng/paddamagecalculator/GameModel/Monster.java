@@ -1,9 +1,5 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
-import android.widget.ArrayAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -16,10 +12,7 @@ public class Monster {
     private static final int MAX_AWAKENINGS = 9;
     private static final int MAX_LATENT_SLOTS = 6;
 
-
-
     private UUID mId;
-
     private int mHp;
     private int mAtk;
     private int mRcv;
@@ -28,28 +21,17 @@ public class Monster {
     private int[] mLatentAwakenings;
     private int[] mTypes;
     private int mRarity;
-
     private String mName;
     private int mNum;
 
     public Monster() {
-        this(UUID.randomUUID(), "Default", 0, 0, 0, 0);
+        this(UUID.randomUUID(), "NONE", 0);
     }
 
-    public Monster(String name) {
-        this(name, 0);
-    }
-
-    public Monster(String name, int num) {
-        this(name, num, 1, 1, 1);
-    }
-
-    public Monster(String name, int num, int hp, int atk, int rcv) {
-        this(UUID.randomUUID(), name, num, hp, atk, rcv);
-    }
-
-    public Monster(UUID id, String name, int hp, int atk, int rcv) {
-        this(id, name, 0, hp, atk, rcv);
+    public Monster(UUID id, String name, int num) {
+        mId = id;
+        mName = name;
+        mNum = num;
     }
 
     public Monster(UUID uuid, String name, int num, int hp, int atk, int rcv) {
@@ -185,6 +167,4 @@ public class Monster {
     public void setName(String name) {
         mName = name;
     }
-
-
 }

@@ -1,13 +1,12 @@
+Set save disabled 52517
+    - When there is nothing to save
+    - When no changes have been made
+
 
 Saving Monsters in teams
     - Update the teamlist when needed
     - fix problem with TPF and EMF showing diff values
 
-
-Monster icons
-    - Use codywatts tool to get all monster images as bc files
-    - Then use texture tool to turn them into png
-    - Link them only in team page display
 
 
 Dungeon Info

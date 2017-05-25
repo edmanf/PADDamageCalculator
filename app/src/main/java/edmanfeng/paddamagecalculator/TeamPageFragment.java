@@ -1,12 +1,15 @@
 package edmanfeng.paddamagecalculator;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,9 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.NumberPicker;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +35,19 @@ import edmanfeng.paddamagecalculator.GameModel.Team;
  */
 
 public class TeamPageFragment extends Fragment {
-    private static final String TAG = "paddamagecalculator";
+    private static final String TAG = "TeamPageFragment";
 
     private static final String ARG_TEAM_ID = "team_id";
+
+    private static final int REQUEST_MONSTER_UPDATE = 0;
+
+    private static final int VIEW_ITEMS_TO_DISPLAY = 6;
 
     private static final int MIN_ORBS = 1;
     private static final int MAX_ORBS = 42;
 
     private RecyclerView mTeamRecyclerView;
+    private RecyclerView.Adapter mTeamAdapter;
     private Spinner mComboTypeSpinner;
     private Spinner mComboOrbNumberSpinner;
     private Spinner mComboEnhanceNumberSpinner;
@@ -84,8 +93,11 @@ public class TeamPageFragment extends Fragment {
 
         mTeamRecyclerView = (RecyclerView)view
                 .findViewById(R.id.team_recycler_view);
+        mTeamRecyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mTeamRecyclerView.setAdapter(new MonsterAdapter(mTeam.asList()));
+
+        mTeamAdapter = new MonsterAdapter(mTeam.asList());
+        mTeamRecyclerView.setAdapter(mTeamAdapter);
 
         mComboTypeSpinner = (Spinner)view.findViewById(R.id.combo_type_spinner);
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
@@ -121,6 +133,22 @@ public class TeamPageFragment extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        Log.d(TAG, "Result got");
+        if (requestCode == REQUEST_MONSTER_UPDATE) {
+            UUID uuid = (UUID) data.getSerializableExtra(EditMonsterFragment.EXTRA_UPDATE);
+            int pos = data.getIntExtra(EditMonsterFragment.EXTRA_POSITION, -1);
+            MonsterLab ml = MonsterLab.get(getActivity());
+//            mTeam.setSub(pos, ml.getMonster(uuid));
+            //mTeamAdapter.notifyItemChanged(pos);
+            mTeamAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_team_page, menu);
@@ -130,24 +158,15 @@ public class TeamPageFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_save:
-                if (mNewTeam) {
-                    TeamLab teamLab = TeamLab.get(getActivity());
-                    Team team = new Team();
-                    Monster leader = new Monster();
-                    leader.setName("A");
-                    team.setLeader(leader);
-                    Monster friend = new Monster();
-                    friend.setName("B");
-                    team.setFriend(friend);
-                    ArrayList<Monster> subs = new ArrayList<>();
-                    for (int i = 0; i < 4; i++) {
-                        team.setSub(i, new Monster());
+                if (!mTeam.isEmpty()) {
+                    if (mNewTeam) {
+                        TeamLab teamLab = TeamLab.get(getActivity());
+                        teamLab.addTeam(mTeam);
+                        mNewTeam = false;
+                        Log.i(TAG, "Adding team successful");
+                    } else {
+                        TeamLab.get(getActivity()).updateTeam(mTeam);
                     }
-                    teamLab.addTeam(team);
-                    mNewTeam = false;
-                    Log.i(TAG, "Adding team successful");
-                } else {
-                    TeamLab.get(getActivity()).updateTeam(mTeam);
                 }
                 return true;
             case R.id.menu_item_delete_team:
@@ -163,47 +182,57 @@ public class TeamPageFragment extends Fragment {
     }
 
 
-    private class MonsterHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
-        private TextView mExampleText;
+    private class MonsterHolder extends RecyclerView.ViewHolder {
+        private ImageButton mMonsterImageButton;
         private Monster mMonster;
 
         public MonsterHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-            mExampleText = (TextView) itemView.findViewById(R.id.monster_item);
+            mMonsterImageButton = (ImageButton) itemView.findViewById(R.id.monster_item);
+            mMonsterImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    UUID id;
 
+                    if (mMonster == null) {
+                        id = null;
+                    } else {
+                        id = mMonster.getId();
+                    }
+                    EditMonsterFragment fragment = EditMonsterFragment.newInstance(id, position);
+
+                    fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
+            int width = mTeamRecyclerView.getMeasuredWidth();
+            mMonsterImageButton.getLayoutParams().width = width / VIEW_ITEMS_TO_DISPLAY;
+            mMonsterImageButton.getLayoutParams().height = width / VIEW_ITEMS_TO_DISPLAY;
         }
 
-        public void bindMonster(Monster monster) {
-            if (monster == null) {
-                mExampleText.setText("---");
-            } else {
-                mExampleText.setText(monster.getName());
-            }
+        public void bindMonster(Monster monster, int position) {
             mMonster = monster;
+
+            Uri uri = PictureUtils.getMonsterIconUri(mMonster);
+            Log.d(TAG, "Try to get icon at: " + uri.toString());
+            Glide.with(getFragmentManager().findFragmentById(R.id.fragment_container))
+                    .load(uri)
+                    .fitCenter()
+                    .into(mMonsterImageButton);
         }
 
-        @Override
-        public void onClick(View v) {
-
-            if (mMonster == null) {
-                mMonster = new Monster();
-            }
-            EditMonsterFragment fragment =
-                    EditMonsterFragment.newInstance(mMonster.getId());
-
-            Log.d(TAG, "TPF;" +
-                    mMonster.getName() + ";" +
-                    mMonster.getId() + ";" +
-                    mMonster.getHp() + ";" +
-                    mMonster.getAtk() + ";" +
-                    mMonster.getRcv());
-            FragmentManager fm = getActivity().getSupportFragmentManager();
-            fm.beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null)
-                    .commit();
+        private int getScreenWidth() {
+            DisplayMetrics metrics = new DisplayMetrics();
+            getActivity()
+                    .getWindowManager()
+                    .getDefaultDisplay()
+                    .getMetrics(metrics);
+            return metrics.widthPixels;
         }
     }
 
@@ -223,7 +252,7 @@ public class TeamPageFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(MonsterHolder holder, int position) {
-            holder.bindMonster(mMonsters.get(position));
+            holder.bindMonster(mMonsters.get(position), position);
         }
 
         @Override
