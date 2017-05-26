@@ -23,8 +23,10 @@ public class MonsterCursorWrapper extends CursorWrapper {
         String nameString = getString(getColumnIndex(MonsterTable.Cols.NAME));
         String numString = getString(getColumnIndex(MonsterTable.Cols.NUM));
 
+        int num = Integer.parseInt(numString);
+
         return new Monster(UUID.fromString(uuidString),
                 nameString,
-                Integer.getInteger(numString));
+                num);
     }
 }

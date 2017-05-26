@@ -40,6 +40,8 @@ public class PadDbSchema {
             public static final String BASE_INHERIT = "inherit";
             public static final String ACTIVE_SKILL = "active";
             public static final String LEADER_SKILL = "leader";
+            public static final String FROM_PADHERDER = "padherder";
+            public static final String PADHERDER_ACCOUNT = "padherder_user";
         }
     }
 }

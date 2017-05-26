@@ -25,7 +25,7 @@ public class EditMonsterFragment extends Fragment {
     public static final String EXTRA_UPDATE = "edmanfeng.paddamagecalculator.monsterupdate";
     public static final String EXTRA_POSITION = "edmanfeng.paddamagecalculator.monsterposition";
 
-    private static final String TAG = "paddamagecalculator";
+    private static final String TAG = "EditMonsterFragment";
     private static final String ARG_MONSTER_ID = "monster id";
     private static final String ARG_MONSTER_POS = "monster pos";
 
@@ -66,8 +66,6 @@ public class EditMonsterFragment extends Fragment {
             mNewMonster = false;
         }
     }
-
-
 
     @Nullable
     @Override

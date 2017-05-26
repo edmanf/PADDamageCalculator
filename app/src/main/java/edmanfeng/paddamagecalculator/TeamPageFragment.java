@@ -142,7 +142,7 @@ public class TeamPageFragment extends Fragment {
             UUID uuid = (UUID) data.getSerializableExtra(EditMonsterFragment.EXTRA_UPDATE);
             int pos = data.getIntExtra(EditMonsterFragment.EXTRA_POSITION, -1);
             MonsterLab ml = MonsterLab.get(getActivity());
-//            mTeam.setSub(pos, ml.getMonster(uuid));
+            mTeam.setSub(pos, ml.getMonster(uuid));
             //mTeamAdapter.notifyItemChanged(pos);
             mTeamAdapter.notifyDataSetChanged();
         }
