@@ -1,20 +1,28 @@
 <resources>
     <string name="app_name">PADDamageCalculator</string>
+
+    <!-- TeamListFragment -->
+    <string name="menu_new_team">New Team</string>
+    <string name="menu_accounts">Manage Accounts</string>
+
+    <!-- AccountManager -->
+    <string name="menu_add_account">Add account</string>
+    <string name="menu_remove_accounts">Remove accounts</string>
+    <string name="menu_sync_accounts">Sync</string>
+
+    <!-- AddAccountDialog -->
+    <string name="add_account_hint">Padherder username</string>
+    <string name="add_account_title">Add Padherder Account</string>
+    <string name="add_account_message">Add account</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="add_account_confirm_button">Add</string>
+
+    <!-- TeamPageFragment -->
     <string name="choose_orb_type_label">Orb type</string>
     <string name="choose_number_orbs_label"># orbs</string>
     <string name="choose_number_enhanced_label"># enhanced</string>
     <string name="choose_shape_label">Shape</string>
-    <string name="menu_new_team">New Team</string>
-    <string name="menu_save">Save</string>
-    <string name="edit_name">Name</string>
-    <string name="edit_hp">Hp</string>
-    <string name="edit_atk">Atk</string>
-    <string name="edit_rcv">Rcv</string>
-    <string name="edit_name_hint">Enter Name</string>
-    <string name="edit_hp_hint">Enter Hp</string>
-    <string name="edit_atk_hint">Enter Atk</string>
-    <string name="edit_rcv_hint">Enter Rcv</string>
-
+    <string name="menu_save_team">Save Team</string>
     <string-array name="orb_types">
         <item>Red</item>
         <item>Blue</item>
@@ -27,11 +35,23 @@
         <item>Mortal Poison</item>
         <item>Bomb</item>
     </string-array>
-
     <string-array name="combo_shape_types">
         <item name="blob">Blob</item>
         <item name="tpa">TPA</item>
         <item name="row">Row</item>
         <item name="cross">Cross</item>
     </string-array>
+
+    <!-- EditMonsterFragment -->
+    <string name="menu_save_monster">Save Monster</string>
+    <string name="edit_name">Name</string>
+    <string name="edit_hp">Hp</string>
+    <string name="edit_atk">Atk</string>
+    <string name="edit_rcv">Rcv</string>
+    <string name="edit_name_hint">Enter Name</string>
+    <string name="edit_hp_hint">Enter Hp</string>
+    <string name="edit_atk_hint">Enter Atk</string>
+    <string name="edit_rcv_hint">Enter Rcv</string>
+
+
 </resources>

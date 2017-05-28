@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menu_item_save"
         android:icon="@drawable/ic_menu_save"
-        android:title="@string/menu_save"
+        android:title="@string/menu_save_team"
         app:showAsAction="always|withText"/>
 
     <item

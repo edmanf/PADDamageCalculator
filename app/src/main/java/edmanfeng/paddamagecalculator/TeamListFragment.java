@@ -25,6 +25,8 @@ import edmanfeng.paddamagecalculator.database.TeamBaseHelper;
  */
 
 public class TeamListFragment extends Fragment {
+    private static final String TAG = "TeamListFragment";
+
 
     private RecyclerView mTeamRecyclerView;
     private TeamAdapter mAdapter;
@@ -47,6 +49,14 @@ public class TeamListFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
                 return true;
+            case R.id.menu_item_manage_accounts:
+                AccountSyncFragment fragment = AccountSyncFragment
+                        .newInstance();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
             default:
                 return super.onOptionsItemSelected(item);
         }

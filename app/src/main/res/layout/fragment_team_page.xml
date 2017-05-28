@@ -61,8 +61,8 @@
                 android:id="@+id/combo_enhance_number_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="@string/choose_number_enhanced_label"/>
+                android:text="@string/choose_number_enhanced_label"
+                tools:text="# enhanced"/>
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/combo_enhance_number_spinner"
                 android:layout_width="wrap_content"
@@ -79,7 +79,8 @@
                 android:id="@+id/combo_shape_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/choose_shape_label"/>
+                android:text="@string/choose_shape_label"
+                tools:text="Shape"/>
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/combo_shape_spinner"
                 android:layout_width="wrap_content"

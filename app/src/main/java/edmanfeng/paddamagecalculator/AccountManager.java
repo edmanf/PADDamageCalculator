@@ -67,6 +67,11 @@ public class AccountManager {
     }
 
     private static List<String> separateNames(String namesString) {
-        return Arrays.asList(namesString.split(DELIMITER));
+        if (namesString == null) {
+            return new ArrayList<String>();
+        }
+
+        // asList is fixed size, so make a new one
+        return new ArrayList<>(Arrays.asList(namesString.split(DELIMITER)));
     }
 }

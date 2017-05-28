@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sync_accounts"
+        android:title="@string/menu_sync_accounts"
+        android:icon="@drawable/ic_menu_account_sync"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_account_add"
+        android:title="@string/menu_add_account"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_account_remove"
+        android:title="@string/menu_remove_accounts"
+        app:showAsAction="never"/>
+
+</menu>
