@@ -1,8 +1,10 @@
 package edmanfeng.paddamagecalculator;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,34 +31,6 @@ public class AddAccountDialogFragment extends DialogFragment {
     public static AddAccountDialogFragment newInstance() {
         return new AddAccountDialogFragment();
     }
-    /*
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        builder.setView(inflater.inflate(R.layout.dialog_add_account, null))
-                .setPositiveButton(R.string.add_account_message, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Add account to shared preferences
-                        Log.i(TAG, "Adding account");
-
-                        AccountManager.addAccount();
-                    }
-                })
-
-                .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // cancel
-                        Log.i(TAG, "Cancel add account");
-                    }
-                });
-
-        return builder.create();
-    }*/
 
 
     @Nullable
@@ -74,7 +48,15 @@ public class AddAccountDialogFragment extends DialogFragment {
         mPositiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AccountManager.addAccount(mEditText.getText().toString(), getActivity());
+                String name = mEditText.getText().toString();
+                boolean added = AccountManager.addAccount(name, getActivity());
+                Log.d(TAG, "Result of adding " + name + ": " + added);
+                if (added) {
+                    sendResult(Activity.RESULT_OK);
+                } else {
+                    sendResult(Activity.RESULT_CANCELED);
+                }
+
                 getDialog().dismiss();
             }
         });
@@ -90,4 +72,17 @@ public class AddAccountDialogFragment extends DialogFragment {
 
         return v;
     }
+
+
+    private void sendResult(int resultCode) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+
+        Intent intent = new Intent();
+        getTargetFragment()
+                .onActivityResult(getTargetRequestCode(), resultCode, intent);
+    }
+
+
 }
