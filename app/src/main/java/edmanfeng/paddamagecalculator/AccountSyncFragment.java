@@ -1,5 +1,7 @@
 package edmanfeng.paddamagecalculator;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +28,7 @@ import java.util.List;
 public class AccountSyncFragment extends Fragment {
     private static final String TAG = "AccountSyncFragment";
     private static final String DIALOG_ADD_ACCOUNT = "AddAccountDialog";
+    private static final int REQUEST_ACCOUNT = 0;
 
     private RecyclerView mAccountsRecyclerView;
 
@@ -67,6 +70,7 @@ public class AccountSyncFragment extends Fragment {
             case R.id.menu_account_add:
                 AddAccountDialogFragment fragment = AddAccountDialogFragment
                         .newInstance();
+                fragment.setTargetFragment(this, REQUEST_ACCOUNT);
                 fragment.show(getActivity().getSupportFragmentManager(),
                         DIALOG_ADD_ACCOUNT);
             case R.id.menu_account_remove:
@@ -76,7 +80,15 @@ public class AccountSyncFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            if (requestCode == REQUEST_ACCOUNT) {
+                // new background thread for downloading
+            }
+        }
     }
 
     private class AccountHolder extends RecyclerView.ViewHolder {

@@ -32,11 +32,15 @@ public class AccountManager {
      * @param name Name of the account
      * @param context Context to get the SharedPreferences from
      */
-    public static void addAccount(String name, Context context) {
+    public static boolean addAccount(String name, Context context) {
         List<String> names = getAccountNames(context);
+        if (names.contains(name)) {
+            return false;
+        }
         names.add(name);
         String prefString = getPrefString(names);
         updatePreferences(prefString, context);
+        return true;
     }
 
     /**
