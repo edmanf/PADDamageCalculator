@@ -4,14 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.database.MonsterBaseHelper;
 import edmanfeng.paddamagecalculator.database.MonsterCursorWrapper;
-import edmanfeng.paddamagecalculator.database.PadDbSchema;
 import edmanfeng.paddamagecalculator.database.PadDbSchema.MonsterTable;
 
 /**
@@ -19,14 +17,12 @@ import edmanfeng.paddamagecalculator.database.PadDbSchema.MonsterTable;
  */
 
 public class MonsterLab {
-    private static final String TAG = "paddamagecalculator";
+    private static final String TAG = "MonsterLab";
     private static MonsterLab sMonsterLab;
 
-    private Context mContext;
     private SQLiteDatabase mDatabase;
 
     private MonsterLab(Context context) {
-        mContext = context;
         mDatabase = new MonsterBaseHelper(context)
                 .getWritableDatabase();
     }
