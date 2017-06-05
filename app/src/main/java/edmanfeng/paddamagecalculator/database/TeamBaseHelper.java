@@ -22,7 +22,8 @@ public class TeamBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TeamTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
-                TeamTable.Cols.UUID + ", " +
+                TeamTable.Cols.ID + ", " +
+                TeamTable.Cols.OWNER + ", " +
                 TeamTable.Cols.LEADER + ", " +
                 TeamTable.Cols.SUB1 + ", " +
                 TeamTable.Cols.SUB2 + ", " +

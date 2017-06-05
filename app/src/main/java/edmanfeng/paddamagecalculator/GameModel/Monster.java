@@ -12,7 +12,8 @@ public class Monster {
     private static final int MAX_AWAKENINGS = 9;
     private static final int MAX_LATENT_SLOTS = 6;
 
-    private UUID mId;
+    private String mId;
+    private String mOwner;
     private int mHp;
     private int mAtk;
     private int mRcv;
@@ -25,35 +26,51 @@ public class Monster {
     private int mNum;
 
     public Monster() {
-        this(UUID.randomUUID(), "NONE", 0);
+        this(UUID.randomUUID().toString(), Values.LOCAL, "CUSTOM", 0, 0, 0, 0);
     }
 
-    public Monster(UUID id, String name, int num) {
-        mId = id;
-        mName = name;
-        mNum = num;
-    }
-
-    public Monster(UUID uuid, String name, int num, int hp, int atk, int rcv) {
+    public Monster(String uuid, String owner, String name,
+                   int num, int hp, int atk, int rcv) {
         this.mId = uuid;
+        mOwner = owner;
         this.mName = name;
         this.mNum = num;
         this.mHp = hp;
         this.mAtk = atk;
         this.mRcv = rcv;
-        this.mAttributes = new int[MAX_ATTRIBUTES];
-        this.mAwakenings = new int[MAX_AWAKENINGS];
-        this.mLatentAwakenings = new int[MAX_LATENT_SLOTS];
-        this.mTypes = new int[MAX_TYPES];
     }
 
 
-    public UUID getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         mId = id;
+    }
+
+    public String getOwner() {
+        return mOwner;
+    }
+
+    public void setOwner(String owner) {
+        mOwner = owner;
+    }
+
+    public int getNum() {
+        return mNum;
+    }
+
+    public void setNum(int num) {
+        mNum = num;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 
     public int getHp() {
@@ -152,19 +169,4 @@ public class Monster {
         mRarity = rarity;
     }
 
-    public int getNum() {
-        return mNum;
-    }
-
-    public void setNum(int num) {
-        mNum = num;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
 }

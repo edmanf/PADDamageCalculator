@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.UUID;
-
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.database.MonsterBaseHelper;
 import edmanfeng.paddamagecalculator.database.MonsterCursorWrapper;
@@ -40,7 +38,7 @@ public class MonsterLab {
     }
 
     public void updateMonster(Monster monster) {
-        String whereClause = MonsterTable.Cols.UUID + " = ?";
+        String whereClause = MonsterTable.Cols.ID + " = ?";
         String[] whereArgs = new String[] { monster.getId().toString() };
         ContentValues values = getContentValues(monster);
         mDatabase.update(
@@ -51,16 +49,16 @@ public class MonsterLab {
     }
 
     public void deleteMonster(Monster monster) {
-        String whereClause = MonsterTable.Cols.UUID + " = ?";
+        String whereClause = MonsterTable.Cols.ID + " = ?";
         String[] whereArgs = new String[] { monster.getId().toString() };
         ContentValues values = getContentValues(monster);
         mDatabase.delete(MonsterTable.Cols.NAME, whereClause, whereArgs);
 
     }
 
-    public Monster getMonster(UUID uuid) {
-        String query = MonsterTable.Cols.UUID + " = ?";
-        String[] args = new String[] { uuid.toString() };
+    public Monster getMonster(String id) {
+        String query = MonsterTable.Cols.ID + " = ?";
+        String[] args = new String[] { id };
 
         MonsterCursorWrapper cursor = queryMonsters(query, args);
         try {
@@ -77,7 +75,7 @@ public class MonsterLab {
 
     public ContentValues getContentValues(Monster monster) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MonsterTable.Cols.UUID, monster.getId().toString());
+        contentValues.put(MonsterTable.Cols.ID, monster.getId().toString());
         contentValues.put(MonsterTable.Cols.NAME, monster.getName());
         contentValues.put(MonsterTable.Cols.NUM, monster.getNum());
 

@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Team;
-import edmanfeng.paddamagecalculator.database.PadDbSchema;
 import edmanfeng.paddamagecalculator.database.PadDbSchema.TeamTable;
 import edmanfeng.paddamagecalculator.database.TeamBaseHelper;
 import edmanfeng.paddamagecalculator.database.TeamCursorWrapper;
@@ -56,7 +54,7 @@ public class TeamLab {
         try{
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                teams.add(makeTeamFromUUIDs(cursor.getTeamUUIDs()));
+                teams.add(cursor.getTeam(mContext));
                 cursor.moveToNext();
             }
         } finally {
@@ -67,7 +65,7 @@ public class TeamLab {
     }
 
     public Team getTeam(UUID id) {
-        String whereClause = TeamTable.Cols.UUID + " = ?";
+        String whereClause = TeamTable.Cols.ID + " = ?";
         String[] whereArgs= new String[] { id.toString() };
         TeamCursorWrapper cursor = queryTeams(whereClause, whereArgs);
 
@@ -77,34 +75,23 @@ public class TeamLab {
             }
 
             cursor.moveToFirst();
-            return makeTeamFromUUIDs(cursor.getTeamUUIDs());
+            return cursor.getTeam(mContext);
         } finally {
             cursor.close();
         }
     }
 
     public void updateTeam(Team team) {
-        String whereClause = TeamTable.Cols.UUID + " = ?";
+        String whereClause = TeamTable.Cols.ID + " = ?";
         String[] whereArgs = new String[] { team.getId().toString() };
         ContentValues values = getContentValues(team);
         mDatabase.update(TeamTable.NAME, values, whereClause, whereArgs);
     }
 
     public void deleteTeam(Team team) {
-        String whereClause = TeamTable.Cols.UUID + " = ?";
+        String whereClause = TeamTable.Cols.ID + " = ?";
         String[] whereArgs = new String[] { team.getId().toString() };
         mDatabase.delete(TeamTable.NAME, whereClause, whereArgs);
-    }
-
-    public Team makeTeamFromUUIDs(UUID[] uuids) {
-        MonsterLab ml = MonsterLab.get(mContext);
-
-        Team team = new Team();
-        team.setId(uuids[0]);
-        for (int i = 1; i < uuids.length; i++) {
-            team.setSub(i - 1, ml.getMonster(uuids[i - 1]));
-        }
-        return team;
     }
 
     /**
@@ -114,7 +101,7 @@ public class TeamLab {
      */
     private static ContentValues getContentValues(Team team) {
         ContentValues values = new ContentValues();
-        values.put(TeamTable.Cols.UUID, team.getId().toString());
+        values.put(TeamTable.Cols.ID, team.getId().toString());
         values.put(TeamTable.Cols.LEADER, team.getLeader().getId().toString());
         values.put(TeamTable.Cols.SUB1, team.getSub(0).getId().toString());
         values.put(TeamTable.Cols.SUB2, team.getSub(1).getId().toString());

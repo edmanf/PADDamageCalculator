@@ -19,14 +19,19 @@ public class MonsterCursorWrapper extends CursorWrapper {
     }
 
     public Monster getMonster() {
-        String uuidString = getString(getColumnIndex(MonsterTable.Cols.UUID));
-        String nameString = getString(getColumnIndex(MonsterTable.Cols.NAME));
+        String id = getString(getColumnIndex(MonsterTable.Cols.ID));
+        String owner = getString(getColumnIndex(MonsterTable.Cols.OWNER));
+        String name = getString(getColumnIndex(MonsterTable.Cols.NAME));
         String numString = getString(getColumnIndex(MonsterTable.Cols.NUM));
+        String hpString = getString(getColumnIndex(MonsterTable.Cols.BASE_HP));
+        String atkString = getString(getColumnIndex(MonsterTable.Cols.BASE_ATK));
+        String rcvString = getString(getColumnIndex(MonsterTable.Cols.BASE_RCV));
 
         int num = Integer.parseInt(numString);
+        int hp = Integer.parseInt(hpString);
+        int atk = Integer.parseInt(atkString);
+        int rcv = Integer.parseInt(rcvString);
 
-        return new Monster(UUID.fromString(uuidString),
-                nameString,
-                num);
+        return new Monster(id, owner, name, num, hp, atk, rcv);
     }
 }

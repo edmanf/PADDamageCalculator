@@ -12,27 +12,38 @@ public class Team {
     private static final int DEFAULT_SUBS_SOLO = 4;
     private static final int DEFAULT_TEAM_SIZE = 6;
 
-    private UUID mId;
+    /**
+     * Id of team. Either team name from padherder or ID if local.
+     */
+    private String mId;
+    private String mOwner;
     private Monster[] mMonsters;
-    private int mBadge;
 
     public Team() {
-        mId = UUID.randomUUID();
+        mId = UUID.randomUUID().toString();
         mMonsters = new Monster[DEFAULT_TEAM_SIZE];
-        mBadge = Values.Badge.NONE;
     }
 
-    public Team(UUID id, Monster[] monsters) {
+    public Team(String id, String owner, Monster[] monsters) {
         mId = id;
+        mOwner = owner;
         mMonsters = monsters;
     }
 
-    public UUID getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         mId = id;
+    }
+
+    public String getOwner() {
+        return mOwner;
+    }
+
+    public void setOwner(String owner) {
+        mOwner = owner;
     }
 
     public Monster getLeader() {
@@ -65,14 +76,6 @@ public class Team {
 
     public void setSub(int slot, Monster sub) {
         mMonsters[slot] = sub;
-    }
-
-    public int getBadge() {
-        return mBadge;
-    }
-
-    public void setBadge(int badge) {
-        mBadge = badge;
     }
 
     public List<Monster> asList() {

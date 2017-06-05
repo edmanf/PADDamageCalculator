@@ -17,10 +17,6 @@ import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 
-/**
- * Created by t7500 on 4/6/2017.
- */
-
 public class EditMonsterFragment extends Fragment {
     public static final String EXTRA_UPDATE = "edmanfeng.paddamagecalculator.monsterupdate";
     public static final String EXTRA_POSITION = "edmanfeng.paddamagecalculator.monsterposition";
@@ -40,11 +36,11 @@ public class EditMonsterFragment extends Fragment {
     private boolean mNewMonster;
     private int mPos;
 
-    public static EditMonsterFragment newInstance(UUID id, int pos) {
+    public static EditMonsterFragment newInstance(String id, int pos) {
         EditMonsterFragment fragment = new EditMonsterFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_MONSTER_ID, id);
-        args.putSerializable(ARG_MONSTER_POS, pos);
+        args.putString(ARG_MONSTER_ID, id);
+        args.putInt(ARG_MONSTER_POS, pos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +51,7 @@ public class EditMonsterFragment extends Fragment {
         setHasOptionsMenu(true);
 
         Bundle args = getArguments();
-        UUID id = (UUID) args.getSerializable(ARG_MONSTER_ID);
+        String id = args.getString(ARG_MONSTER_ID);
         mPos = args.getInt(ARG_MONSTER_POS);
         if (id == null) {
             mMonster = new Monster();

@@ -7,6 +7,16 @@ import java.math.BigDecimal;
  */
 
 public class Values {
+
+    /**
+     * ID used to identify monsters and teams owned locally,
+     * not by a synced padherder account. Padherder does not allow
+     * "~" in its usernames.
+     */
+    public static final String LOCAL = "~~LOCAL~~";
+
+    public static final int SOLO_TEAM_SIZE = 6;
+
     public static final class Attribute {
         public static final int NONE = -1;
         public static final int FIRE = 0;

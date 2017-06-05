@@ -139,10 +139,10 @@ public class TeamPageFragment extends Fragment {
         }
         Log.d(TAG, "Result got");
         if (requestCode == REQUEST_MONSTER_UPDATE) {
-            UUID uuid = (UUID) data.getSerializableExtra(EditMonsterFragment.EXTRA_UPDATE);
+            String id = data.getStringExtra(EditMonsterFragment.EXTRA_UPDATE);
             int pos = data.getIntExtra(EditMonsterFragment.EXTRA_POSITION, -1);
             MonsterLab ml = MonsterLab.get(getActivity());
-            Monster monster = ml.getMonster(uuid);
+            Monster monster = ml.getMonster(id);
             mTeam.setSub(pos, monster);
             //mTeamAdapter.notifyItemChanged(pos);
 
@@ -197,14 +197,15 @@ public class TeamPageFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    UUID id;
+                    String id;
 
                     if (mMonster == null) {
                         id = null;
                     } else {
                         id = mMonster.getId();
                     }
-                    EditMonsterFragment fragment = EditMonsterFragment.newInstance(id, position);
+                    EditMonsterFragment fragment = EditMonsterFragment
+                            .newInstance(id, position);
 
                     fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
                     FragmentManager fm = getActivity().getSupportFragmentManager();

@@ -22,9 +22,13 @@ public class MonsterBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + MonsterTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
-                MonsterTable.Cols.UUID + ", " +
+                MonsterTable.Cols.ID + ", " +
+                MonsterTable.Cols.OWNER + ", " +
                 MonsterTable.Cols.NAME + ", " +
-                MonsterTable.Cols.NUM +
+                MonsterTable.Cols.NUM + ", " +
+                MonsterTable.Cols.BASE_HP + ", " +
+                MonsterTable.Cols.BASE_ATK + ", " +
+                MonsterTable.Cols.BASE_RCV +
                 ")"
         );
     }
