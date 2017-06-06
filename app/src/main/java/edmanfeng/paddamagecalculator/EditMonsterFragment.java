@@ -85,7 +85,18 @@ public class EditMonsterFragment extends Fragment {
         mNumEditText = (EditText) v
                 .findViewById(R.id.monster_id_edit_text);
 
+        setDisplay();
         return v;
+    }
+
+    private void setDisplay() {
+        if (!mNewMonster) {
+            mNumEditText.setText(Integer.toString(mMonster.getNum()));
+            mNameEditTxt.setText(mMonster.getName());
+            mHpEditText.setText(Integer.toString(mMonster.getHp()));
+            mAtkEditText.setText(Integer.toString(mMonster.getAtk()));
+            mRcvEditText.setText(Integer.toString(mMonster.getRcv()));
+        }
     }
 
     @Override
