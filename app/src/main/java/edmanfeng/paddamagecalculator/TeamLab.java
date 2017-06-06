@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Team;
+import edmanfeng.paddamagecalculator.GameModel.Values;
 import edmanfeng.paddamagecalculator.database.PadDbSchema.TeamTable;
 import edmanfeng.paddamagecalculator.database.TeamBaseHelper;
 import edmanfeng.paddamagecalculator.database.TeamCursorWrapper;
@@ -49,7 +51,6 @@ public class TeamLab {
     public List<Team> getTeams() {
         List<Team> teams = new ArrayList<>();
         TeamCursorWrapper cursor = queryTeams(null, null);
-        MonsterLab ml = MonsterLab.get(mContext);
 
         try{
             cursor.moveToFirst();
@@ -64,7 +65,7 @@ public class TeamLab {
         return teams;
     }
 
-    public Team getTeam(UUID id) {
+    public Team getTeam(String id) {
         String whereClause = TeamTable.Cols.ID + " = ?";
         String[] whereArgs= new String[] { id.toString() };
         TeamCursorWrapper cursor = queryTeams(whereClause, whereArgs);
@@ -100,15 +101,28 @@ public class TeamLab {
      * @return
      */
     private static ContentValues getContentValues(Team team) {
-        ContentValues values = new ContentValues();
-        values.put(TeamTable.Cols.ID, team.getId().toString());
-        values.put(TeamTable.Cols.LEADER, team.getLeader().getId().toString());
-        values.put(TeamTable.Cols.SUB1, team.getSub(0).getId().toString());
-        values.put(TeamTable.Cols.SUB2, team.getSub(1).getId().toString());
-        values.put(TeamTable.Cols.SUB3, team.getSub(2).getId().toString());
-        values.put(TeamTable.Cols.SUB4, team.getSub(3).getId().toString());
-        values.put(TeamTable.Cols.FRIEND_LEADER, team.getFriend().getId().toString());
-        return values;
+        if (team == null) {
+            return null;
+        }
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TeamTable.Cols.ID, team.getId().toString());
+
+        String[] ids = new String[Values.SOLO_TEAM_SIZE];
+        for (int i = 0; i < ids.length; i++) {
+            Monster monster = team.get(i);
+            if (monster == null) {
+                ids[i] = Values.NO_MONSTER_ID;
+            } else {
+                ids[i] = monster.getId();
+            }
+        }
+        contentValues.put(TeamTable.Cols.LEADER, ids[0]);
+        contentValues.put(TeamTable.Cols.SUB1, ids[1]);
+        contentValues.put(TeamTable.Cols.SUB2, ids[2]);
+        contentValues.put(TeamTable.Cols.SUB3, ids[3]);
+        contentValues.put(TeamTable.Cols.SUB4, ids[4]);
+        contentValues.put(TeamTable.Cols.FRIEND_LEADER, ids[5]);
+        return contentValues;
     }
 
     private TeamCursorWrapper queryTeams(String whereClause, String[] whereArgs) {

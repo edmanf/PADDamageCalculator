@@ -39,7 +39,7 @@ public class MonsterLab {
 
     public void updateMonster(Monster monster) {
         String whereClause = MonsterTable.Cols.ID + " = ?";
-        String[] whereArgs = new String[] { monster.getId().toString() };
+        String[] whereArgs = new String[] { monster.getId() };
         ContentValues values = getContentValues(monster);
         mDatabase.update(
                 MonsterTable.NAME,
@@ -50,7 +50,7 @@ public class MonsterLab {
 
     public void deleteMonster(Monster monster) {
         String whereClause = MonsterTable.Cols.ID + " = ?";
-        String[] whereArgs = new String[] { monster.getId().toString() };
+        String[] whereArgs = new String[] { monster.getId() };
         ContentValues values = getContentValues(monster);
         mDatabase.delete(MonsterTable.Cols.NAME, whereClause, whereArgs);
 
@@ -75,10 +75,14 @@ public class MonsterLab {
 
     public ContentValues getContentValues(Monster monster) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MonsterTable.Cols.ID, monster.getId().toString());
+        contentValues.put(MonsterTable.Cols.ID, monster.getId());
+        contentValues.put(MonsterTable.Cols.OWNER, monster.getOwner());
         contentValues.put(MonsterTable.Cols.NAME, monster.getName());
         contentValues.put(MonsterTable.Cols.NUM, monster.getNum());
 
+        contentValues.put(MonsterTable.Cols.BASE_HP, monster.getHp());
+        contentValues.put(MonsterTable.Cols.BASE_ATK, monster.getAtk());
+        contentValues.put(MonsterTable.Cols.BASE_RCV, monster.getRcv());
         return contentValues;
     }
 

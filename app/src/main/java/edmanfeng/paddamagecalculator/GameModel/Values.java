@@ -15,6 +15,8 @@ public class Values {
      */
     public static final String LOCAL = "~~LOCAL~~";
 
+    public static final String NO_MONSTER_ID = "";
+
     public static final int SOLO_TEAM_SIZE = 6;
 
     public static final class Attribute {

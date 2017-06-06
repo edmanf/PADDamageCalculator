@@ -57,9 +57,9 @@ public class TeamPageFragment extends Fragment {
     private boolean mNewTeam;
 
 
-    public static TeamPageFragment newInstance(UUID uuid) {
+    public static TeamPageFragment newInstance(String id) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_TEAM_ID, uuid);
+        args.putString(ARG_TEAM_ID, id);
 
         TeamPageFragment fragment = new TeamPageFragment();
         fragment.setArguments(args);
@@ -72,13 +72,13 @@ public class TeamPageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        UUID uuid = (UUID) getArguments().getSerializable(ARG_TEAM_ID);
-        if (uuid == null) {
+        String id = getArguments().getString(ARG_TEAM_ID);
+        if (id == null) {
             mTeam = new Team();
             mNewTeam = true;
         } else {
             TeamLab teamLab = TeamLab.get(getActivity());
-            mTeam = teamLab.getTeam(uuid);
+            mTeam = teamLab.getTeam(id);
             mNewTeam = false;
         }
     }
@@ -143,11 +143,11 @@ public class TeamPageFragment extends Fragment {
             int pos = data.getIntExtra(EditMonsterFragment.EXTRA_POSITION, -1);
             MonsterLab ml = MonsterLab.get(getActivity());
             Monster monster = ml.getMonster(id);
-            mTeam.setSub(pos, monster);
+            mTeam.set(pos, monster);
             //mTeamAdapter.notifyItemChanged(pos);
 
 //            monster = FirebaseUtility.getMonster(monster.getNum());
-  //          mTeam.setSub(pos, monster);
+  //          mTeam.set(pos, monster);
             mTeamAdapter.notifyDataSetChanged();
         }
     }

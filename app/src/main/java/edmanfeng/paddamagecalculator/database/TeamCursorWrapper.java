@@ -22,23 +22,6 @@ public class TeamCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public UUID[] getTeamUUIDs() {
-        String owner = getString(getColumnIndex(TeamTable.Cols.OWNER));
-        String[] teamUUIDStrings = {getString(getColumnIndex(TeamTable.Cols.ID)),
-                getString(getColumnIndex(TeamTable.Cols.LEADER)),
-                getString(getColumnIndex(TeamTable.Cols.SUB1)),
-                getString(getColumnIndex(TeamTable.Cols.SUB2)),
-                getString(getColumnIndex(TeamTable.Cols.SUB3)),
-                getString(getColumnIndex(TeamTable.Cols.SUB4)),
-                getString(getColumnIndex(TeamTable.Cols.FRIEND_LEADER))};
-
-        UUID[] teamUUIDs = new UUID[teamUUIDStrings.length];
-        for (int i = 0; i < teamUUIDStrings.length; i++) {
-            teamUUIDs[i] = UUID.fromString(teamUUIDStrings[i]);
-        }
-        return teamUUIDs;
-    }
-
     public Team getTeam(Context context) {
         MonsterLab ml = MonsterLab.get(context);
         String owner = getString(getColumnIndex(TeamTable.Cols.OWNER));

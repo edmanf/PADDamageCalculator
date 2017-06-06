@@ -21,7 +21,7 @@ public class Team {
 
     public Team() {
         mId = UUID.randomUUID().toString();
-        mMonsters = new Monster[DEFAULT_TEAM_SIZE];
+        mMonsters = new Monster[Values.SOLO_TEAM_SIZE];
     }
 
     public Team(String id, String owner, Monster[] monsters) {
@@ -55,11 +55,11 @@ public class Team {
     }
 
     public Monster getFriend() {
-        return mMonsters[5];
+        return mMonsters[Values.SOLO_TEAM_SIZE - 1];
     }
 
     public void setFriend(Monster friend) {
-        mMonsters[5] = friend;
+        mMonsters[Values.SOLO_TEAM_SIZE - 1] = friend;
     }
 
     public Monster[] getMonsters() {
@@ -70,11 +70,11 @@ public class Team {
         mMonsters = monsters;
     }
 
-    public Monster getSub(int slot) {
+    public Monster get(int slot) {
         return mMonsters[slot];
     }
 
-    public void setSub(int slot, Monster sub) {
+    public void set(int slot, Monster sub) {
         mMonsters[slot] = sub;
     }
 
