@@ -42,6 +42,10 @@
         <item name="cross">Cross</item>
     </string-array>
 
+    <!-- MonsterSearchFragment -->
+    <string name="monster_search_title_text">Saved Monsters</string>
+    <string name="new_monster_button_text">New Monster</string>
+
     <!-- EditMonsterFragment -->
     <string name="menu_save_monster">Save Monster</string>
     <string name="edit_name">Name</string>
