@@ -1,12 +1,13 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
  * Created by t7500 on 2/25/2017.
  */
 
-public class Monster {
+public class Monster implements SortedListAdapter.ViewModel {
     private static final int MAX_ATTRIBUTES = 2;
     private static final int MAX_TYPES = 3;
     private static final int MAX_AWAKENINGS = 9;
@@ -169,4 +170,42 @@ public class Monster {
         mRarity = rarity;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Monster monster = (Monster) o;
+
+        if (mHp != monster.mHp) return false;
+        if (mAtk != monster.mAtk) return false;
+        if (mRcv != monster.mRcv) return false;
+        if (mRarity != monster.mRarity) return false;
+        if (mNum != monster.mNum) return false;
+        if (mId != null ? !mId.equals(monster.mId) : monster.mId != null) return false;
+        if (mOwner != null ? !mOwner.equals(monster.mOwner) : monster.mOwner != null) return false;
+        if (!Arrays.equals(mAttributes, monster.mAttributes)) return false;
+        if (!Arrays.equals(mAwakenings, monster.mAwakenings)) return false;
+        if (!Arrays.equals(mLatentAwakenings, monster.mLatentAwakenings)) return false;
+        if (!Arrays.equals(mTypes, monster.mTypes)) return false;
+        return mName != null ? mName.equals(monster.mName) : monster.mName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mId != null ? mId.hashCode() : 0;
+        result = 31 * result + (mOwner != null ? mOwner.hashCode() : 0);
+        result = 31 * result + mHp;
+        result = 31 * result + mAtk;
+        result = 31 * result + mRcv;
+        result = 31 * result + Arrays.hashCode(mAttributes);
+        result = 31 * result + Arrays.hashCode(mAwakenings);
+        result = 31 * result + Arrays.hashCode(mLatentAwakenings);
+        result = 31 * result + Arrays.hashCode(mTypes);
+        result = 31 * result + mRarity;
+        result = 31 * result + (mName != null ? mName.hashCode() : 0);
+        result = 31 * result + mNum;
+        return result;
+    }
 }
