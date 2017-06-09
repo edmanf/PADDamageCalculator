@@ -223,6 +223,7 @@ public class TeamPageFragment extends Fragment {
 
                 }
             });
+            // Set the layout params so that things will fit in one screen
             int width = mTeamRecyclerView.getMeasuredWidth();
             mMonsterImageButton.getLayoutParams().width = width / VIEW_ITEMS_TO_DISPLAY;
             mMonsterImageButton.getLayoutParams().height = width / VIEW_ITEMS_TO_DISPLAY;
