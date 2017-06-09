@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.database.MonsterBaseHelper;
@@ -73,6 +77,23 @@ public class MonsterLab {
         }
     }
 
+    public List<Monster> getMonsters() {
+        List<Monster> monsters = new ArrayList<>();
+        MonsterCursorWrapper cursor = queryMonsters(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                monsters.add(cursor.getMonster());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        Log.i(TAG, "Found monsters: " + monsters.size());
+        return monsters;
+    }
+
     public ContentValues getContentValues(Monster monster) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MonsterTable.Cols.ID, monster.getId());
@@ -98,5 +119,6 @@ public class MonsterLab {
         );
         return new MonsterCursorWrapper(cursor);
     }
+
 
 }

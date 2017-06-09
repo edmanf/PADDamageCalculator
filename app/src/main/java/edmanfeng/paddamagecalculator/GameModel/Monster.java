@@ -7,7 +7,7 @@ import java.util.UUID;
  * Created by t7500 on 2/25/2017.
  */
 
-public class Monster implements SortedListAdapter.ViewModel {
+public class Monster {
     private static final int MAX_ATTRIBUTES = 2;
     private static final int MAX_TYPES = 3;
     private static final int MAX_AWAKENINGS = 9;
@@ -208,4 +208,6 @@ public class Monster implements SortedListAdapter.ViewModel {
         result = 31 * result + mNum;
         return result;
     }
+
+
 }

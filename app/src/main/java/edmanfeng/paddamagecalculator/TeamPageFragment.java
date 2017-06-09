@@ -40,6 +40,7 @@ public class TeamPageFragment extends Fragment {
     private static final String ARG_TEAM_ID = "team_id";
 
     private static final int REQUEST_MONSTER_UPDATE = 0;
+    private static final int REQUEST_MONSTER_ADD = 1;
 
     private static final int VIEW_ITEMS_TO_DISPLAY = 6;
 
@@ -200,19 +201,26 @@ public class TeamPageFragment extends Fragment {
                     String id;
 
                     if (mMonster == null) {
-                        id = null;
+                        MonsterSearchFragment fragment =
+                                MonsterSearchFragment.newInstance();
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
                     } else {
                         id = mMonster.getId();
-                    }
-                    EditMonsterFragment fragment = EditMonsterFragment
-                            .newInstance(id, position);
+                        EditMonsterFragment fragment = EditMonsterFragment
+                                .newInstance(id, position);
 
-                    fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .addToBackStack(null)
-                            .commit();
+                        fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+
                 }
             });
             int width = mTeamRecyclerView.getMeasuredWidth();

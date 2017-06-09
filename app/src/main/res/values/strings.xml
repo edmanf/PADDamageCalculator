@@ -44,7 +44,7 @@
 
     <!-- MonsterSearchFragment -->
     <string name="monster_search_title_text">Saved Monsters</string>
-    <string name="new_monster_button_text">New Monster</string>
+    <string name="new_monster_checkbox_text">New Monster</string>
     <string name="action_search_title">Search Monsters</string>
 
     <!-- EditMonsterFragment -->
