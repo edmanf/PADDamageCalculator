@@ -2,21 +2,27 @@ package edmanfeng.paddamagecalculator;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -119,6 +125,62 @@ public class MonsterSearchFragment extends Fragment {
         }
         return filteredList;
     }
+
+    /*
+    private class MonsterHolder extends RecyclerView.ViewHolder {
+        private ImageButton mMonsterImageButton;
+        private Monster mMonster;
+
+        public MonsterHolder(View itemView) {
+            super(itemView);
+            mMonsterImageButton = (ImageButton) itemView.findViewById(R.id.monster_item);
+            mMonsterImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    String id;
+
+                    if (mMonster == null) {
+                        MonsterSearchFragment fragment =
+                                MonsterSearchFragment.newInstance();
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        id = mMonster.getId();
+                        EditMonsterFragment fragment = EditMonsterFragment
+                                .newInstance(id, position);
+
+                        fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+
+                }
+            });
+            // Set the layout params so that things will fit in one screen
+            int width = mTeamRecyclerView.getMeasuredWidth();
+            mMonsterImageButton.getLayoutParams().width = width / VIEW_ITEMS_TO_DISPLAY;
+            mMonsterImageButton.getLayoutParams().height = width / VIEW_ITEMS_TO_DISPLAY;
+        }
+
+        public void bindMonster(Monster monster, int position) {
+            mMonster = monster;
+
+            Uri uri = PictureUtils.getMonsterIconUri(mMonster);
+            Log.d(TAG, "Try to get icon at: " + uri.toString());
+            Glide.with(getActivity().getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_container))
+                    .load(uri)
+                    .fitCenter()
+                    .into(mMonsterImageButton);
+        }
+    }*/
 
     private class MonsterHolder extends RecyclerView.ViewHolder {
         private final ListItemMonsterSearchBinding mBinding;
