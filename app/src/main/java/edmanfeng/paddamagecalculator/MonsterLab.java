@@ -6,10 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
+import edmanfeng.paddamagecalculator.GameModel.Values;
 import edmanfeng.paddamagecalculator.database.MonsterBaseHelper;
 import edmanfeng.paddamagecalculator.database.MonsterCursorWrapper;
 import edmanfeng.paddamagecalculator.database.PadDbSchema.MonsterTable;
@@ -22,11 +29,39 @@ public class MonsterLab {
     private static final String TAG = "MonsterLab";
     private static MonsterLab sMonsterLab;
 
+    // For custom monsters
     private SQLiteDatabase mDatabase;
+
+    // For the default firebase monsters
+    private List<Monster> mFirebaseMonsters;
 
     private MonsterLab(Context context) {
         mDatabase = new MonsterBaseHelper(context)
                 .getWritableDatabase();
+
+        mFirebaseMonsters = new ArrayList<>();
+
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = db.child("monsters");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "Datachanged");
+                mFirebaseMonsters.clear();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Monster monster = child.getValue(Monster.class);
+                    monster.setOwner(Values.FIREBASE);
+                    mFirebaseMonsters.add(monster);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public static MonsterLab get(Context context) {
@@ -92,6 +127,10 @@ public class MonsterLab {
         }
         Log.i(TAG, "Found monsters: " + monsters.size());
         return monsters;
+    }
+    
+    public List<Monster> getDefaultMonsters() {
+        return mFirebaseMonsters;
     }
 
     public ContentValues getContentValues(Monster monster) {

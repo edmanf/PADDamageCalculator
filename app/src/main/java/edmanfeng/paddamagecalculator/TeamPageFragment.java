@@ -234,20 +234,12 @@ public class TeamPageFragment extends Fragment {
 
             Uri uri = PictureUtils.getMonsterIconUri(mMonster);
             Log.d(TAG, "Try to get icon at: " + uri.toString());
-            Glide.with(getActivity().getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_container))
+            //Activity().getSupportFragmentManager()
+            //        .findFragmentById(R.id.fragment_container)
+            Glide.with(getContext())
                     .load(uri)
                     .fitCenter()
                     .into(mMonsterImageButton);
-        }
-
-        private int getScreenWidth() {
-            DisplayMetrics metrics = new DisplayMetrics();
-            getActivity()
-                    .getWindowManager()
-                    .getDefaultDisplay()
-                    .getMetrics(metrics);
-            return metrics.widthPixels;
         }
     }
 

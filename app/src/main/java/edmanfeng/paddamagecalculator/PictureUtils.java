@@ -1,8 +1,12 @@
 package edmanfeng.paddamagecalculator;
 
+import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageButton;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 
@@ -33,5 +37,10 @@ public class PictureUtils {
         return uri;
     }
 
+    public static Uri getMonsterIconUri(int num) {
+        Monster monster = new Monster();
+        monster.setNum(num);
+        return getMonsterIconUri(monster);
+    }
 
 }

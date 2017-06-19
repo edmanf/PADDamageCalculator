@@ -14,6 +14,7 @@ public class Values {
      * "~" in its usernames.
      */
     public static final String LOCAL = "~~LOCAL~~";
+    public static final String FIREBASE = "~~FIREBASE~~";
 
     public static final String NO_MONSTER_ID = "";
 
