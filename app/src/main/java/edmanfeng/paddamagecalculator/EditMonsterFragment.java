@@ -16,6 +16,7 @@ import android.widget.EditText;
 import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
+import edmanfeng.paddamagecalculator.GameModel.Values;
 
 public class EditMonsterFragment extends Fragment {
     public static final String EXTRA_UPDATE = "edmanfeng.paddamagecalculator.monsterupdate";
@@ -24,6 +25,10 @@ public class EditMonsterFragment extends Fragment {
     private static final String TAG = "EditMonsterFragment";
     private static final String ARG_MONSTER_ID = "monster id";
     private static final String ARG_MONSTER_POS = "monster pos";
+    private static final String ARG_OWNER = "monster owner";
+    private static final String ARG_MONSTER_NUM = "monster num";
+
+    private static final int NO_NUM = -1;
 
     private EditText mNameEditTxt;
     private EditText mHpEditText;
@@ -36,6 +41,12 @@ public class EditMonsterFragment extends Fragment {
     private boolean mNewMonster;
     private int mPos;
 
+    /**
+     * Returns a new instance of EditMonsterFragment meant for a saved mosnter
+     * @param id
+     * @param pos
+     * @return
+     */
     public static EditMonsterFragment newInstance(String id, int pos) {
         EditMonsterFragment fragment = new EditMonsterFragment();
         Bundle args = new Bundle();
@@ -45,22 +56,46 @@ public class EditMonsterFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Returns an instance of EditMonsterFragment meant for a monster from Firebase.
+     * Monster will have owner set to local
+     * @param pos Team slot position of the new monster
+     * @param num Monster number
+     * @return The fragment instance
+     */
+    public static EditMonsterFragment newInstance(int pos, int num) {
+        EditMonsterFragment fragment = new EditMonsterFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_MONSTER_POS, pos);
+        args.putInt(ARG_MONSTER_NUM, num);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        MonsterLab ml = MonsterLab.get(getActivity());
+
         Bundle args = getArguments();
         String id = args.getString(ARG_MONSTER_ID);
+        int num = args.getInt(ARG_MONSTER_NUM, -1);
         mPos = args.getInt(ARG_MONSTER_POS);
-        if (id == null) {
-            mMonster = new Monster();
-            mNewMonster = true;
-        } else {
-            MonsterLab ml = MonsterLab.get(getActivity());
+        if (id != null) {
+
             mMonster = ml.getMonster(id);
             mNewMonster = false;
+        } else {
+            mMonster = new Monster();
+            mNewMonster = true;
+            if (num != NO_NUM) {
+                mMonster = ml.getFirebaseMonster(num);
+                mMonster.setOwner(Values.LOCAL);
+            }
         }
+
     }
 
     @Nullable
@@ -90,7 +125,9 @@ public class EditMonsterFragment extends Fragment {
     }
 
     private void setDisplay() {
-        if (!mNewMonster) {
+        Monster monster = MonsterLab.get(getActivity())
+                .getMonster(mMonster.getId());
+        if (mMonster != null) {
             mNumEditText.setText(Integer.toString(mMonster.getNum()));
             mNameEditTxt.setText(mMonster.getName());
             mHpEditText.setText(Integer.toString(mMonster.getHp()));

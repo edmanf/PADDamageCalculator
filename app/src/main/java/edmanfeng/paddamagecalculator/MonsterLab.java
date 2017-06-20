@@ -22,7 +22,8 @@ import edmanfeng.paddamagecalculator.database.MonsterCursorWrapper;
 import edmanfeng.paddamagecalculator.database.PadDbSchema.MonsterTable;
 
 /**
- * Created by t7500 on 4/7/2017.
+ * A class for retrieving monsters from both local databases as well
+ * as firebase.
  */
 
 public class MonsterLab {
@@ -82,7 +83,7 @@ public class MonsterLab {
         ContentValues values = getContentValues(monster);
         mDatabase.update(
                 MonsterTable.NAME,
-                null,
+                values,
                 whereClause,
                 whereArgs);
     }
@@ -128,13 +129,31 @@ public class MonsterLab {
         Log.i(TAG, "Found monsters: " + monsters.size());
         return monsters;
     }
-    
-    public List<Monster> getDefaultMonsters() {
+
+
+    public List<Monster> getFirebaseMonsters() {
         return mFirebaseMonsters;
     }
 
-    public List<Monster> getDefaultMonsters() {
-        return mFirebaseMonsters;
+    public Monster getFirebaseMonster(int num) {
+        Monster monster = null;
+        int lo = 0;
+        int hi = mFirebaseMonsters.size() - 1;
+        int mid = (lo + hi) / 2;
+        while (hi > lo) {
+
+            monster = mFirebaseMonsters.get(mid);
+            if (monster.getNum() > num) {
+                hi = mid - 1;
+            } else if (monster.getNum() < num) {
+                lo = mid + 1;
+            } else {
+                break;
+            }
+            mid = (lo + hi) / 2;
+        }
+        monster = mFirebaseMonsters.get(mid);
+        return monster;
     }
 
     public ContentValues getContentValues(Monster monster) {

@@ -41,11 +41,13 @@ public class TeamPageFragment extends Fragment {
 
     private static final int REQUEST_MONSTER_UPDATE = 0;
     private static final int REQUEST_MONSTER_ADD = 1;
+    private static final int REQUEST_NEW_MONSTER = 2;
 
     private static final int VIEW_ITEMS_TO_DISPLAY = 6;
 
     private static final int MIN_ORBS = 1;
     private static final int MAX_ORBS = 42;
+
 
     private RecyclerView mTeamRecyclerView;
     private RecyclerView.Adapter mTeamAdapter;
@@ -202,7 +204,8 @@ public class TeamPageFragment extends Fragment {
 
                     if (mMonster == null) {
                         MonsterSearchFragment fragment =
-                                MonsterSearchFragment.newInstance();
+                                MonsterSearchFragment.newInstance(position);
+                        fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction()
                                 .replace(R.id.fragment_container, fragment)
