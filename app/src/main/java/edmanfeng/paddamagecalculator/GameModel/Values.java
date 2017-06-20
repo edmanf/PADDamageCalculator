@@ -275,4 +275,15 @@ public class Values {
         public static final BigDecimal IMPROVED_RCV_2 = new BigDecimal(0.35);
         public static final BigDecimal IMPROVED_ATK_2 = new BigDecimal(0.15);
     }
+
+    public static final class OrbType {
+        public static int FIRE = 0;
+        public static int WATER = 1;
+        public static int WOOD = 2;
+        public static int LIGHT = 3;
+        public static int DARK = 4;
+        public static int HEAL = 5;
+        public static int JAMMER = 6;
+        public static int POISON = 7;
+    }
 }

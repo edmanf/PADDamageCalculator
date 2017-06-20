@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by t7500 on 5/26/2017.
+ * Manages the database of accounts that are tracked for syncing.
  */
 
 public class AccountManager {
