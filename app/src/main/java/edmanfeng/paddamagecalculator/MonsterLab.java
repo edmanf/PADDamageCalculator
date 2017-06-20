@@ -133,6 +133,10 @@ public class MonsterLab {
         return mFirebaseMonsters;
     }
 
+    public List<Monster> getDefaultMonsters() {
+        return mFirebaseMonsters;
+    }
+
     public ContentValues getContentValues(Monster monster) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MonsterTable.Cols.ID, monster.getId());

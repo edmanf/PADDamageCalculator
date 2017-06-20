@@ -1,17 +1,18 @@
 package edmanfeng.paddamagecalculator;
 
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,10 +20,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -39,7 +38,8 @@ import edmanfeng.paddamagecalculator.databinding.ListItemMonsterSearchBinding;
  */
 
 public class MonsterSearchFragment extends Fragment {
-    private static final String TAG = "MonsterSearchFragment";
+    public static final String TAG = "MonsterSearchFragment";
+
     private static final Comparator<Monster> MONSTER_NUM_COMPARATOR =
             new Comparator<Monster>() {
                 @Override
@@ -49,14 +49,10 @@ public class MonsterSearchFragment extends Fragment {
             };
     private MenuItem mSearchItem;
     private SearchView mSearchView;
-    private CheckBox mCheckBox;
     private FragmentMonsterSearchBinding mBinding;
-
-    private final int RECYCLER_VIEW_COLUMNS = 5;
 
     private MonsterAdapter mAdapter;
     private List<Monster> mMonsters;
-    private int mRecyclerViewWidth;
 
     public static MonsterSearchFragment newInstance() {
         return new MonsterSearchFragment();
@@ -78,35 +74,35 @@ public class MonsterSearchFragment extends Fragment {
         // where does binding come from??
         mBinding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_monster_search, container, false);
-
+        mAdapter = null;
 
         MonsterLab ml = MonsterLab.get(getActivity());
+        mBinding.newMonsterCheckbox.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        MonsterLab monsterLab = MonsterLab.get(getActivity());
+                        if (isChecked) {
+                            mMonsters = monsterLab.getDefaultMonsters();
+                        } else {
+                            mMonsters = monsterLab.getMonsters();
+                        }
+                        if (mAdapter != null) {
+                            mAdapter.replaceAll(mMonsters);
+                        }
+                        Log.d(TAG, "Checked changed, found: " + mMonsters.size());
+
+                    }
+                }
+        );
         mMonsters = ml.getMonsters();
 
         mAdapter = new MonsterAdapter(getActivity(), MONSTER_NUM_COMPARATOR,
                 mMonsters);
         mBinding.monsterSearchRecyclerView.setLayoutManager(
-                new GridLayoutManager(getActivity(), RECYCLER_VIEW_COLUMNS));
+                new GridLayoutManager(getActivity(), 5));
         mBinding.monsterSearchRecyclerView.setAdapter(mAdapter);
 
-        mCheckBox = mBinding.newMonsterCheckbox;
-        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MonsterLab ml = MonsterLab.get(getActivity());
-                if (isChecked) {
-                    // Want to make a new monster, so list default ones
-                    mMonsters = ml.getDefaultMonsters().subList(0, 10);
-                    Log.i(TAG, "Switching to FB, found: " + mMonsters.size());
-                } else {
-                    // Show locally saved monsters
-                    mMonsters = ml.getMonsters();
-                    Log.i(TAG, "Switching to ML, found: " + mMonsters.size());
-                }
-                mAdapter.replaceAll(mMonsters);
-            }
-        });
-        mRecyclerViewWidth = mBinding.monsterSearchRecyclerView.getMeasuredWidth();
         return mBinding.getRoot();
     }
 
@@ -136,8 +132,6 @@ public class MonsterSearchFragment extends Fragment {
     }
 
     private List<Monster> filter(List<Monster> monsters, String query) {
-        boolean cleared = query == null || query.isEmpty();
-        Log.d(TAG, "Query isEmpty(): " + query.isEmpty());
         String lowerCaseQuery = query.toLowerCase();
 
         List<Monster> filteredList = new ArrayList<>();
@@ -146,27 +140,80 @@ public class MonsterSearchFragment extends Fragment {
             // search by name or number
             String text = monster.getName().toLowerCase() + monster.getNum();
 
-            if (text.contains(lowerCaseQuery) || cleared) {
+            if (text.contains(lowerCaseQuery)) {
                 filteredList.add(monster);
             }
         }
         return filteredList;
     }
 
+    /*
     private class MonsterHolder extends RecyclerView.ViewHolder {
-        private final ListItemMonsterSearchBinding mListItemBinding;
+        private ImageButton mMonsterImageButton;
+        private Monster mMonster;
+
+        public MonsterHolder(View itemView) {
+            super(itemView);
+            mMonsterImageButton = (ImageButton) itemView.findViewById(R.id.monster_item);
+            mMonsterImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    String id;
+
+                    if (mMonster == null) {
+                        MonsterSearchFragment fragment =
+                                MonsterSearchFragment.newInstance();
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        id = mMonster.getId();
+                        EditMonsterFragment fragment = EditMonsterFragment
+                                .newInstance(id, position);
+
+                        fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+
+                }
+            });
+            // Set the layout params so that things will fit in one screen
+            int width = mTeamRecyclerView.getMeasuredWidth();
+            mMonsterImageButton.getLayoutParams().width = width / VIEW_ITEMS_TO_DISPLAY;
+            mMonsterImageButton.getLayoutParams().height = width / VIEW_ITEMS_TO_DISPLAY;
+        }
+
+        public void bindMonster(Monster monster, int position) {
+            mMonster = monster;
+
+            Uri uri = PictureUtils.getMonsterIconUri(mMonster);
+            Log.d(TAG, "Try to get icon at: " + uri.toString());
+            Glide.with(getActivity().getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_container))
+                    .load(uri)
+                    .fitCenter()
+                    .into(mMonsterImageButton);
+        }
+    }*/
+
+    private class MonsterHolder extends RecyclerView.ViewHolder {
+        private final ListItemMonsterSearchBinding mBinding;
 
 
         public MonsterHolder(ListItemMonsterSearchBinding binding) {
             super(binding.getRoot());
-            mListItemBinding = binding;
-            TextView view = mListItemBinding.monsterTextView;
-            view.getLayoutParams().width = mRecyclerViewWidth / RECYCLER_VIEW_COLUMNS;
-            view.getLayoutParams().height = mRecyclerViewWidth / RECYCLER_VIEW_COLUMNS;
+            mBinding = binding;
         }
 
         public void bind(Monster monster) {
-            mListItemBinding.setMonster(monster);
+            mBinding.setModel(monster);
         }
     }
 
