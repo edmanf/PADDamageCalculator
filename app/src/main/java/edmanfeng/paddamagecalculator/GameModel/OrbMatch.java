@@ -5,13 +5,24 @@ package edmanfeng.paddamagecalculator.GameModel;
  */
 
 public class OrbMatch {
+    public static final int ORB_TYPE_FIRE = 0;
+    public static final int ORB_TYPE_WATER = 1;
+    public static final int ORB_TYPE_WOOD = 2;
+    public static final int ORB_TYPE_LIGHT = 3;
+    public static final int ORB_TYPE_DARK = 4;
+    public static final int ORB_TYPE_HEAL = 5;
+    public static final int ORB_TYPE_JAMMER = 6;
+    public static final int ORB_TYPE_POISON = 7;
+
     private int mOrbType;
     private int mCount;
     private int mShape;
     private int mEnhanced;
 
-    public OrbMatch() {
-
+    public OrbMatch(int orbType, int count, int enhanced) {
+        mOrbType = orbType;
+        mCount = count;
+        mEnhanced = enhanced;
     }
 
     public int getOrbType() {
@@ -45,4 +56,7 @@ public class OrbMatch {
     public void setEnhanced(int enhanced) {
         mEnhanced = enhanced;
     }
+
+
+
 }
