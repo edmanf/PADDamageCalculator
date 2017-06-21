@@ -36,6 +36,9 @@ public class TeamListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        // Call here to trigger the retrieval of FB data
+        MonsterLab.get(getActivity());
     }
 
     @Override

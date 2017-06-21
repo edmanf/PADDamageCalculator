@@ -17,6 +17,7 @@ import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Values;
+import edmanfeng.paddamagecalculator.databinding.FragmentEditMonsterBinding;
 
 public class EditMonsterFragment extends Fragment {
     public static final String EXTRA_UPDATE = "edmanfeng.paddamagecalculator.monsterupdate";
@@ -30,16 +31,10 @@ public class EditMonsterFragment extends Fragment {
 
     private static final int NO_NUM = -1;
 
-    private EditText mNameEditTxt;
-    private EditText mHpEditText;
-    private EditText mAtkEditText;
-    private EditText mRcvEditText;
-    private EditText mNumEditText;
-
-
     private Monster mMonster;
     private boolean mNewMonster;
     private int mPos;
+    private FragmentEditMonsterBinding mBinding;
 
     /**
      * Returns a new instance of EditMonsterFragment meant for a saved mosnter
@@ -77,6 +72,7 @@ public class EditMonsterFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+
         MonsterLab ml = MonsterLab.get(getActivity());
 
         Bundle args = getArguments();
@@ -96,6 +92,7 @@ public class EditMonsterFragment extends Fragment {
             }
         }
 
+
     }
 
     @Nullable
@@ -103,22 +100,12 @@ public class EditMonsterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_edit_monster, container, false);
+        mBinding = FragmentEditMonsterBinding.inflate(getLayoutInflater(savedInstanceState));
+        mBinding.setMonster(mMonster);
+        View v = mBinding.getRoot();
+                //inflater.inflate(R.layout.fragment_edit_monster, container, false);
 
-        mNameEditTxt = (EditText) v
-                .findViewById(R.id.monster_name_edit_text);
 
-        mHpEditText = (EditText) v
-                .findViewById(R.id.monster_hp_edit_text);
-
-        mAtkEditText = (EditText) v
-                .findViewById(R.id.monster_atk_edit_text);
-
-        mRcvEditText = (EditText) v
-                .findViewById(R.id.monster_rcv_edit_text);
-
-        mNumEditText = (EditText) v
-                .findViewById(R.id.monster_id_edit_text);
 
         setDisplay();
         return v;
@@ -128,11 +115,7 @@ public class EditMonsterFragment extends Fragment {
         Monster monster = MonsterLab.get(getActivity())
                 .getMonster(mMonster.getId());
         if (mMonster != null) {
-            mNumEditText.setText(Integer.toString(mMonster.getNum()));
-            mNameEditTxt.setText(mMonster.getName());
-            mHpEditText.setText(Integer.toString(mMonster.getHp()));
-            mAtkEditText.setText(Integer.toString(mMonster.getAtk()));
-            mRcvEditText.setText(Integer.toString(mMonster.getRcv()));
+
         }
     }
 
@@ -147,11 +130,6 @@ public class EditMonsterFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_monster_save:
                 MonsterLab ml = MonsterLab.get(getActivity());
-                mMonster.setName(mNameEditTxt.getText().toString());
-                mMonster.setAtk(Integer.valueOf(mAtkEditText.getText().toString()));
-                mMonster.setHp(Integer.valueOf(mHpEditText.getText().toString()));
-                mMonster.setRcv(Integer.valueOf(mRcvEditText.getText().toString()));
-                mMonster.setNum(Integer.valueOf(mNumEditText.getText().toString()));
                 if (mNewMonster) {
                     ml.addMonster(mMonster);
                 } else {
