@@ -20,15 +20,6 @@ public class Values {
 
     public static final int SOLO_TEAM_SIZE = 6;
 
-    public static final class Attribute {
-        public static final int NONE = -1;
-        public static final int FIRE = 0;
-        public static final int WATER = 1;
-        public static final int WOOD = 2;
-        public static final int LIGHT = 3;
-        public static final int DARK = 4;
-    }
-
     public static final class Type {
         public static final int NONE = -1;
         public static final int GOD = 0;

@@ -33,6 +33,7 @@ public class PadDbSchema {
             public static final String BASE_HP = "hp";
             public static final String BASE_ATK = "atk";
             public static final String BASE_RCV = "rcv";
+            public static final String ATTRIBUTES = "attributes";
 
             public static final String AWAKENINGS = "awakenings";
             public static final String LATENT_AWAKENINGS = "latents";

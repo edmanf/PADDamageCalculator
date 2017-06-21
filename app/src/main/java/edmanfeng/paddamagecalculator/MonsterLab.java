@@ -52,10 +52,11 @@ public class MonsterLab {
                 mFirebaseMonsters.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Monster monster = child.getValue(Monster.class);
+                    //List<Long> attrs = (List<Long>) child.child("attribute").getValue();
+                    //monster.setAttributes(attrs);
                     monster.setOwner(Values.FIREBASE);
                     mFirebaseMonsters.add(monster);
                 }
-
             }
 
             @Override
@@ -166,6 +167,9 @@ public class MonsterLab {
         contentValues.put(MonsterTable.Cols.BASE_HP, monster.getHp());
         contentValues.put(MonsterTable.Cols.BASE_ATK, monster.getAtk());
         contentValues.put(MonsterTable.Cols.BASE_RCV, monster.getRcv());
+
+        int[] attrs = monster.getAttributes();
+        contentValues.put(MonsterTable.Cols.ATTRIBUTES, "" + attrs[0] + "," + attrs[1]);
         return contentValues;
     }
 

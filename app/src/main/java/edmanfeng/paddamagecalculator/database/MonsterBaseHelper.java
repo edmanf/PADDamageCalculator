@@ -28,7 +28,8 @@ public class MonsterBaseHelper extends SQLiteOpenHelper {
                 MonsterTable.Cols.NUM + ", " +
                 MonsterTable.Cols.BASE_HP + ", " +
                 MonsterTable.Cols.BASE_ATK + ", " +
-                MonsterTable.Cols.BASE_RCV +
+                MonsterTable.Cols.BASE_RCV + ", " +
+                MonsterTable.Cols.ATTRIBUTES +
                 ")"
         );
     }

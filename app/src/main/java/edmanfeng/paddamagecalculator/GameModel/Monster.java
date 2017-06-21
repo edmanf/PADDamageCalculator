@@ -1,13 +1,8 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
-import android.databinding.BindingAdapter;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.ImageButton;
 
-import com.bumptech.glide.Glide;
-
-import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.PictureUtils;
@@ -23,6 +18,15 @@ public class Monster {
     private static final int MAX_AWAKENINGS = 9;
     private static final int MAX_LATENT_SLOTS = 6;
 
+    public static final class Attribute {
+        public static final int NONE = -1;
+        public static final int FIRE = 0;
+        public static final int WATER = 1;
+        public static final int WOOD = 2;
+        public static final int LIGHT = 3;
+        public static final int DARK = 4;
+    }
+
     private String mId;
     private String mOwner;
     private int mHp;
@@ -30,21 +34,24 @@ public class Monster {
     private int mRcv;
     private String mName;
     private int mNum;
+    private int[] mAttributes;
     private Uri imageUrl;
 
     public Monster() {
-        this(UUID.randomUUID().toString(), Values.LOCAL, "CUSTOM", 0, 0, 0, 0);
+        this(UUID.randomUUID().toString(), Values.LOCAL,
+                "CUSTOM", 0, 0, 0, 0, new int[] {Attribute.NONE, Attribute.NONE});
     }
 
     public Monster(String uuid, String owner, String name,
-                   int num, int hp, int atk, int rcv) {
-        this.mId = uuid;
+                   int num, int hp, int atk, int rcv, int[] attributes) {
+        mId = uuid;
         mOwner = owner;
-        this.mName = name;
-        this.mNum = num;
-        this.mHp = hp;
-        this.mAtk = atk;
-        this.mRcv = rcv;
+        mName = name;
+        mNum = num;
+        mHp = hp;
+        mAtk = atk;
+        mRcv = rcv;
+        mAttributes = attributes;
     }
 
 
@@ -102,6 +109,58 @@ public class Monster {
 
     public void setRcv(int rcv) {
         mRcv = rcv;
+    }
+
+    public int[] getAttributes() {
+        return mAttributes;
+    }
+
+
+    /**
+     * Sets the monsters attributes. Array must be size 2
+     * @param attributes The new attributes of the monster
+     */
+    /*
+    public void setAttributes(int[] attributes) {
+        if (attributes == null || attributes.length != 2) {
+            throw new IllegalArgumentException("attributes must be an array of size 2");
+        }
+        this.mAttributes = attributes;
+    }*/
+
+    public void setAttributes(List<Long> attributes) {
+        mAttributes[0] = attributes.get(0).intValue();
+        mAttributes[1] = attributes.get(1).intValue();
+    }
+
+    public int getNumberAttributes() {
+        int count = 0;
+        for (int attr : mAttributes) {
+            if (attr != Attribute.NONE) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Returns the monster's nth (zero-based) attribute.
+     * @param n The number attribute
+     * @return The nth attribute
+     */
+    public int getAttribute(int n) {
+        return mAttributes[n];
+    }
+
+    /**
+     * Sets the attribute at n to the given attribute.
+     * @param attribute The new attribute
+     * @param n The number attribute to change
+     */
+    public void setAttribute(int attribute, int n) {
+        mAttributes[n] = attribute;
     }
 
     public Uri getImageUrl() {
