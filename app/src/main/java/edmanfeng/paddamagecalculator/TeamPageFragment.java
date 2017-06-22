@@ -29,6 +29,8 @@ import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.Team;
+import edmanfeng.paddamagecalculator.databinding.FragmentTeamPageBinding;
+import edmanfeng.paddamagecalculator.databinding.ListItemMonsterBinding;
 
 /**
  * Created by t7500 on 4/3/2017.
@@ -48,8 +50,7 @@ public class TeamPageFragment extends Fragment {
     private static final int MIN_ORBS = 1;
     private static final int MAX_ORBS = 42;
 
-
-    private RecyclerView mTeamRecyclerView;
+    private FragmentTeamPageBinding mTeamPageBinding;
     private RecyclerView.Adapter mTeamAdapter;
     private Spinner mComboTypeSpinner;
     private Spinner mComboOrbNumberSpinner;
@@ -91,17 +92,16 @@ public class TeamPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater
-                .inflate(R.layout.fragment_team_page,container, false);
+        mTeamPageBinding = FragmentTeamPageBinding.inflate(inflater);
 
-        mTeamRecyclerView = (RecyclerView)view
-                .findViewById(R.id.team_recycler_view);
-        mTeamRecyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        View view = mTeamPageBinding.getRoot();
 
-        mTeamAdapter = new MonsterAdapter(mTeam.asList());
-        mTeamRecyclerView.setAdapter(mTeamAdapter);
+        RecyclerView teamRecyclerView = mTeamPageBinding.teamRecyclerView;
+        teamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
+
+
+        // TODO: Figure out what to do with all the spinners in data binding
         mComboTypeSpinner = (Spinner)view.findViewById(R.id.combo_type_spinner);
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
                 getActivity(), R.array.orb_types, android.R.layout.simple_spinner_item);
@@ -132,6 +132,9 @@ public class TeamPageFragment extends Fragment {
                 getActivity(), R.array.combo_shape_types, android.R.layout.simple_spinner_item);
         comboShapeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mComboShapeSpinner.setAdapter(comboShapeAdapter);
+
+        mTeamAdapter = new MonsterAdapter(mTeam.asList());
+        teamRecyclerView.setAdapter(mTeamAdapter);
         return view;
     }
 
@@ -190,19 +193,19 @@ public class TeamPageFragment extends Fragment {
 
 
     private class MonsterHolder extends RecyclerView.ViewHolder {
-        private ImageButton mMonsterImageButton;
-        private Monster mMonster;
+        private ListItemMonsterBinding mItemBinding;
 
-        public MonsterHolder(View itemView) {
-            super(itemView);
-            mMonsterImageButton = (ImageButton) itemView.findViewById(R.id.monster_item);
-            mMonsterImageButton.setOnClickListener(new View.OnClickListener() {
+
+        public MonsterHolder(ListItemMonsterBinding binding) {
+            super(binding.getRoot());
+            mItemBinding = binding;
+            mItemBinding.monsterItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     String id;
-
-                    if (mMonster == null) {
+                    Monster monster = mItemBinding.getMonster();
+                    if (monster == null) {
                         MonsterSearchFragment fragment =
                                 MonsterSearchFragment.newInstance(position);
                         fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
@@ -212,7 +215,7 @@ public class TeamPageFragment extends Fragment {
                                 .addToBackStack(null)
                                 .commit();
                     } else {
-                        id = mMonster.getId();
+                        id = monster.getId();
                         EditMonsterFragment fragment = EditMonsterFragment
                                 .newInstance(id, position);
 
@@ -226,23 +229,19 @@ public class TeamPageFragment extends Fragment {
 
                 }
             });
-            // Set the layout params so that things will fit in one screen
-            int width = mTeamRecyclerView.getMeasuredWidth();
-            mMonsterImageButton.getLayoutParams().width = width / VIEW_ITEMS_TO_DISPLAY;
-            mMonsterImageButton.getLayoutParams().height = width / VIEW_ITEMS_TO_DISPLAY;
         }
 
         public void bindMonster(Monster monster, int position) {
-            mMonster = monster;
+            mItemBinding.setMonster(monster);
 
-            Uri uri = PictureUtils.getMonsterIconUri(mMonster);
+            Uri uri = PictureUtils.getMonsterIconUri(monster);
             Log.d(TAG, "Try to get icon at: " + uri.toString());
             //Activity().getSupportFragmentManager()
             //        .findFragmentById(R.id.fragment_container)
             Glide.with(getContext())
                     .load(uri)
                     .fitCenter()
-                    .into(mMonsterImageButton);
+                    .into(mItemBinding.monsterItem);
         }
     }
 
@@ -256,8 +255,7 @@ public class TeamPageFragment extends Fragment {
         @Override
         public MonsterHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View v = inflater.inflate(R.layout.list_item_monster, parent, false);
-            return new MonsterHolder(v);
+            return new MonsterHolder(ListItemMonsterBinding.inflate(inflater));
         }
 
         @Override
