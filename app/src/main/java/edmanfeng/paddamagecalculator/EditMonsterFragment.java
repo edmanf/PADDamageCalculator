@@ -2,9 +2,12 @@ package edmanfeng.paddamagecalculator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.UUID;
 
@@ -153,5 +159,15 @@ public class EditMonsterFragment extends Fragment {
 
         getTargetFragment()
                 .onActivityResult(getTargetRequestCode(), resultCode, intent);
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView image, String imageUrl) {
+        Log.d(TAG, "load image " + imageUrl);
+        Uri uri = Uri.parse(imageUrl);
+        Glide.with(image.getContext())
+                .load(uri)
+                .fitCenter()
+                .into(image);
     }
 }

@@ -21,7 +21,9 @@
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            app:imageUrl="@{monster.imageUrl.toString()}"
+            />
         <TextView
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"

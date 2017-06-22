@@ -35,7 +35,7 @@ public class Monster {
     private String mName;
     private int mNum;
     private int[] mAttributes;
-    private Uri imageUrl;
+    private Uri mImageUrl;
 
     public Monster() {
         this(UUID.randomUUID().toString(), Values.LOCAL,
@@ -165,6 +165,10 @@ public class Monster {
 
     public Uri getImageUrl() {
         return PictureUtils.getMonsterIconUri(mNum);
+    }
+
+    public void setImageUrl(String url) {
+        mImageUrl = Uri.parse(url);
     }
 
 
