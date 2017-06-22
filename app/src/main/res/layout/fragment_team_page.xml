@@ -1,94 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/team_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/combo_type_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_orb_type_label"
-                tools:text="Orb type"/>
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/combo_type_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/team_recycler_view"
+            android:layout_width="336dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/combo_orb_number_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_number_orbs_label"
-                tools:text="# Orbs"/>
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/combo_orb_number_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
 
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/combo_type_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/combo_enhance_number_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_number_enhanced_label"
-                tools:text="# enhanced"/>
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/combo_enhance_number_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/choose_orb_type_label"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/team_recycler_view"
+            tools:text="Orb type"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/combo_type_spinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/combo_shape_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_shape_label"
-                tools:text="Shape"/>
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/combo_shape_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+            tools:layout_conversion_absoluteX="16dp"
+            tools:layout_conversion_absoluteY="197dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_conversion_absoluteHeight="24dp"
+            app:layout_constraintLeft_toRightOf="@+id/combo_type_label"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/team_recycler_view"/>
 
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/combo_orb_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_number_orbs_label"
+            tools:text="# Orbs"
+            tools:layout_conversion_absoluteX="104dp"
+            tools:layout_conversion_absoluteY="181dp"
+            tools:layout_conversion_absoluteWidth="40dp"
+            tools:layout_conversion_absoluteHeight="16dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_type_label"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/combo_orb_number_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_conversion_absoluteX="104dp"
+            tools:layout_conversion_absoluteY="197dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_conversion_absoluteHeight="24dp"
+            app:layout_constraintLeft_toRightOf="@+id/combo_orb_number_label"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_type_spinner"/>
+
+
+        <TextView
+            android:id="@+id/combo_enhance_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_number_enhanced_label"
+            tools:text="# enhanced"
+            tools:layout_conversion_absoluteX="192dp"
+            tools:layout_conversion_absoluteY="181dp"
+            tools:layout_conversion_absoluteWidth="73dp"
+            tools:layout_conversion_absoluteHeight="16dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="17dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_orb_number_label"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/combo_enhance_number_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_conversion_absoluteX="192dp"
+            tools:layout_conversion_absoluteY="197dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_conversion_absoluteHeight="24dp"
+            app:layout_constraintLeft_toRightOf="@+id/combo_enhance_number_label"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_orb_number_spinner"/>
+
+
+        <TextView
+            android:id="@+id/combo_shape_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_shape_label"
+            tools:text="Shape"
+            tools:layout_conversion_absoluteX="280dp"
+            tools:layout_conversion_absoluteY="181dp"
+            tools:layout_conversion_absoluteWidth="39dp"
+            tools:layout_conversion_absoluteHeight="16dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_label"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/combo_shape_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_conversion_absoluteX="280dp"
+            tools:layout_conversion_absoluteY="197dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_conversion_absoluteHeight="24dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_spinner"
+            app:layout_constraintLeft_toRightOf="@+id/combo_shape_label"
+            android:layout_marginLeft="42dp"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
