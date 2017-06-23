@@ -233,14 +233,6 @@ public class TeamPageFragment extends Fragment {
 
         public void bindMonster(Monster monster, int position) {
             mItemBinding.setMonster(monster);
-
-            Uri uri = PictureUtils.getMonsterIconUri(monster);
-            Log.d(TAG, "Try to get icon at: " + uri.toString());
-
-            Glide.with(getContext())
-                    .load(uri)
-                    .fitCenter()
-                    .into(mItemBinding.monsterItem);
         }
     }
 
