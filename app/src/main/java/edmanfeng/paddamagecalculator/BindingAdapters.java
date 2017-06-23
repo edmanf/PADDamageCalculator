@@ -27,6 +27,7 @@ public class BindingAdapters {
         Uri uri = Uri.parse(url);
         Glide.with(image.getContext())
                 .load(uri)
+                .placeholder(R.drawable.monster_image_placeholder)
                 .fitCenter()
                 .into(image);
     }

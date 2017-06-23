@@ -9,12 +9,11 @@
 
     <!--android:background="?attr/selectableItemBackground"-->
 
-    <TextView
-        android:id="@+id/monster_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
+    <ImageButton
+        android:id="@+id/monster_search_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@color/colorAccent"
-        android:text="@{monster.name}"/>
+        app:imageUrl="@{monster.imageUrl.toString()}"/>
 
 </layout>

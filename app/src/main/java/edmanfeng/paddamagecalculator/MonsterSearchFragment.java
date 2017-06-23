@@ -159,7 +159,7 @@ public class MonsterSearchFragment extends Fragment {
         public MonsterHolder(ListItemMonsterSearchBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
-            mBinding.monsterTextView.setOnClickListener(new View.OnClickListener() {
+            mBinding.monsterSearchImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -299,60 +299,4 @@ public class MonsterSearchFragment extends Fragment {
             return mSortedList.size();
         }
     }
-
-    /*
-    private class MonsterHolder extends RecyclerView.ViewHolder {
-        private ImageButton mMonsterImageButton;
-        private Monster mMonster;
-
-        public MonsterHolder(View itemView) {
-            super(itemView);
-            mMonsterImageButton = (ImageButton) itemView.findViewById(R.id.monster_item);
-            mMonsterImageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    String id;
-
-                    if (mMonster == null) {
-                        MonsterSearchFragment fragment =
-                                MonsterSearchFragment.newInstance();
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        fm.beginTransaction()
-                                .replace(R.id.fragment_container, fragment)
-                                .addToBackStack(null)
-                                .commit();
-                    } else {
-                        id = mMonster.getId();
-                        EditMonsterFragment fragment = EditMonsterFragment
-                                .newInstance(id, position);
-
-                        fragment.setTargetFragment(TeamPageFragment.this, REQUEST_MONSTER_UPDATE);
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        fm.beginTransaction()
-                                .replace(R.id.fragment_container, fragment)
-                                .addToBackStack(null)
-                                .commit();
-                    }
-
-                }
-            });
-            // Set the layout params so that things will fit in one screen
-            int width = mTeamRecyclerView.getMeasuredWidth();
-            mMonsterImageButton.getLayoutParams().width = width / VIEW_ITEMS_TO_DISPLAY;
-            mMonsterImageButton.getLayoutParams().height = width / VIEW_ITEMS_TO_DISPLAY;
-        }
-
-        public void bindMonster(Monster monster, int position) {
-            mMonster = monster;
-
-            Uri uri = PictureUtils.getMonsterIconUri(mMonster);
-            Log.d(TAG, "Try to get icon at: " + uri.toString());
-            Glide.with(getActivity().getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_container))
-                    .load(uri)
-                    .fitCenter()
-                    .into(mMonsterImageButton);
-        }
-    }*/
 }
