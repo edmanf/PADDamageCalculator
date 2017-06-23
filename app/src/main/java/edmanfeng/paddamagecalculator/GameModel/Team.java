@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class Team {
     private static final int DEFAULT_SUBS_SOLO = 4;
-    private static final int DEFAULT_TEAM_SIZE = 6;
+    public static final int TEAM_SIZE = 6;
 
     /**
      * Id of team. Either team name from padherder or ID if local.
@@ -80,7 +80,7 @@ public class Team {
 
     public List<Monster> asList() {
         List<Monster> team = new ArrayList<>();
-        for (int i = 0; i < DEFAULT_TEAM_SIZE; i++) {
+        for (int i = 0; i < TEAM_SIZE; i++) {
             team.add(mMonsters[i]);
         }
         return team;

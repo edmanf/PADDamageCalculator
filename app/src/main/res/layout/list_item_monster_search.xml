@@ -11,9 +11,9 @@
 
     <ImageButton
         android:id="@+id/monster_search_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/colorAccent"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="?attr/selectableItemBackground"
         app:imageUrl="@{monster.imageUrl.toString()}"/>
 
 </layout>
