@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by t7500 on 2/25/2017.
+ * Represents a single team of monsters (in solo).
  */
 
 public class Team {
@@ -76,6 +76,20 @@ public class Team {
 
     public void set(int slot, Monster sub) {
         mMonsters[slot] = sub;
+    }
+
+    public int getEnhanced(int attribute) {
+        int count = 0;
+        for (Monster monster : mMonsters) {
+            if (monster != null) {
+                count += 0;
+            }
+        }
+        return count;
+    }
+
+    public int getRowEnhance(int attribute) {
+        return 0;
     }
 
     public List<Monster> asList() {

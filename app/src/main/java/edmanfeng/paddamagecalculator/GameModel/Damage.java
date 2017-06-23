@@ -1,7 +1,7 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
 /**
- * Created by t7500 on 6/23/2017.
+ * Represents final atk damage before enemy modifications
  */
 
 public class Damage {

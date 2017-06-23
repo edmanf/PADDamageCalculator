@@ -8,7 +8,7 @@ import java.util.UUID;
 import edmanfeng.paddamagecalculator.PictureUtils;
 
 /**
- * Created by t7500 on 2/25/2017.
+ * A ViewModel for monsters
  */
 
 public class Monster {

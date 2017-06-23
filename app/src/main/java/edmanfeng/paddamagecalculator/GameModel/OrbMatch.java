@@ -1,7 +1,7 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
 /**
- * Created by t7500 on 4/3/2017.
+ * Represents a single match of orbs
  */
 
 public class OrbMatch {
