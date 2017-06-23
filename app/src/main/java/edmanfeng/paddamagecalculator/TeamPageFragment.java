@@ -236,8 +236,7 @@ public class TeamPageFragment extends Fragment {
 
             Uri uri = PictureUtils.getMonsterIconUri(monster);
             Log.d(TAG, "Try to get icon at: " + uri.toString());
-            //Activity().getSupportFragmentManager()
-            //        .findFragmentById(R.id.fragment_container)
+
             Glide.with(getContext())
                     .load(uri)
                     .fitCenter()

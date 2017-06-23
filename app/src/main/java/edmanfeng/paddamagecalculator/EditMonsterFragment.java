@@ -161,13 +161,5 @@ public class EditMonsterFragment extends Fragment {
                 .onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView image, String imageUrl) {
-        Log.d(TAG, "load image " + imageUrl);
-        Uri uri = Uri.parse(imageUrl);
-        Glide.with(image.getContext())
-                .load(uri)
-                .fitCenter()
-                .into(image);
-    }
+
 }
