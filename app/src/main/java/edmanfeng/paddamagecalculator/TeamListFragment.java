@@ -92,7 +92,7 @@ public class TeamListFragment extends Fragment {
         damages.add(null);
         damages.add(new Damage(20555.0, OrbMatch.ORB_TYPE_WATER));
         damages.add(null);
-        List<Damage> calculated = CalculateDamage.calculatePerMonsterDamage(team, combos);
+        Damage[] calculated = CalculateDamage.calculatePerMonsterDamage(team, combos);
         Log.d("HELEL", calculated.toString());
     }
 

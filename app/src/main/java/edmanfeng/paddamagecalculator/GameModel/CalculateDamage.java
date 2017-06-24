@@ -19,14 +19,14 @@ public class CalculateDamage {
      * @param combos
      * @return
      */
-    public static List<Damage> calculatePerMonsterDamage(Team team, List<OrbMatch> combos) {
+    public static Damage[] calculatePerMonsterDamage(Team team, List<OrbMatch> combos) {
         // G1 round up: attri multi, enhanced in combo, active
         // G2 round near: TPA
         // G3 round near: Row, # combos
         // G4 round near: leader
         // http://puzzleanddragonsforum.com/threads/mechanics-comprehensive-guide-to-game-mechanics.50604/
-        // TODO: Fix arraylist indexoutofbounds
         List<Damage> damageList = new ArrayList<>(12);
+        Damage[] damageArray = new Damage[12];
         SparseArray<List<OrbMatch>> colorCombos = new SparseArray<>();
         double activeMultiplier = 1;
         double leaderMultiplier = 1;
@@ -78,7 +78,8 @@ public class CalculateDamage {
 
                 // G4: Leader
                 total = Math.round(total * leaderMultiplier * friendMultiplier);
-                damageList.add(i * 2, new Damage(total, mainAttr));
+                //damageList.add(i * 2, new Damage(total, mainAttr));
+                damageArray[i * 2] = new Damage(total, mainAttr);
             }
             colorMultiplier = mainAttr == subAttr ? 0.1 : 1.0 / 3;
             for (OrbMatch combo : colorCombos.get(subAttr)) {
@@ -96,7 +97,8 @@ public class CalculateDamage {
 
                 // G4: Leader
                 total = Math.round(total * leaderMultiplier * friendMultiplier);
-                damageList.add(i * 2 + 1, new Damage(total, subAttr));
+                //damageList.add(i * 2 + 1, new Damage(total, subAttr));
+                damageArray[i * 2 + 1] = new Damage(total, subAttr);
             }
         }
 
@@ -104,6 +106,6 @@ public class CalculateDamage {
         // nOrb = 1 + 0.25 * (match.count() - 3)
         // pOrbs = (1 + 0.06 * OE_matched) * (1 + 0.05 * team.OEA)
         // bOrb per combo is 1 + 0.25(matched orbs - 3)
-        return damageList;
+        return damageArray;
     }
 }

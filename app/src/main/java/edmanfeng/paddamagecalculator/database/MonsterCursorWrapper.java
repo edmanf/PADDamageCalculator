@@ -23,16 +23,13 @@ public class MonsterCursorWrapper extends CursorWrapper {
         String id = getString(getColumnIndex(MonsterTable.Cols.ID));
         String owner = getString(getColumnIndex(MonsterTable.Cols.OWNER));
         String name = getString(getColumnIndex(MonsterTable.Cols.NAME));
-        String numString = getString(getColumnIndex(MonsterTable.Cols.NUM));
-        String hpString = getString(getColumnIndex(MonsterTable.Cols.BASE_HP));
-        String atkString = getString(getColumnIndex(MonsterTable.Cols.BASE_ATK));
-        String rcvString = getString(getColumnIndex(MonsterTable.Cols.BASE_RCV));
         String attributeString = getString(getColumnIndex(MonsterTable.Cols.ATTRIBUTES));
 
-        int num = Integer.parseInt(numString);
-        int hp = Integer.parseInt(hpString);
-        int atk = Integer.parseInt(atkString);
-        int rcv = Integer.parseInt(rcvString);
+        int num = getInt(getColumnIndex(MonsterTable.Cols.NUM));
+        int hp = getInt(getColumnIndex(MonsterTable.Cols.BASE_HP));
+        int atk = getInt(getColumnIndex(MonsterTable.Cols.BASE_ATK));
+        int rcv = getInt(getColumnIndex(MonsterTable.Cols.BASE_RCV));
+
         String[] attrs = attributeString.split(",");
         int[] attributes = new int[] {Integer.parseInt(attrs[0]), Integer.parseInt(attrs[1])};
 
