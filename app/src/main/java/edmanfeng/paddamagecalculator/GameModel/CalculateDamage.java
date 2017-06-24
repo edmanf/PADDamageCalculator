@@ -19,17 +19,19 @@ public class CalculateDamage {
      * @param combos
      * @return
      */
-    public List<Damage> calculatePerMonsterDamage(Team team, List<OrbMatch> combos) {
+    public static List<Damage> calculatePerMonsterDamage(Team team, List<OrbMatch> combos) {
         // G1 round up: attri multi, enhanced in combo, active
         // G2 round near: TPA
         // G3 round near: Row, # combos
         // G4 round near: leader
         // http://puzzleanddragonsforum.com/threads/mechanics-comprehensive-guide-to-game-mechanics.50604/
-        List<Damage> damageList = new ArrayList<>();
+        // TODO: Fix arraylist indexoutofbounds
+        List<Damage> damageList = new ArrayList<>(12);
         SparseArray<List<OrbMatch>> colorCombos = new SparseArray<>();
         double activeMultiplier = 1;
         double leaderMultiplier = 1;
         double friendMultiplier = 1;
+        friendMultiplier = 5; // TEST DEBUG
 
         // Stores sum of bOrb for each type
         SparseArray<Double> bOrbArray = new SparseArray<>();
@@ -42,6 +44,9 @@ public class CalculateDamage {
          */
         for (OrbMatch combo : combos) {
             List<OrbMatch> list = colorCombos.get(combo.getOrbType(), new ArrayList<OrbMatch>());
+            if (list == null) {
+                list = new ArrayList<>();
+            }
             list.add(combo);
             colorCombos.put(combo.getOrbType(), list);
         }
@@ -50,12 +55,15 @@ public class CalculateDamage {
         for (int i = 0; i < Team.TEAM_SIZE; i++) {
             Monster monster = team.get(i);
             if (monster == null) {
-                break;
+                continue;
             }
             int mainAttr = monster.getAttribute(0);
             int subAttr = monster.getAttribute(1);
             double colorMultiplier = 1.0;
-            for (OrbMatch combo : colorCombos.get(mainAttr)) {
+            for (OrbMatch combo : colorCombos.get(mainAttr, new ArrayList<OrbMatch>())) {
+                if (combo == null) {
+                    continue;
+                }
                 double nOrb = 1 + 0.25 * (combo.getCount() - 3);
                 double pOrb = (1 + 0.06 * combo.getEnhanced()) * (1 + team.getEnhanced(mainAttr));
                 double total = Math.ceil(monster.getAtk() * colorMultiplier * nOrb * pOrb * activeMultiplier);
@@ -66,7 +74,7 @@ public class CalculateDamage {
                 }
 
                 // G3: bCombo, bRow
-                total = Math.round(total * bCombo * team.getRowEnhance(mainAttr));
+                total = Math.round(total * bCombo); //team.getRowEnhance(mainAttr));
 
                 // G4: Leader
                 total = Math.round(total * leaderMultiplier * friendMultiplier);
@@ -84,7 +92,7 @@ public class CalculateDamage {
                 }
 
                 // G3: bCombo, bRow
-                total = Math.round(total * bCombo * team.getRowEnhance(subAttr));
+                total = Math.round(total * bCombo);// * team.getRowEnhance(subAttr));
 
                 // G4: Leader
                 total = Math.round(total * leaderMultiplier * friendMultiplier);
@@ -96,7 +104,6 @@ public class CalculateDamage {
         // nOrb = 1 + 0.25 * (match.count() - 3)
         // pOrbs = (1 + 0.06 * OE_matched) * (1 + 0.05 * team.OEA)
         // bOrb per combo is 1 + 0.25(matched orbs - 3)
-
         return damageList;
     }
 }
