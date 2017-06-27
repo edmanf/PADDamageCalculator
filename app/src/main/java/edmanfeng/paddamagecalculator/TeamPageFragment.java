@@ -28,12 +28,14 @@ import java.util.List;
 import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
+import edmanfeng.paddamagecalculator.GameModel.OrbMatch;
 import edmanfeng.paddamagecalculator.GameModel.Team;
 import edmanfeng.paddamagecalculator.databinding.FragmentTeamPageBinding;
 import edmanfeng.paddamagecalculator.databinding.ListItemMonsterBinding;
 
 /**
- * Created by t7500 on 4/3/2017.
+ * This fragment holds team information and allows you to build and calculate
+ * damage from combos
  */
 
 public class TeamPageFragment extends Fragment {
@@ -52,6 +54,7 @@ public class TeamPageFragment extends Fragment {
 
     private FragmentTeamPageBinding mTeamPageBinding;
     private Team mTeam;
+    private List<OrbMatch> mOrbMatches;
 
     private boolean mNewTeam;
 
@@ -80,6 +83,8 @@ public class TeamPageFragment extends Fragment {
             mTeam = teamLab.getTeam(id);
             mNewTeam = false;
         }
+
+        mOrbMatches = new ArrayList<>();
     }
 
     @Nullable
@@ -89,12 +94,11 @@ public class TeamPageFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mTeamPageBinding = FragmentTeamPageBinding.inflate(inflater);
 
-        View view = mTeamPageBinding.getRoot();
+        //TODO: https://stackoverflow.com/questions/39201778/android-recyclerview-for-a-few-items
 
         RecyclerView teamRecyclerView = mTeamPageBinding.teamRecyclerView;
-        teamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
-
+        teamRecyclerView.setLayoutManager(new LinearLayoutManager(
+                getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         // TODO: Figure out what to do with all the spinners in data binding
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
@@ -107,12 +111,12 @@ public class TeamPageFragment extends Fragment {
             orbCountLimits.add(i);
         }
 
-        ArrayAdapter<Integer> comboOrbNumAdapter = new ArrayAdapter<Integer>(
+        ArrayAdapter<Integer> comboOrbNumAdapter = new ArrayAdapter<>(
                 getActivity(), android.R.layout.simple_spinner_item, orbCountLimits);
         comboOrbNumAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTeamPageBinding.comboOrbNumberSpinner.setAdapter(comboOrbNumAdapter);
 
-        ArrayAdapter<Integer> comboEnhanceNumAdapter = new ArrayAdapter<Integer>(
+        ArrayAdapter<Integer> comboEnhanceNumAdapter = new ArrayAdapter<>(
                 getActivity(), android.R.layout.simple_spinner_item, orbCountLimits);
         comboEnhanceNumAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTeamPageBinding.comboEnhanceNumberSpinner
@@ -125,7 +129,7 @@ public class TeamPageFragment extends Fragment {
 
         MonsterAdapter adapter = new MonsterAdapter(mTeam.asList());
         teamRecyclerView.setAdapter(adapter);
-        return view;
+        return mTeamPageBinding.getRoot();
     }
 
     @Override
@@ -181,6 +185,32 @@ public class TeamPageFragment extends Fragment {
         }
     }
 
+    private class ComboHolder extends RecyclerView.ViewHolder {
+        public ComboHolder (View itemView) {
+            super(itemView);
+        }
+
+        public void bindCombo(OrbMatch combo) {
+
+        }
+    }
+
+    private class ComboAdapter extends RecyclerView.Adapter<ComboHolder> {
+        @Override
+        public ComboHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(ComboHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+    }
 
     private class MonsterHolder extends RecyclerView.ViewHolder {
         private ListItemMonsterBinding mItemBinding;
