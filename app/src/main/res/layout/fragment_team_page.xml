@@ -61,10 +61,10 @@
             tools:layout_conversion_absoluteWidth="40dp"
             tools:layout_conversion_absoluteHeight="16dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/combo_enhance_number_spinner"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="25dp"
-            app:layout_constraintTop_toBottomOf="@+id/combo_shape_label"/>
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_shape_label"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/combo_orb_number_spinner"
@@ -74,9 +74,9 @@
             tools:layout_conversion_absoluteY="197dp"
             tools:layout_conversion_absoluteWidth="48dp"
             tools:layout_conversion_absoluteHeight="24dp"
-            app:layout_constraintLeft_toRightOf="@+id/combo_orb_number_label"
-            android:layout_marginLeft="40dp"
             android:layout_marginStart="40dp"
+            app:layout_constraintLeft_toRightOf="@+id/combo_orb_number_label"
+            android:layout_marginLeft="38dp"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/combo_shape_spinner"/>
 
@@ -91,10 +91,10 @@
             tools:layout_conversion_absoluteY="181dp"
             tools:layout_conversion_absoluteWidth="73dp"
             tools:layout_conversion_absoluteHeight="16dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintTop_toBottomOf="@+id/combo_type_label"/>
 
         <android.support.v7.widget.AppCompatSpinner
@@ -108,7 +108,7 @@
             app:layout_constraintLeft_toRightOf="@+id/combo_enhance_number_label"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/combo_type_spinner"/>
 
 
@@ -123,10 +123,10 @@
             tools:layout_conversion_absoluteWidth="39dp"
             tools:layout_conversion_absoluteHeight="16dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/combo_type_spinner"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/team_recycler_view"/>
+            android:layout_marginLeft="-3dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_label"/>
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/combo_shape_spinner"
@@ -136,11 +136,11 @@
             tools:layout_conversion_absoluteY="197dp"
             tools:layout_conversion_absoluteWidth="48dp"
             tools:layout_conversion_absoluteHeight="24dp"
-            app:layout_constraintLeft_toRightOf="@+id/combo_shape_label"
-            android:layout_marginLeft="42dp"
             android:layout_marginStart="42dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/team_recycler_view"/>
+            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_spinner"
+            app:layout_constraintLeft_toRightOf="@+id/combo_shape_label"
+            android:layout_marginLeft="8dp"/>
 
         <Button
             android:id="@+id/add_combo_button"
@@ -148,20 +148,29 @@
             android:layout_height="wrap_content"
             android:text="@string/add_combo_button_text"
             tools:text="Add"
-            app:layout_constraintLeft_toRightOf="@+id/combo_shape_spinner"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/team_recycler_view"/>
+            app:layout_constraintTop_toBottomOf="@+id/team_recycler_view"
+            app:layout_constraintLeft_toRightOf="@+id/combo_type_spinner"
+            android:layout_marginLeft="8dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/combo_recyclerview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_spinner"/>
+            app:layout_constraintTop_toBottomOf="@+id/combo_orb_number_spinner"/>
+
+        <Button
+            android:id="@+id/combo_calculate_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calculate_combo_button_text"
+            tools:layout_editor_absoluteY="374dp"
+            app:layout_constraintLeft_toRightOf="@+id/combo_recyclerview"
+            android:layout_marginLeft="89dp"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
