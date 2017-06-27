@@ -23,20 +23,21 @@
     <string name="choose_number_enhanced_label"># enhanced</string>
     <string name="choose_shape_label">Shape</string>
     <string name="menu_save_team">Save Team</string>
+    <string name="add_combo_button_text">Add Combo</string>
     <string-array name="orb_types">
-        <item>Red</item>
-        <item>Blue</item>
-        <item>Green</item>
-        <item>Yellow</item>
-        <item>Purple</item>
-        <item>Heart</item>
+        <item>Fire</item>
+        <item>Water</item>
+        <item>Wood</item>
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Heal</item>
         <item>Jammer</item>
         <item>Poison</item>
         <item>Mortal Poison</item>
         <item>Bomb</item>
     </string-array>
     <string-array name="combo_shape_types">
-        <item name="blob">Blob</item>
+        <item name="blob">Normal</item>
         <item name="tpa">TPA</item>
         <item name="row">Row</item>
         <item name="cross">Cross</item>
