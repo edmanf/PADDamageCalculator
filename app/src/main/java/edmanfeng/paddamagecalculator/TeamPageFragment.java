@@ -51,11 +51,6 @@ public class TeamPageFragment extends Fragment {
     private static final int MAX_ORBS = 42;
 
     private FragmentTeamPageBinding mTeamPageBinding;
-    private RecyclerView.Adapter mTeamAdapter;
-    private Spinner mComboTypeSpinner;
-    private Spinner mComboOrbNumberSpinner;
-    private Spinner mComboEnhanceNumberSpinner;
-    private Spinner mComboShapeSpinner;
     private Team mTeam;
 
     private boolean mNewTeam;
@@ -102,39 +97,34 @@ public class TeamPageFragment extends Fragment {
 
 
         // TODO: Figure out what to do with all the spinners in data binding
-        mComboTypeSpinner = (Spinner)view.findViewById(R.id.combo_type_spinner);
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
                 getActivity(), R.array.orb_types, android.R.layout.simple_spinner_item);
         comboTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mComboTypeSpinner.setAdapter(comboTypeAdapter);
+        mTeamPageBinding.comboTypeSpinner.setAdapter(comboTypeAdapter);
 
         List<Integer> orbCountLimits = new ArrayList<>();
         for (int i = MIN_ORBS; i < MAX_ORBS; i++) {
             orbCountLimits.add(i);
         }
-        mComboOrbNumberSpinner = (Spinner)view
-                .findViewById(R.id.combo_orb_number_spinner);
+
         ArrayAdapter<Integer> comboOrbNumAdapter = new ArrayAdapter<Integer>(
                 getActivity(), android.R.layout.simple_spinner_item, orbCountLimits);
         comboOrbNumAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mComboOrbNumberSpinner.setAdapter(comboOrbNumAdapter);
+        mTeamPageBinding.comboOrbNumberSpinner.setAdapter(comboOrbNumAdapter);
 
-
-        mComboEnhanceNumberSpinner = (Spinner) view
-                .findViewById(R.id.combo_enhance_number_spinner);
         ArrayAdapter<Integer> comboEnhanceNumAdapter = new ArrayAdapter<Integer>(
                 getActivity(), android.R.layout.simple_spinner_item, orbCountLimits);
         comboEnhanceNumAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mComboEnhanceNumberSpinner.setAdapter(comboEnhanceNumAdapter);
+        mTeamPageBinding.comboEnhanceNumberSpinner
+                .setAdapter(comboEnhanceNumAdapter);
 
-        mComboShapeSpinner = (Spinner)view.findViewById(R.id.combo_shape_spinner);
         ArrayAdapter<CharSequence> comboShapeAdapter = ArrayAdapter.createFromResource(
                 getActivity(), R.array.combo_shape_types, android.R.layout.simple_spinner_item);
         comboShapeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mComboShapeSpinner.setAdapter(comboShapeAdapter);
+        mTeamPageBinding.comboShapeSpinner.setAdapter(comboShapeAdapter);
 
-        mTeamAdapter = new MonsterAdapter(mTeam.asList());
-        teamRecyclerView.setAdapter(mTeamAdapter);
+        MonsterAdapter adapter = new MonsterAdapter(mTeam.asList());
+        teamRecyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -154,7 +144,7 @@ public class TeamPageFragment extends Fragment {
 
 //            monster = FirebaseUtility.getMonster(monster.getNum());
   //          mTeam.set(pos, monster);
-            mTeamAdapter.notifyDataSetChanged();
+            mTeamPageBinding.teamRecyclerView.getAdapter().notifyDataSetChanged();
         }
     }
 
@@ -194,7 +184,6 @@ public class TeamPageFragment extends Fragment {
 
     private class MonsterHolder extends RecyclerView.ViewHolder {
         private ListItemMonsterBinding mItemBinding;
-
 
         public MonsterHolder(ListItemMonsterBinding binding) {
             super(binding.getRoot());
