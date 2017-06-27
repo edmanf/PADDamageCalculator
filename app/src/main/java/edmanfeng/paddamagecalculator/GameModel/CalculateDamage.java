@@ -13,13 +13,18 @@ import java.util.Map;
  */
 
 public class CalculateDamage {
+
+    // TODO: Get rid of leadermulti and friendleadermlti
     /**
-     * The order will be in (main, sub) for each monster in team
-     * @param team
-     * @param combos
-     * @return
+     * Array of damage given by the team and combos made.
+     * The ith monster in the team will have its main attribute damage in the (i * 2) position
+     * and its sub attribute damage in the ((i * 2) + 1) positon.
+     * @param team The team to calculate damage for
+     * @param combos A list of OrbMatches that make up the combos
+     * @return Returns an array of Damage that the team will deal with the given combos
      */
-    public static Damage[] calculatePerMonsterDamage(Team team, List<OrbMatch> combos) {
+    public static Damage[] calculatePerMonsterDamage(Team team, List<OrbMatch> combos,
+                                                     double leaderMulti, double friendLeaderMulti) {
         // G1 round up: attri multi, enhanced in combo, active
         // G2 round near: TPA
         // G3 round near: Row, # combos
@@ -29,8 +34,8 @@ public class CalculateDamage {
         Damage[] damageArray = new Damage[12];
         SparseArray<List<OrbMatch>> colorCombos = new SparseArray<>();
         double activeMultiplier = 1;
-        double leaderMultiplier = 1;
-        double friendMultiplier = 1;
+        double leaderMultiplier = leaderMulti;
+        double friendMultiplier = friendLeaderMulti;
         friendMultiplier = 5; // TEST DEBUG
 
         // Stores sum of bOrb for each type
@@ -40,7 +45,6 @@ public class CalculateDamage {
            With: worst case is go through combos once, then (if all combos are same type)
                  each monster goes through each combo in list (m * n + n)
                  avg case is k combo for each attr, so n + m * k
-
          */
         for (OrbMatch combo : combos) {
             List<OrbMatch> list = colorCombos.get(combo.getOrbType(), new ArrayList<OrbMatch>());
