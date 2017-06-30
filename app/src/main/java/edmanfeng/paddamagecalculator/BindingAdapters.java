@@ -31,7 +31,7 @@ import edmanfeng.paddamagecalculator.GameModel.Monster;
 public class BindingAdapters {
     private static final String TAG = "BindingAdapters";
 
-    @BindingAdapter({"bind:imageUrl"})
+    @BindingAdapter({"app:imageUrl"})
     public static void loadImage(ImageView image, String imageUrl) {
         Log.d(TAG, "load image " + imageUrl);
         String url = imageUrl;
@@ -44,6 +44,11 @@ public class BindingAdapters {
                 .placeholder(R.drawable.monster_image_placeholder)
                 .fitCenter()
                 .into(image);
+    }
+
+    @BindingAdapter({"app:selectedValue"})
+    public static void bindSpinner(AppCompatSpinner appCompatSpinner, int orbType) {
+        Log.d(TAG, "Bind spinner orbType: " + orbType);
     }
 
 
