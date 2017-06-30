@@ -3,15 +3,12 @@ package edmanfeng.paddamagecalculator;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
-import android.databinding.InverseBindingMethod;
-import android.databinding.InverseBindingMethods;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +16,7 @@ import com.bumptech.glide.Glide;
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 
 /**
- * Created by t7500 on 6/22/2017.
+ * This class stores the adapters for data binding
  */
 
 /*
@@ -49,19 +46,25 @@ public class BindingAdapters {
 
 
     @BindingAdapter({"app:selectedValue"})
-    public static void setShape(AppCompatSpinner appCompatSpinner, int orbType) {
-        Log.d(TAG, "Set type: " + orbType);
+    public static void setValue(AppCompatSpinner appCompatSpinner,
+                                int value) {
+        appCompatSpinner.setSelection(value);
+        Log.d(TAG, "Set: " + value);
     }
 
-    @InverseBindingAdapter(attribute = "app:selectedValue")
-    public static int getShape(AppCompatSpinner appCompatSpinner) {
+    @InverseBindingAdapter(attribute = "app:selectedValue", event = "app:selectedValueAttrChanged")
+    public static int getValue(AppCompatSpinner appCompatSpinner) {
         int res = appCompatSpinner.getSelectedItemPosition();
-        Log.d(TAG, "Inverse get type: " + res);
+        Log.d(TAG, "Inverse get: " + res);
         return res;
     }
 
-    @BindingAdapter(value = {"bind:selectedValue", "bind:selectedValueAttrChanged"}, requireAll = false)
-    public static void bindSpinnerData(AppCompatSpinner pAppCompatSpinner, final String newSelectedValue, final InverseBindingListener newTextAttrChanged) {
+    @BindingAdapter(value = {"bind:selectedValue",
+            "bind:selectedValueAttrChanged"},
+            requireAll = false)
+    public static void bindSpinnerData(AppCompatSpinner pAppCompatSpinner,
+                                       final String newSelectedValue,
+                                       final InverseBindingListener newTextAttrChanged) {
         Log.d(TAG, "bindSpinnerData: " + newSelectedValue);
         pAppCompatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,10 +85,12 @@ public class BindingAdapters {
             pAppCompatSpinner.setSelection(pos, true);
         }
     }
+
+    /*
     @InverseBindingAdapter(attribute = "bind:selectedValue", event = "bind:selectedValueAttrChanged")
     public static String captureSelectedValue(AppCompatSpinner pAppCompatSpinner) {
         return (String) pAppCompatSpinner.getSelectedItem();
-    }
+    }*/
 
 
 /*

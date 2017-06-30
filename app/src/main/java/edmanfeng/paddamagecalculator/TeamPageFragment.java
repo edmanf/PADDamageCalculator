@@ -50,7 +50,7 @@ public class TeamPageFragment extends Fragment {
 
     private static final int VIEW_ITEMS_TO_DISPLAY = 6;
 
-    private static final int MIN_ORBS = 1;
+    private static final int MIN_ORBS = 0;
     private static final int MAX_ORBS = 42;
 
     private FragmentTeamPageBinding mTeamPageBinding;
