@@ -19,7 +19,6 @@ public class MonsterCursorWrapper extends CursorWrapper {
     }
 
     public Monster getMonster() {
-        // TODO: Change int strings to use getInt()
         String id = getString(getColumnIndex(MonsterTable.Cols.ID));
         String owner = getString(getColumnIndex(MonsterTable.Cols.OWNER));
         String name = getString(getColumnIndex(MonsterTable.Cols.NAME));
