@@ -104,7 +104,6 @@ public class TeamPageFragment extends Fragment {
         teamRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        // TODO: Figure out what to do with all the spinners in data binding
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
                 getActivity(), R.array.orb_types, android.R.layout.simple_spinner_item);
         comboTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

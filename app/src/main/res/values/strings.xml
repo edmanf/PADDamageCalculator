@@ -24,7 +24,7 @@
     <string name="choose_shape_label">Shape</string>
     <string name="menu_save_team">Save Team</string>
     <string name="add_combo_button_text">Add Combo</string>
-    <string name="calculate_combo_button_text">Calculate Damage</string>
+    <string name="calculate_combo_button_text">Calculate</string>
     <string-array name="orb_types">
         <item>Fire</item>
         <item>Water</item>
