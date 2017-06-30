@@ -2,6 +2,7 @@ package edmanfeng.paddamagecalculator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.InverseBindingListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -55,6 +56,7 @@ public class TeamPageFragment extends Fragment {
     private FragmentTeamPageBinding mTeamPageBinding;
     private Team mTeam;
     private List<OrbMatch> mOrbMatches;
+    private OrbMatch mCurrentMatch;
 
     private boolean mNewTeam;
 
@@ -85,6 +87,7 @@ public class TeamPageFragment extends Fragment {
         }
 
         mOrbMatches = new ArrayList<>();
+        mCurrentMatch = new OrbMatch();
     }
 
     @Nullable
@@ -93,6 +96,7 @@ public class TeamPageFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mTeamPageBinding = FragmentTeamPageBinding.inflate(inflater);
+        mTeamPageBinding.setOrbmatch(mCurrentMatch);
 
         //TODO: https://stackoverflow.com/questions/39201778/android-recyclerview-for-a-few-items
 

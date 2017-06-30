@@ -35,6 +35,10 @@ public class OrbMatch {
         mEnhanced = enhanced;
     }
 
+    public OrbMatch() {
+        this(ORB_TYPE_FIRE, 0, 0);
+    }
+
     public int getOrbType() {
         return mOrbType;
     }
