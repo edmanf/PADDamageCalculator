@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
@@ -96,7 +97,9 @@ public class TeamPageFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mTeamPageBinding = FragmentTeamPageBinding.inflate(inflater);
+        mTeamPageBinding.setAdapters(new BindingAdapters());
         mTeamPageBinding.setOrbmatch(mCurrentMatch);
+        mTeamPageBinding.setCombolist(mOrbMatches);
 
         //TODO: https://stackoverflow.com/questions/39201778/android-recyclerview-for-a-few-items
 
@@ -132,6 +135,7 @@ public class TeamPageFragment extends Fragment {
 
         MonsterAdapter adapter = new MonsterAdapter(mTeam.asList());
         teamRecyclerView.setAdapter(adapter);
+
         return mTeamPageBinding.getRoot();
     }
 

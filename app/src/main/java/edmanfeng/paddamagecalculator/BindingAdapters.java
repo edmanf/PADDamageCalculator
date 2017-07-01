@@ -27,7 +27,7 @@ import edmanfeng.paddamagecalculator.GameModel.OrbMatch;
 public class BindingAdapters {
     private static final String TAG = "BindingAdapters";
 
-    @BindingAdapter({"app:imageUrl"})
+    @BindingAdapter({"imageUrl"})
     public static void loadImage(ImageView image, String imageUrl) {
         Log.d(TAG, "load image " + imageUrl);
         String url = imageUrl;
@@ -43,22 +43,22 @@ public class BindingAdapters {
     }
 
 
-    @BindingAdapter({"app:selectedValue"})
+    @BindingAdapter({"selectedValue"})
     public static void setValue(AppCompatSpinner appCompatSpinner,
                                 int value) {
         appCompatSpinner.setSelection(value);
         Log.d(TAG, "Set: " + value);
     }
 
-    @InverseBindingAdapter(attribute = "app:selectedValue", event = "app:selectedValueAttrChanged")
+    @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
     public static int getValue(AppCompatSpinner appCompatSpinner) {
         int res = appCompatSpinner.getSelectedItemPosition();
         Log.d(TAG, "Inverse get: " + res);
         return res;
     }
 
-    @BindingAdapter(value = {"bind:selectedValue",
-            "bind:selectedValueAttrChanged"},
+    @BindingAdapter(value = {"selectedValue",
+            "selectedValueAttrChanged"},
             requireAll = false)
     public static void bindSpinnerData(AppCompatSpinner pAppCompatSpinner,
                                        final String newSelectedValue,
@@ -84,8 +84,9 @@ public class BindingAdapters {
         }
     }
 
-    public static void onAddCombo(OrbMatch combo, List<OrbMatch> list) {
+    public void onAddCombo(OrbMatch combo, List list) {
         if (combo.getCount() > 0 && combo.getEnhanced() <= combo.getCount()) {
+            Log.d(TAG, "good combo: " + combo.toString());
             list.add(combo);
         } else {
             Log.d(TAG, "bad combo");

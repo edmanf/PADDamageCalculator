@@ -17,12 +17,12 @@ public class OrbMatch {
             "WOOD","LIGHT", "DARK", "HEAL", "JAMMER", "POISON"};
 
     public static final int SHAPE_NORMAL = 0;
-    public static final int SHAPE_ROW = 1;
-    public static final int SHAPE_TPA = 2;
+    public static final int SHAPE_TPA = 1;
+    public static final int SHAPE_ROW = 2;
     public static final int SHAPE_CROSS = 3;
     public static final int SHAPE_COLUMN = 4;
-    public static final String[] SHAPES = new String[] {"NORMAL", "ROW",
-            "TPA", "CROSS", "COLUMN"};
+    public static final String[] SHAPES = new String[] {"NORMAL", "TPA",
+            "ROW", "CROSS", "COLUMN"};
 
     private int mOrbType;
     private int mCount;
