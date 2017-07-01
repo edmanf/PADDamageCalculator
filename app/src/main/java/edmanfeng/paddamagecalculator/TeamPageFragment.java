@@ -22,12 +22,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.Inflater;
 
 import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.OrbMatch;
@@ -193,8 +195,11 @@ public class TeamPageFragment extends Fragment {
     }
 
     private class ComboHolder extends RecyclerView.ViewHolder {
+        TextView mTextView;
+
         public ComboHolder (View itemView) {
             super(itemView);
+
         }
 
         public void bindCombo(OrbMatch combo) {
@@ -203,19 +208,27 @@ public class TeamPageFragment extends Fragment {
     }
 
     private class ComboAdapter extends RecyclerView.Adapter<ComboHolder> {
+        List<OrbMatch> mCombos;
+        public ComboAdapter(List<OrbMatch> combos) {
+            mCombos = combos;
+        }
+
         @Override
         public ComboHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return null;
+            // TODO: pass in inflater instead, so combo holder knows its layout instead of the adapter
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View view =  inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            return new ComboHolder(view);
         }
 
         @Override
         public void onBindViewHolder(ComboHolder holder, int position) {
-
+            holder.bindCombo(mCombos.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mCombos.size();
         }
     }
 
