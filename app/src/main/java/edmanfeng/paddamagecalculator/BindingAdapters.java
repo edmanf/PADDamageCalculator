@@ -5,27 +5,25 @@ import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.PagerSnapHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import edmanfeng.paddamagecalculator.GameModel.Monster;
+import edmanfeng.paddamagecalculator.GameModel.OrbMatch;
 
 /**
  * This class stores the adapters for data binding
  */
 
-/*
-@InverseBindingMethods({
-        @InverseBindingMethod(
-                type = AppCompatSpinner.class,
-                attribute = "selectedValue"
-        )
-})*/
 public class BindingAdapters {
     private static final String TAG = "BindingAdapters";
 
@@ -86,42 +84,13 @@ public class BindingAdapters {
         }
     }
 
-    /*
-    @InverseBindingAdapter(attribute = "bind:selectedValue", event = "bind:selectedValueAttrChanged")
-    public static String captureSelectedValue(AppCompatSpinner pAppCompatSpinner) {
-        return (String) pAppCompatSpinner.getSelectedItem();
-    }*/
-
-
-/*
-    @BindingAdapter(value = {"bind:selectedValue", "bind:selectedValueAttrChanged"}, requireAll = false)
-    public static void bindSpinnerData(AppCompatSpinner spinner,String newSelectedValue,
-                                       final InverseBindingAdapter newTextAttrChanged) {
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //newTextAttrChanged.onChange();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        if (newSelectedValue != null) {
-            int pos = ((ArrayAdapter<String>) spinner.getAdapter()).getPosition(newSelectedValue);
-            spinner.setSelection(pos);
+    public static void onAddCombo(OrbMatch combo, List<OrbMatch> list) {
+        if (combo.getCount() > 0 && combo.getEnhanced() <= combo.getCount()) {
+            list.add(combo);
+        } else {
+            Log.d(TAG, "bad combo");
+            // display a toast describing the error
         }
-    }*/
+    }
 
-    /*
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageButton imageButton, String imageUrl) {
-        Log.d(TAG, "load image " + imageUrl);
-        Uri uri = Uri.parse(imageUrl);
-        Glide.with(imageButton.getContext())
-                .load(uri)
-                .fitCenter()
-                .into(imageButton);
-    }*/
 }

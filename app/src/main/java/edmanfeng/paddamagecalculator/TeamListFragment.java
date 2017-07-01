@@ -1,10 +1,8 @@
 package edmanfeng.paddamagecalculator;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,16 +12,9 @@ import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import edmanfeng.paddamagecalculator.GameModel.CalculateDamage;
-import edmanfeng.paddamagecalculator.GameModel.Damage;
-import edmanfeng.paddamagecalculator.GameModel.Monster;
-import edmanfeng.paddamagecalculator.GameModel.OrbMatch;
 import edmanfeng.paddamagecalculator.GameModel.Team;
-import edmanfeng.paddamagecalculator.database.TeamBaseHelper;
 
 /**
  * Created by t7500 on 2/27/2017.
@@ -32,11 +23,6 @@ import edmanfeng.paddamagecalculator.database.TeamBaseHelper;
 public class TeamListFragment extends Fragment {
     private static final String TAG = "TeamListFragment";
 
-
-    private RecyclerView mTeamRecyclerView;
-    private TeamAdapter mAdapter;
-    private SQLiteDatabase mTeamDatabase;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,56 +30,6 @@ public class TeamListFragment extends Fragment {
 
         // Call here to trigger the retrieval of FB data
         MonsterLab.get(getActivity());
-        Team team = new Team();
-        //String uuid, String owner, String name,
-        //int num, int hp, int atk, int rcv, int[] attributes
-        Monster kuvia = new Monster(
-                UUID.randomUUID().toString(), "", "Kuvia",
-                1, 3217, 1516, 590,
-                new int[]{Monster.Attribute.FIRE, Monster.Attribute.WATER}
-        );
-        Monster odin = new Monster(
-                UUID.randomUUID().toString(), "", "Odin",
-                2, 4531, 1291, 548,
-                new int[]{Monster.Attribute.WATER, Monster.Attribute.DARK}
-        );
-        Monster gilliam = new Monster(
-                UUID.randomUUID().toString(), "", "Gilliam",
-                3, 2213, 1659, 272,
-                new int[]{Monster.Attribute.WOOD, Monster.Attribute.DARK}
-        );
-        Monster cthulhu = new Monster(
-                UUID.randomUUID().toString(), "", "Cthulhu",
-                6, 3028, 1827, 253,
-                new int[]{Monster.Attribute.FIRE, Monster.Attribute.WATER}
-        );
-        Monster[] monsters = new Monster[]{kuvia, odin, gilliam,
-                null, null, cthulhu};
-        team.setMonsters(monsters);
-
-        List<OrbMatch> combos = new ArrayList<>();
-        combos.add(new OrbMatch(OrbMatch.ORB_TYPE_DARK, 3, 0));
-        combos.add(new OrbMatch(OrbMatch.ORB_TYPE_LIGHT, 3, 0));
-        combos.add(new OrbMatch(OrbMatch.ORB_TYPE_FIRE, 3, 0));
-        combos.add(new OrbMatch(OrbMatch.ORB_TYPE_WOOD, 3, 0));
-        combos.add(new OrbMatch(OrbMatch.ORB_TYPE_WATER, 3, 0));
-        combos.add(new OrbMatch(OrbMatch.ORB_TYPE_WOOD, 4, 0));
-
-        List<Damage> damages = new ArrayList<>();
-        damages.add(new Damage(17055.0, OrbMatch.ORB_TYPE_FIRE));
-        damages.add(new Damage(5695.0, OrbMatch.ORB_TYPE_WATER));
-        damages.add(new Damage(14525.0, OrbMatch.ORB_TYPE_WATER));
-        damages.add(new Damage(4850.0, OrbMatch.ORB_TYPE_DARK));
-        damages.add(new Damage(71170.0, OrbMatch.ORB_TYPE_WOOD));
-        damages.add(new Damage(6225.0, OrbMatch.ORB_TYPE_DARK));
-        damages.add(null);
-        damages.add(null);
-        damages.add(null);
-        damages.add(null);
-        damages.add(new Damage(20555.0, OrbMatch.ORB_TYPE_WATER));
-        damages.add(null);
-        Damage[] calculated = CalculateDamage.calculatePerMonsterDamage(team, combos,1, 5);
-        Log.d("HELEL", calculated.toString());
     }
 
     @Override
@@ -127,12 +63,10 @@ public class TeamListFragment extends Fragment {
         // inflate the recycler layout and save the recycler view
         View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
-        mTeamDatabase = new TeamBaseHelper(getContext()).getWritableDatabase();
-
-        mTeamRecyclerView = (RecyclerView) view
+        final RecyclerView teamRecyclerView = (RecyclerView) view
                 .findViewById(R.id.team_list_recycler_view);
-        mTeamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mTeamRecyclerView.setAdapter(
+        teamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        teamRecyclerView.setAdapter(
                 new TeamAdapter(TeamLab.get(getContext()).getTeams()));
         return view;
     }
