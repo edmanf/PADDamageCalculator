@@ -77,7 +77,7 @@ public class OrbMatch {
      */
     @Override
     public String toString() {
-        return "{" + ORB_TYPES[mOrbType] + "," + mCount + "," +
-                mEnhanced + "," + SHAPES[mShape];
+        return "{" + ORB_TYPES[mOrbType] + ", " + mCount + " orbs, " +
+                mEnhanced + " enhanced, " + SHAPES[mShape] + "}";
     }
 }
