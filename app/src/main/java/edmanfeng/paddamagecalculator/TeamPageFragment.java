@@ -108,6 +108,8 @@ public class TeamPageFragment extends Fragment {
         RecyclerView teamRecyclerView = mTeamPageBinding.teamRecyclerView;
         teamRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        MonsterAdapter adapter = new MonsterAdapter(mTeam.asList());
+        teamRecyclerView.setAdapter(adapter);
 
         ArrayAdapter<CharSequence> comboTypeAdapter = ArrayAdapter.createFromResource(
                 getActivity(), R.array.orb_types, android.R.layout.simple_spinner_item);
@@ -135,8 +137,24 @@ public class TeamPageFragment extends Fragment {
         comboShapeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTeamPageBinding.comboShapeSpinner.setAdapter(comboShapeAdapter);
 
-        MonsterAdapter adapter = new MonsterAdapter(mTeam.asList());
-        teamRecyclerView.setAdapter(adapter);
+
+        final RecyclerView comboRecyclerView = mTeamPageBinding.comboRecyclerview;
+        comboRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        comboRecyclerView.setAdapter(new ComboAdapter(mOrbMatches));
+
+        mTeamPageBinding.addComboButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentMatch.getCount() > 0 && mCurrentMatch.getEnhanced() <= mCurrentMatch.getCount()) {
+                    Log.d(TAG, "good combo: " + mCurrentMatch.toString());
+                    mOrbMatches.add(mCurrentMatch);
+                    mTeamPageBinding.comboRecyclerview.getAdapter().notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "bad combo");
+                    // display a toast describing the error
+                }
+            }
+        });
 
         return mTeamPageBinding.getRoot();
     }
@@ -199,11 +217,11 @@ public class TeamPageFragment extends Fragment {
 
         public ComboHolder (View itemView) {
             super(itemView);
-
+            mTextView = (TextView) itemView.findViewById(android.R.id.text1);
         }
 
         public void bindCombo(OrbMatch combo) {
-
+            mTextView.setText(combo.toString());
         }
     }
 

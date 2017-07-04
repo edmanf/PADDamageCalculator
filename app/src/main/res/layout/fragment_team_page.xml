@@ -162,12 +162,11 @@
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_spinner"
-            android:onClick="@{() -> adapters.onAddCombo(orbmatch, combolist)}"/>
+            app:layout_constraintTop_toBottomOf="@+id/combo_enhance_number_spinner"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/combo_recyclerview"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="59dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
