@@ -35,6 +35,7 @@ import edmanfeng.paddamagecalculator.GameModel.Monster;
 import edmanfeng.paddamagecalculator.GameModel.OrbMatch;
 import edmanfeng.paddamagecalculator.GameModel.Team;
 import edmanfeng.paddamagecalculator.databinding.FragmentTeamPageBinding;
+import edmanfeng.paddamagecalculator.databinding.ListItemComboBinding;
 import edmanfeng.paddamagecalculator.databinding.ListItemMonsterBinding;
 
 /**
@@ -147,7 +148,7 @@ public class TeamPageFragment extends Fragment {
             public void onClick(View v) {
                 if (mCurrentMatch.getCount() > 0 && mCurrentMatch.getEnhanced() <= mCurrentMatch.getCount()) {
                     Log.d(TAG, "good combo: " + mCurrentMatch.toString());
-                    mOrbMatches.add(mCurrentMatch);
+                    mOrbMatches.add(new OrbMatch(mCurrentMatch));
                     mTeamPageBinding.comboRecyclerview.getAdapter().notifyDataSetChanged();
                 } else {
                     Log.d(TAG, "bad combo");
@@ -213,15 +214,15 @@ public class TeamPageFragment extends Fragment {
     }
 
     private class ComboHolder extends RecyclerView.ViewHolder {
-        TextView mTextView;
+        ListItemComboBinding mComboBinding;
 
-        public ComboHolder (View itemView) {
-            super(itemView);
-            mTextView = (TextView) itemView.findViewById(android.R.id.text1);
+        public ComboHolder (ListItemComboBinding binding) {
+            super(binding.getRoot());
+            mComboBinding = binding;
         }
 
         public void bindCombo(OrbMatch combo) {
-            mTextView.setText(combo.toString());
+            mComboBinding.setCombo(combo);
         }
     }
 
@@ -234,9 +235,9 @@ public class TeamPageFragment extends Fragment {
         @Override
         public ComboHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             // TODO: pass in inflater instead, so combo holder knows its layout instead of the adapter
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View view =  inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-            return new ComboHolder(view);
+            ListItemComboBinding binding = ListItemComboBinding
+                    .inflate(LayoutInflater.from(getActivity()), parent, false);
+            return new ComboHolder(binding);
         }
 
         @Override

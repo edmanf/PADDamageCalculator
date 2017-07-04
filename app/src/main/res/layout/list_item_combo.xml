@@ -10,5 +10,6 @@
         android:id="@+id/combo_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{`@colors/` + combo.color}"/>
+        android:text="@{combo.toString}"
+        android:background="@{combo.color}"/>
 </layout>

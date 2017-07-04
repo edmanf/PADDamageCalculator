@@ -1,5 +1,9 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,10 +38,11 @@ public class OrbMatch {
     private int mShape;
     private int mEnhanced;
 
-    public OrbMatch(int orbType, int count, int enhanced) {
+    public OrbMatch(int orbType, int count, int enhanced, int shape) {
         mOrbType = orbType;
         mCount = count;
         mEnhanced = enhanced;
+        mShape = shape;
 
         mColors = new HashMap<>();
         mColors.put(ORB_TYPES[ORB_TYPE_FIRE], "red");
@@ -45,11 +50,18 @@ public class OrbMatch {
         mColors.put(ORB_TYPES[ORB_TYPE_WOOD], "green");
         mColors.put(ORB_TYPES[ORB_TYPE_DARK], "purple");
         mColors.put(ORB_TYPES[ORB_TYPE_LIGHT], "yellow");
+        mColors.put(ORB_TYPES[ORB_TYPE_HEAL], "pink");
+        mColors.put(ORB_TYPES[ORB_TYPE_JAMMER], "darkgray");
+        mColors.put(ORB_TYPES[ORB_TYPE_POISON], "darkgray");
 
     }
 
     public OrbMatch() {
-        this(ORB_TYPE_FIRE, 0, 0);
+        this(ORB_TYPE_FIRE, 0, 0, 0);
+    }
+
+    public OrbMatch(OrbMatch orig) {
+        this(orig.getOrbType(), orig.getCount(), orig.getEnhanced(), orig.getShape());
     }
 
     public int getOrbType() {
@@ -84,8 +96,8 @@ public class OrbMatch {
         mEnhanced = enhanced;
     }
 
-    public String getColor() {
-        return mColors.get(ORB_TYPES[getOrbType()]);
+    public Drawable getColor() {
+        return new ColorDrawable(Color.parseColor(mColors.get(ORB_TYPES[getOrbType()])));
     }
 
     /**
