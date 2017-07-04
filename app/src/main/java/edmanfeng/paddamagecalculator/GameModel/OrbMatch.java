@@ -1,5 +1,8 @@
 package edmanfeng.paddamagecalculator.GameModel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents a single match of orbs
  */
@@ -24,6 +27,8 @@ public class OrbMatch {
     public static final String[] SHAPES = new String[] {"NORMAL", "TPA",
             "ROW", "CROSS", "COLUMN"};
 
+    private final Map<String, String> mColors;
+
     private int mOrbType;
     private int mCount;
     private int mShape;
@@ -33,6 +38,14 @@ public class OrbMatch {
         mOrbType = orbType;
         mCount = count;
         mEnhanced = enhanced;
+
+        mColors = new HashMap<>();
+        mColors.put(ORB_TYPES[ORB_TYPE_FIRE], "red");
+        mColors.put(ORB_TYPES[ORB_TYPE_WATER], "blue");
+        mColors.put(ORB_TYPES[ORB_TYPE_WOOD], "green");
+        mColors.put(ORB_TYPES[ORB_TYPE_DARK], "purple");
+        mColors.put(ORB_TYPES[ORB_TYPE_LIGHT], "yellow");
+
     }
 
     public OrbMatch() {
@@ -71,6 +84,10 @@ public class OrbMatch {
         mEnhanced = enhanced;
     }
 
+    public String getColor() {
+        return mColors.get(ORB_TYPES[getOrbType()]);
+    }
+
     /**
      * Format: {type,number of orbs,number of enhanced orbs,shape}
      * @return
@@ -80,4 +97,6 @@ public class OrbMatch {
         return "{" + ORB_TYPES[mOrbType] + ", " + mCount + " orbs, " +
                 mEnhanced + " enhanced, " + SHAPES[mShape] + "}";
     }
+
+
 }
