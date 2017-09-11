@@ -1,6 +1,7 @@
 package edmanfeng.paddamagecalculator;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -36,12 +37,7 @@ public class TeamListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_team:
-                TeamPageFragment teamPageFragment = TeamPageFragment.newInstance(null);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, teamPageFragment)
-                        .addToBackStack(null)
-                        .commit();
+                instantiateNewTeamPage();
                 return true;
             case R.id.menu_item_manage_accounts:
                 AccountSyncFragment fragment = AccountSyncFragment
@@ -57,6 +53,15 @@ public class TeamListFragment extends Fragment {
 
     }
 
+    private void instantiateNewTeamPage() {
+        TeamPageFragment teamPageFragment = TeamPageFragment.newInstance(null);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, teamPageFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +73,16 @@ public class TeamListFragment extends Fragment {
         teamRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         teamRecyclerView.setAdapter(
                 new TeamAdapter(TeamLab.get(getContext()).getTeams()));
+
+        final FloatingActionButton newTeamFAB = (FloatingActionButton) view.
+                findViewById(R.id.new_team_fab);
+        newTeamFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                instantiateNewTeamPage();
+            }
+        });
+
         return view;
     }
 
@@ -76,6 +91,8 @@ public class TeamListFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_team_list, menu);
     }
+
+
 
     private class TeamHolder extends RecyclerView.ViewHolder
             implements  View.OnClickListener {
@@ -105,7 +122,12 @@ public class TeamListFragment extends Fragment {
 
         public void bindTeam(Team team) {
             mTeam = team;
-            mTeamNameTextView.setText(team.getLeader().getName());
+            if (team.getLeader() != null) {
+                mTeamNameTextView.setText(team.getLeader().getName());
+            } else {
+                // TODO: fix
+                mTeamNameTextView.setText("DEBUG: PLACEHOLDER");
+            }
         }
     }
 
