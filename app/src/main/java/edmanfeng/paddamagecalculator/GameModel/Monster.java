@@ -18,15 +18,6 @@ public class Monster {
     private static final int MAX_AWAKENINGS = 9;
     private static final int MAX_LATENT_SLOTS = 6;
 
-    public static final class Attribute {
-        public static final int NONE = -1;
-        public static final int FIRE = 0;
-        public static final int WATER = 1;
-        public static final int WOOD = 2;
-        public static final int LIGHT = 3;
-        public static final int DARK = 4;
-    }
-
     private String mId;
     private String mOwner;
     private int mHp;
@@ -39,7 +30,7 @@ public class Monster {
 
     public Monster() {
         this(UUID.randomUUID().toString(), Values.LOCAL,
-                "CUSTOM", 0, 0, 0, 0, new int[] {Attribute.NONE, Attribute.NONE});
+                "CUSTOM", 0, 0, 0, 0, new int[] {Values.Attribute.NONE, Values.Attribute.NONE});
     }
 
     public Monster(String uuid, String owner, String name,
@@ -136,7 +127,7 @@ public class Monster {
     public int getNumberAttributes() {
         int count = 0;
         for (int attr : mAttributes) {
-            if (attr != Attribute.NONE) {
+            if (attr != Values.Attribute.NONE) {
                 count++;
             } else {
                 break;

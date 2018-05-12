@@ -20,6 +20,15 @@ public class Values {
 
     public static final int SOLO_TEAM_SIZE = 6;
 
+    public static final class Attribute {
+        public static final int NONE = -1;
+        public static final int FIRE = 0;
+        public static final int WATER = 1;
+        public static final int WOOD = 2;
+        public static final int LIGHT = 3;
+        public static final int DARK = 4;
+    }
+
     public static final class Type {
         public static final int NONE = -1;
         public static final int GOD = 0;
@@ -276,5 +285,66 @@ public class Values {
         public static int HEAL = 5;
         public static int JAMMER = 6;
         public static int POISON = 7;
+    }
+
+    public static final class LeaderSkillType {
+        public static final int NONE = -1;
+
+        // General static stat multipliers
+        public static final int BASIC = 0;
+
+        // Skill applies when connecting a certain amount of orbs in a match
+        public static final int CONNECTED = 1;
+
+        // Skill applies when matching certain combos
+        public static final int COMBO = 2;
+
+        // Skill applies when matching at least one enhanced orb in a 5 orb match
+        public static final int ENHANCED_MATCH = 3;
+
+        // Skill applies when matching a certain combination of orb types
+        public static final int ORB_TYPE_MATCH = 4;
+
+        // Skill applies when matching heart orbs in a cross shape
+        public static final int HEART_CROSS = 5;
+
+        // Skill applies when matching orbs in a cross shape
+        public static final int CROSS = 6;
+
+        // Skill applies when HP% is in a certain range
+        public static final int HP_CONDITIONAL = 7;
+
+        // Skill applies if a skill was used that turn
+        public static final int SKILL_USE = 8;
+
+        // Skill applies after taking damage
+        public static final int COUNTER = 9;
+
+        // Skill applies after making a match
+        public static final int POST_MATCH = 10;
+
+        // Skill applies when a team has a certain sub or subs
+        public static final int TEAMMATE = 11;
+
+        // Skill applies when played in co-op mode
+        public static final int COOPERATION = 12;
+
+        // Skill prevents death based on team HP%
+        public static final int RESOLVE = 13;
+
+        // Skill changes the dimensions of the board
+        public static final int BOARD_SIZE = 14;
+
+        // Skill changes the ammount of orbs needed to make a match
+        public static final int MIN_CONNECTED = 15;
+
+        // Skill changes the rewards received after completing a dungeon
+        public static final int BOOST = 16;
+
+        // Skill prevents skyfalls from matching
+        public static final int RESTRICT_SKYFALL_MATCHES = 17;
+
+        // SKill changes the amount of move time the user has
+        public static final int MOVE_TIME = 18;
     }
 }

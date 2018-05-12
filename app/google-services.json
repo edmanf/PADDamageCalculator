@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "13599548399",
+    "firebase_url": "https://paddamagecalculator.firebaseio.com",
+    "project_id": "paddamagecalculator",
+    "storage_bucket": "paddamagecalculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13599548399:android:823b3c97a077e6b3",
+        "android_client_info": {
+          "package_name": "edmanfeng.paddamagecalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13599548399-4tcbdpip5ev82kkfolcsi1js6okia43t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edmanfeng.paddamagecalculator",
+            "certificate_hash": "77c3e97d7a450bc7ec8d861310700d70e30f6f3f"
+          }
+        },
+        {
+          "client_id": "13599548399-5cp0p0lst2r966bqg0m6qao13r3e9ve2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPESmwGnalLGntMmsnfb293l5B6EQ8rj8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13599548399-5cp0p0lst2r966bqg0m6qao13r3e9ve2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
