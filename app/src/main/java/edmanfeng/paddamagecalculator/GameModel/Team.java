@@ -3,6 +3,7 @@ package edmanfeng.paddamagecalculator.GameModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import edmanfeng.paddamagecalculator.GameModel.Values.Awakening;
 
 /**
  * Represents a single team of monsters (in solo).
@@ -70,6 +71,14 @@ public class Team {
         mMonsters = monsters;
     }
 
+    public Monster getMonster(int n) {
+        return mMonsters[n];
+    }
+
+    public void setMonster(Monster monster, int n) {
+        mMonsters[n] = monster;
+    }
+
     public Monster get(int slot) {
         return mMonsters[slot];
     }
@@ -89,7 +98,11 @@ public class Team {
     }
 
     public int getRowEnhance(int attribute) {
-        return 0;
+        int count = 0;
+        for (Monster monster : mMonsters) {
+            count += monster.getNumAwakening(Awakening.ROWS[attribute]);
+        }
+        return count;
     }
 
     public List<Monster> asList() {

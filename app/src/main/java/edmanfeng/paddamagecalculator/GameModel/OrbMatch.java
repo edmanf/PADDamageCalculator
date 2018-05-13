@@ -7,30 +7,17 @@ import android.graphics.drawable.Drawable;
 import java.util.HashMap;
 import java.util.Map;
 
+import static edmanfeng.paddamagecalculator.GameModel.Values.OrbType;
+import static edmanfeng.paddamagecalculator.GameModel.Values.OrbShape;
+
 /**
  * Represents a single match of orbs
  */
 
 public class OrbMatch {
-    public static final int ORB_TYPE_FIRE = 0;
-    public static final int ORB_TYPE_WATER = 1;
-    public static final int ORB_TYPE_WOOD = 2;
-    public static final int ORB_TYPE_LIGHT = 3;
-    public static final int ORB_TYPE_DARK = 4;
-    public static final int ORB_TYPE_HEAL = 5;
-    public static final int ORB_TYPE_JAMMER = 6;
-    public static final int ORB_TYPE_POISON = 7;
-    public static final String[] ORB_TYPES = new String[] {"FIRE", "WATER",
-            "WOOD","LIGHT", "DARK", "HEAL", "JAMMER", "POISON"};
 
-    public static final int SHAPE_NORMAL = 0;
-    public static final int SHAPE_TPA = 1;
-    public static final int SHAPE_ROW = 2;
-    public static final int SHAPE_CROSS = 3;
-    public static final int SHAPE_COLUMN = 4;
-    public static final String[] SHAPES = new String[] {"NORMAL", "TPA",
-            "ROW", "CROSS", "COLUMN"};
 
+    // sets the color of the combo for data-binding
     private final Map<String, String> mColors;
 
     private int mOrbType;
@@ -45,19 +32,19 @@ public class OrbMatch {
         mShape = shape;
 
         mColors = new HashMap<>();
-        mColors.put(ORB_TYPES[ORB_TYPE_FIRE], "red");
-        mColors.put(ORB_TYPES[ORB_TYPE_WATER], "blue");
-        mColors.put(ORB_TYPES[ORB_TYPE_WOOD], "green");
-        mColors.put(ORB_TYPES[ORB_TYPE_DARK], "purple");
-        mColors.put(ORB_TYPES[ORB_TYPE_LIGHT], "yellow");
-        mColors.put(ORB_TYPES[ORB_TYPE_HEAL], "pink");
-        mColors.put(ORB_TYPES[ORB_TYPE_JAMMER], "darkgray");
-        mColors.put(ORB_TYPES[ORB_TYPE_POISON], "darkgray");
+        mColors.put(OrbType.ORB_TYPES[OrbType.FIRE], "red");
+        mColors.put(OrbType.ORB_TYPES[OrbType.WATER], "blue");
+        mColors.put(OrbType.ORB_TYPES[OrbType.WOOD], "green");
+        mColors.put(OrbType.ORB_TYPES[OrbType.DARK], "purple");
+        mColors.put(OrbType.ORB_TYPES[OrbType.LIGHT], "yellow");
+        mColors.put(OrbType.ORB_TYPES[OrbType.HEAL], "pink");
+        mColors.put(OrbType.ORB_TYPES[OrbType.JAMMER], "darkgray");
+        mColors.put(OrbType.ORB_TYPES[OrbType.POISON], "darkgray");
 
     }
 
     public OrbMatch() {
-        this(ORB_TYPE_FIRE, 0, 0, 0);
+        this(OrbType.FIRE, 0, 0, 0);
     }
 
     public OrbMatch(OrbMatch orig) {
@@ -97,7 +84,7 @@ public class OrbMatch {
     }
 
     public Drawable getColor() {
-        return new ColorDrawable(Color.parseColor(mColors.get(ORB_TYPES[getOrbType()])));
+        return new ColorDrawable(Color.parseColor(mColors.get(OrbType.ORB_TYPES[getOrbType()])));
     }
 
     /**
@@ -106,8 +93,8 @@ public class OrbMatch {
      */
     @Override
     public String toString() {
-        return "[" + ORB_TYPES[mOrbType] + ", " + mCount + " orbs, " +
-                mEnhanced + " enhanced, " + SHAPES[mShape] + "]";
+        return "[" + Values.OrbType.ORB_TYPES[mOrbType] + ", " + mCount + " orbs, " +
+                mEnhanced + " enhanced, " + OrbShape.SHAPES[mShape] + "]";
     }
 
 

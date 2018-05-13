@@ -2,7 +2,9 @@ package edmanfeng.paddamagecalculator.GameModel;
 
 import android.net.Uri;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import edmanfeng.paddamagecalculator.PictureUtils;
@@ -27,6 +29,7 @@ public class Monster {
     private int mNum;
     private int[] mAttributes;
     private Uri mImageUrl;
+    private Map<Integer, Integer> mAwakenings;
 
     public Monster() {
         this(UUID.randomUUID().toString(), Values.LOCAL,
@@ -43,6 +46,7 @@ public class Monster {
         mAtk = atk;
         mRcv = rcv;
         mAttributes = attributes;
+        mAwakenings = new HashMap<Integer, Integer>();
     }
 
 
@@ -162,6 +166,29 @@ public class Monster {
         mImageUrl = Uri.parse(url);
     }
 
+    public Map<Integer, Integer> getAwakenings() {
+        return mAwakenings;
+    }
+
+    public void setAwakenings(Map<Integer, Integer> awakenings) {
+        mAwakenings = awakenings;
+    }
+
+    // Returns the number of the given awakening that this monster has
+    public int getNumAwakening(int awakening) {
+        if (mAwakenings.containsKey(awakening)) {
+            return mAwakenings.get(awakening);
+        }
+        return 0;
+    }
+
+    public void setAwakening(int awakening, int num) {
+        mAwakenings.put(awakening, num);
+    }
+
+    public void resetAwakenings() {
+        mAwakenings.clear();
+    }
 
     @Override
     public boolean equals(Object o) {

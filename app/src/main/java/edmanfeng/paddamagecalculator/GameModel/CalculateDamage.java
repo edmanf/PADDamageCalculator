@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edmanfeng.paddamagecalculator.GameModel.Values.Awakening;
+import edmanfeng.paddamagecalculator.GameModel.Values.AwakeningValue;
+import edmanfeng.paddamagecalculator.GameModel.Values.OrbShape;
 /**
  * Created by t7500 on 6/20/2017.
  */
@@ -30,8 +33,14 @@ public class CalculateDamage {
         // G3 round near: Row, # combos
         // G4 round near: leader
         // http://puzzleanddragonsforum.com/threads/mechanics-comprehensive-guide-to-game-mechanics.50604/
+
+
         List<Damage> damageList = new ArrayList<>(12);
+
+        // 6 monsters, 2 attributes
         Damage[] damageArray = new Damage[12];
+
+
         SparseArray<List<OrbMatch>> colorCombos = new SparseArray<>();
         double activeMultiplier = 1;
         double leaderMultiplier = leaderMulti;
@@ -52,10 +61,12 @@ public class CalculateDamage {
                 list = new ArrayList<>();
             }
             list.add(combo);
-            colorCombos.put(combo.getOrbType(), list);
+            colorCombos.put(combo.getOrbType(), list); // TODO: idk if this is needed
         }
 
         double bCombo = 1 + 0.25 * (combos.size() - 1);
+
+
         for (int i = 0; i < Team.TEAM_SIZE; i++) {
             Monster monster = team.get(i);
             if (monster == null) {
@@ -64,21 +75,41 @@ public class CalculateDamage {
             int mainAttr = monster.getAttribute(0);
             int subAttr = monster.getAttribute(1);
             double colorMultiplier = 1.0;
+
             for (OrbMatch combo : colorCombos.get(mainAttr, new ArrayList<OrbMatch>())) {
                 if (combo == null) {
                     continue;
                 }
+
                 double nOrb = 1 + 0.25 * (combo.getCount() - 3);
-                double pOrb = (1 + 0.06 * combo.getEnhanced()) * (1 + team.getEnhanced(mainAttr));
-                double total = Math.ceil(monster.getAtk() * colorMultiplier * nOrb * pOrb * activeMultiplier);
+                double pOrb = (1 + AwakeningValue.ORB_ENHANCE_MATCHED * combo.getEnhanced()) *
+                        (1 + AwakeningValue.ORB_ENHANCE_BASE * team.getEnhanced(mainAttr));
+                double total = Math.ceil(monster.getAtk() * colorMultiplier *
+                        nOrb * pOrb * activeMultiplier);
 
                 // G2: tpa multipliers
-                if (combo.getCount() == 4) {
-                    total = Math.round(total * 1);
+                double bTPA = 1;
+                if (combo.getShape() == OrbShape.TPA) {
+                    bTPA = Math.max(1, AwakeningValue.TWO_PRONG *
+                            monster.getNumAwakening(Awakening.TWO_PRONG));
                 }
 
-                // G3: bCombo, bRow
-                total = Math.round(total * bCombo); //team.getRowEnhance(mainAttr));
+                double bDVP = 1;
+                if (combo.getShape() == OrbShape.SQUARE_3X3 &&
+                        monster.getNumAwakening(Awakening.DAMAGE_VOID_PIERCER) > 0) {
+                    bDVP = AwakeningValue.VOID_DEFENSE_PIERCER;
+                }
+
+                double bLIA = 1;
+                if (combo.getShape() == OrbShape.L_5) {
+                    bLIA = Math.max(1, AwakeningValue.L_INCREASED_ATTACK *
+                            monster.getNumAwakening(Awakening.L_INCREASED_ATTACK));
+                }
+
+                total = Math.round(total * bTPA * bDVP * bLIA);
+
+                // G3: bCombo, bRow, b7c, bSBA, bLTH, bGTH
+                total = Math.round(total * bCombo * team.getRowEnhance(mainAttr));
 
                 // G4: Leader
                 total = Math.round(total * leaderMultiplier * friendMultiplier);

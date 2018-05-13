@@ -46,25 +46,26 @@ public class Values {
     }
 
     public static final class Awakening {
+
         public static final int NONE = -1;
-        public static final int FIRE_RESIST = 0;
-        public static final int WATER_RESIST = 1;
-        public static final int WOOD_RESIST = 2;
-        public static final int LIGHT_RESIST = 3;
-        public static final int DARK_RESIST = 4;
-        public static final int HP_ENHANCE = 5;
-        public static final int ATK_ENHANCE = 6;
-        public static final int RCV_ENHANCE = 7;
-        public static final int FIRE_ORB_ENHANCE = 8;
-        public static final int WATER_ORB_ENHANCE = 9;
-        public static final int WOOD_ORB_ENHANCE = 10;
-        public static final int LIGHT_ORB_ENHANCE = 11;
-        public static final int DARK_ORB_ENHANCE = 12;
-        public static final int FIRE_ROW = 13;
-        public static final int WATER_ROW = 14;
-        public static final int WOOD_ROW = 15;
-        public static final int LIGHT_ROW = 16;
-        public static final int DARK_ROW = 17;
+        public static final int REDUCE_FIRE_DAMAGE = 0;
+        public static final int REDUCE_WATER_DAMAGE = 1;
+        public static final int REDUCE_WOOD_DAMAGE = 2;
+        public static final int REDUCE_LIGHT_DAMAGE = 3;
+        public static final int REDUCE_DARK_DAMAGE = 4;
+        public static final int ENHANCED_HP = 5;
+        public static final int ENHANCED_ATK = 6;
+        public static final int ENHANCED_RCV = 7;
+        public static final int ENHANCED_FIRE_ORBS = 8;
+        public static final int ENHANCED_WATER_ORBS = 9;
+        public static final int ENHANCED_WOOD_ORBS = 10;
+        public static final int ENHANCED_LIGHT_ORBS = 11;
+        public static final int ENHANCED_DARK_ORBS = 12;
+        public static final int ENHANCED_FIRE_ROW = 13;
+        public static final int ENHANCED_WATER_ROW = 14;
+        public static final int ENHANCED_WOOD_ROW = 15;
+        public static final int ENHANCED_LIGHT_ROW = 16;
+        public static final int ENHANCED_DARK_ROW = 17;
         public static final int AUTOHEAL = 18;
         public static final int BIND_RESIST = 19;
         public static final int BIND_CLEAR = 20;
@@ -91,6 +92,22 @@ public class Values {
         public static final int REDEEMABLE_MATERIAL_KILLER = 40;
         public static final int ENHANCED_COMBO_7 = 41;
         public static final int DEFENSE_BREAK = 42;
+        public static final int ENHANCED_TEAM_HP = 43;
+        public static final int ENHANCED_TEAM_RCV = 44;
+        public static final int DAMAGE_VOID_PIERCER = 45;
+        public static final int SUPER_BONUS_ATTACK = 46;
+        public static final int HP_LESS_THAN_ENHANCED = 47;
+        public static final int HP_GREATER_THAN_ENHANCED = 48;
+        public static final int L_INCREASED_ATTACK = 49;
+        public static final int SUPER_ENHANCED_COMBOS = 50;
+
+
+        // Index i is attribute i and ROWS[i] is the row awakening for that attribute
+        public static final int[] ROWS = new int[]{ENHANCED_FIRE_ROW,
+                ENHANCED_WATER_ROW,
+                ENHANCED_WOOD_ROW,
+                ENHANCED_LIGHT_ROW,
+                ENHANCED_DARK_ROW};
     }
 
     public static final class AwakeningValue {
@@ -105,12 +122,12 @@ public class Values {
         /**
          * Damage increased for having an orb enhance awakening
          */
-        public static final BigDecimal ORB_ENHANCE_BASE = new BigDecimal(0.05);
+        public static final double ORB_ENHANCE_BASE = 0.05;
 
         /**
          * Damage increased for matching an enhanced orb
          */
-        public static final BigDecimal ORB_ENHANCE_MATCHED =new BigDecimal(0.06);
+        public static final double ORB_ENHANCE_MATCHED = 0.06;
 
         /**
          * Damage increase for matching a row.
@@ -155,7 +172,7 @@ public class Values {
         /**
          * TPA multiplier (multiplicative)
          */
-        public static final BigDecimal TWO_PRONG = new BigDecimal(1.5);
+        public static final double TWO_PRONG = 1.5;
 
         /**
          * chance to block skill bind
@@ -182,6 +199,9 @@ public class Values {
          */
         public static final BigDecimal DEFENSE_BREAK = new BigDecimal(0.5);
 
+        public static final double VOID_DEFENSE_PIERCER = 1.5;
+
+        public static final double L_INCREASED_ATTACK = 1.5;
 
     }
 
@@ -285,6 +305,20 @@ public class Values {
         public static int HEAL = 5;
         public static int JAMMER = 6;
         public static int POISON = 7;
+        public static final String[] ORB_TYPES = new String[] {"FIRE", "WATER",
+                "WOOD","LIGHT", "DARK", "HEAL", "JAMMER", "POISON"};
+    }
+
+    public static final class OrbShape {
+        public static final int NORMAL = 0;
+        public static final int TPA = 1;
+        public static final int ROW = 2;
+        public static final int CROSS = 3;
+        public static final int COLUMN = 4;
+        public static final int SQUARE_3X3 = 5;
+        public static final int L_5 = 6;
+        public static final String[] SHAPES = new String[] {"NORMAL", "TPA",
+                "ROW", "CROSS", "COLUMN"};
     }
 
     public static final class LeaderSkillType {
