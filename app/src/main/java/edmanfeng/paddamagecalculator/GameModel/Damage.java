@@ -24,6 +24,14 @@ public class Damage {
         mDamage = damage;
     }
 
+    public void addDamage(double dmg) {
+        mDamage += dmg;
+    }
+
+    public int getDamageAsInt() {
+        return (int) Math.round(mDamage);
+    }
+
     public int getOrbType() {
         return mOrbType;
     }

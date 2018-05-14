@@ -18,7 +18,7 @@ public class TeamTest {
     private Team mTeam;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
         mTeam = new Team();
         mTeam.setMonsters(new Monster[] {
                 new Monster(),
@@ -32,11 +32,10 @@ public class TeamTest {
 
     @Test
     public void rowAwakeningCorrect() {
-        assertEquals(mTeam.getRowEnhance(Attribute.FIRE), 0);
-        assertEquals(mTeam.getRowEnhance(Attribute.WATER), 0);
+        assertEquals(mTeam.getAwakening(Awakening.ROWS[Attribute.FIRE]), 0);
+        assertEquals(mTeam.getAwakening(Awakening.ROWS[Attribute.WATER]), 0);
         mTeam.getMonster(0).setAwakening(Awakening.ROWS[Attribute.FIRE], 2);
-        assertEquals(mTeam.getRowEnhance(Attribute.FIRE), 2);
-        assertEquals(mTeam.getRowEnhance(Attribute.WATER), 0);
+        assertEquals(mTeam.getAwakening(Awakening.ROWS[Attribute.FIRE]), 2);
+        assertEquals(mTeam.getAwakening(Awakening.ROWS[Attribute.WATER]), 0);
     }
-
 }

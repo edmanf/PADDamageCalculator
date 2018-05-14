@@ -87,20 +87,12 @@ public class Team {
         mMonsters[slot] = sub;
     }
 
-    public int getEnhanced(int attribute) {
+    public int getAwakening(int awakening) {
         int count = 0;
         for (Monster monster : mMonsters) {
             if (monster != null) {
-                count += 0;
+                count += monster.getNumAwakening(awakening);
             }
-        }
-        return count;
-    }
-
-    public int getRowEnhance(int attribute) {
-        int count = 0;
-        for (Monster monster : mMonsters) {
-            count += monster.getNumAwakening(Awakening.ROWS[attribute]);
         }
         return count;
     }

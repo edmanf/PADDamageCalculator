@@ -103,11 +103,21 @@ public class Values {
 
 
         // Index i is attribute i and ROWS[i] is the row awakening for that attribute
-        public static final int[] ROWS = new int[]{ENHANCED_FIRE_ROW,
+        public static final int[] ROWS = new int[]{
+                ENHANCED_FIRE_ROW,
                 ENHANCED_WATER_ROW,
                 ENHANCED_WOOD_ROW,
                 ENHANCED_LIGHT_ROW,
                 ENHANCED_DARK_ROW};
+
+        // access with OrbType
+        public static final int[] ENHANCED_ORBS = new int[] {
+                ENHANCED_FIRE_ORBS,
+                ENHANCED_WATER_ORBS,
+                ENHANCED_WOOD_ORBS,
+                ENHANCED_LIGHT_ORBS,
+                ENHANCED_DARK_ORBS
+        };
     }
 
     public static final class AwakeningValue {

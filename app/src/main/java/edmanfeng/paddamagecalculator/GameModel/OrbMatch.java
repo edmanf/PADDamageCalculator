@@ -47,6 +47,7 @@ public class OrbMatch {
         this(OrbType.FIRE, 0, 0, 0);
     }
 
+
     public OrbMatch(OrbMatch orig) {
         this(orig.getOrbType(), orig.getCount(), orig.getEnhanced(), orig.getShape());
     }
