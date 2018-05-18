@@ -328,7 +328,7 @@ public class Values {
         public static final int SQUARE_3X3 = 5;
         public static final int L_5 = 6;
         public static final String[] SHAPES = new String[] {"NORMAL", "TPA",
-                "ROW", "CROSS", "COLUMN"};
+                "ROW", "CROSS", "COLUMN", "SQUARE_3X3", "L_5"};
     }
 
     public static final class LeaderSkillType {

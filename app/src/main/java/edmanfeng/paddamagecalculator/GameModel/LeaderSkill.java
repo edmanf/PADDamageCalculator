@@ -33,4 +33,18 @@ public class LeaderSkill {
     public double getLeaderSkillMultiplier(Team team, int pos, List<OrbMatch> combos) {
         return 1;
     }
+
+    /*  Returns an array of leader multipliers.
+    The array will be formatted as
+    [HP_MULTIPLIER, ATK_MULTIPLIER, RCV_MULTIPLIER, SHIELD]
+     */
+    public double[] getLeaderMultipliers(Team team, Monster monster,
+                                      List<OrbMatch> matches) {
+        double[] multipliers = new double[4];
+        for (LeaderSkillComponent component : mLeaderSkillComponents) {
+
+        }
+
+        return null;
+    }
 }

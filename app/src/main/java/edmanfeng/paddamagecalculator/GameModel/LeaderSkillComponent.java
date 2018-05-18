@@ -5,6 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 public class LeaderSkillComponent {
+    /*
+    GameConditions -> Monster Conditions -> Effects
+    Example: When matching 5 orbs w/ at least 1 enhanced
+                -> Monsters with that attribute
+                -> atk x5
+     */
+
+
+
     private List<Integer> mAttributes;
     private List<Integer> mTypes;
     private double mHpMultiplier;
@@ -75,6 +84,17 @@ public class LeaderSkillComponent {
             }
             mLeaderSkillComponent.mAttributes.add(attribute);
             return this;
+        }
+
+        public Builder setTypes(List<Integer> types) {
+            mLeaderSkillComponent.mTypes = types;
+            return this;
+        }
+
+        public SkillEffect getSkillEffect(Team team, Monster monster,
+                                          List<OrbMatch> matches) {
+
+            return null;
         }
     }
 

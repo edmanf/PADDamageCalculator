@@ -10,6 +10,7 @@ import java.util.Map;
 import edmanfeng.paddamagecalculator.GameModel.Values.Awakening;
 import edmanfeng.paddamagecalculator.GameModel.Values.AwakeningValue;
 import edmanfeng.paddamagecalculator.GameModel.Values.OrbShape;
+import edmanfeng.paddamagecalculator.GameModel.Values.Attribute;
 /**
  * Created by t7500 on 6/20/2017.
  */
@@ -75,12 +76,23 @@ public class CalculateDamage {
             int mainAttr = monster.getAttribute(0);
             int subAttr = monster.getAttribute(1);
             boolean sameAttr = mainAttr == subAttr;
-            double colorMultiplier = 1.0;
+
+
+            List<OrbMatch> matches = colorCombos.get(mainAttr, new ArrayList<OrbMatch>());
+            if (!sameAttr) {
+                matches.addAll(colorCombos.get(subAttr, new ArrayList<OrbMatch>()));
+            }
 
             for (OrbMatch combo : colorCombos.get(mainAttr, new ArrayList<OrbMatch>())) {
                 if (combo == null) {
                     continue;
                 }
+
+                // guaranteed to be either main or sub attr
+                int orbType = combo.getOrbType();
+
+                double colorMultiplier = 1.0;
+
                 int teamEnhanced = team.getAwakening(
                         Awakening.ENHANCED_ORBS[mainAttr]);
                 int enhancedOrbs = combo.getEnhanced();

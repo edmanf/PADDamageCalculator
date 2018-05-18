@@ -15,11 +15,6 @@ import edmanfeng.paddamagecalculator.GameModel.Values.Awakening;
 
 
 public class CalculateDamageTest {
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Test
     public void basicEnhancedTest() {
         double leadMulti = 1;
@@ -91,7 +86,6 @@ public class CalculateDamageTest {
         double friendMulti = 1.5;
         // Red Valkyrie
         int atk = 1639;
-        int row = 2;
         Monster monster = new Monster();
         monster.setAtk(atk);
         monster.setAttribute(Attribute.FIRE, 0);
@@ -101,7 +95,6 @@ public class CalculateDamageTest {
 
         // Uriel
         atk = 2387;
-        row = 2;
         monster = new Monster();
         monster.setAtk(atk);
         monster.setAttribute(Attribute.FIRE, 0);
