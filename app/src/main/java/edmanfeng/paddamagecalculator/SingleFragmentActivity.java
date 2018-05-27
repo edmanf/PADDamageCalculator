@@ -20,7 +20,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
      */
     @LayoutRes
     protected int getLayoutResId() {
-        return R.layout.navigation_drawer;
+        return R.layout.activity_fragment;
     }
 
     @Override
@@ -30,7 +30,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity{
 
         // expand the fragment
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.drawer_layout);
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if (fragment == null) {
             fragment = createFragment();
